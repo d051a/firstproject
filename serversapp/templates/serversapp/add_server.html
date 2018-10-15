@@ -10,4 +10,11 @@
 {%endblock%}
 
 {%block body%}
+<form class = "col-md-5" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{technicform}}
+  {{serverform}}
+  <p></p>
+  <button type="submit" class="btn btn-default" name="button">Добавить</button>
+</form>
 {%endblock body%}

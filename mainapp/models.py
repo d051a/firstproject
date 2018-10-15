@@ -1,7 +1,7 @@
 from django.db import models
 from serversapp.models import Server
 
-class Tehnic (models.Model):
+class Technic (models.Model):
     TECHNICTYPES = (
         ('CMT', 'КМТ'),
         ('SERVER', 'Сервер'),
@@ -11,18 +11,14 @@ class Tehnic (models.Model):
         ('TOKEN', 'Токен'),
     )
 
-    inventorynum1 = models.CharField(max_length=50,
-        help_text = 'Инвентарный номер#1',)
-    inventorynum2 = models.CharField(max_length=50,
-        help_text = 'Инвентарный номер#2',)
-    serialnum = models.CharField(max_length=50,
-        help_text = 'Серийный номер',)
-    tecnic = models.OneToOneField(
+    inventorynum1 = models.CharField('Инвентарный номер#1',max_length=50, blank=True,)
+    inventorynum2 = models.CharField('Инвентарный номер#2', max_length=50, blank=True,)
+    serialnum = models.CharField('Серийный номер', max_length=50, blank=True,)
+    technic = models.OneToOneField(
         Server,
         on_delete=models.CASCADE,)
-    technictype = models.CharField(max_length=50,
-        default = 'CMT',
-        help_text = 'Тип техники',
+    technictype = models.CharField('Тип техники', max_length=50,
+        blank=False,
         choices=TECHNICTYPES,)
 
     class Meta:
@@ -31,4 +27,4 @@ class Tehnic (models.Model):
         verbose_name_plural = 'Техника'
 
     def __str__(self):
-        return str(self.id) + str(Server.name)
+        return '{} {} {}'.format(self.id, self.technictype, self.technic.name)

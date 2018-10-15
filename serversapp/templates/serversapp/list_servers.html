@@ -1,4 +1,5 @@
 {% extends 'base_template.html' %}
+{% load static %}
 {%block navimenu%}
   <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
   <li class="breadcrumb-item"><a href="{% url 'serversapp:list_servers' %}">Реестр серверов</a></li>
@@ -10,4 +11,44 @@
 {%endblock%}
 
 {%block body%}
+<div class="">
+
+
+<div class = "col-md-12">
+    <table id="example" class="table table-hover" style="width:100;">
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th class="text-center">Имя</th>
+                    <th class="text-center">IP-адрес</th>
+                    <th class="text-center">Серийный</th>
+                    <th class="text-center">Инвентарный#1</th>
+                    <th class="text-center">Инвентарный#2</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for server in serverslist %}
+
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{{ certificate.pk }}">{{ server.technic.name }} </a></td>
+                    <td class="text-center">{{ server.technic.ip }}</td>
+                    <td class="text-center">{{ server.serialnum }}</td>
+                    <td class="text-center">{{ server.inventorynum1 }}</td>
+                    <td class="text-center">{{ server.inventorynum2 }}</td>
+                  </tr>
+
+                  {% endfor %}
+
+            </tbody>
+        </table>
+</div>
+</div>
 {%endblock body%}
+
+{%block scripts%}
+<script type="text/javascript" language="javascript" src={% static "base_js/jquery-3.3.1.min.js" %}></script>
+<script type="text/javascript" language="javascript" src={% static "base_js/jquery.dataTables.min.js"%} ></script>
+<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.bootstrap4.min.js"%} ></script>
+<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.settings.js"%} ></script>
+{%endblock scripts%}
