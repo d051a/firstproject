@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 def list_servers(request):
     pagename = 'Все'
-    allservers = Technic.objects.filter(technictype='SERVER')
+    allservers = Server.objects.all()
     return render(request, 'serversapp/list_servers.html', {'pagename': pagename,
         'serverslist': allservers})
 
@@ -19,9 +19,11 @@ def add_server(request):
         serverform = ServerModelForm(request.POST)
         technicform = TechnicModelForm(request.POST)
         if serverform.is_valid() and technicform.is_valid():
-            serverform = serverform.save()
-            technicform = technicform.save(commit=False)
-            technicform.technic = serverform
+            technicform = technicform.save()
+            serverform = serverform.save(commit=False)
+            serverform.technic_id = technicform
+            serverform.save()
+            technicform.technictype = 'SERVER'
             technicform.save()
             return HttpResponseRedirect('/servers')
     else:

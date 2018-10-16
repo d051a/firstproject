@@ -31,11 +31,11 @@
 
                   <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td><a href="{{ certificate.pk }}">{{ server.technic.name }} </a></td>
-                    <td class="text-center">{{ server.technic.ip }}</td>
-                    <td class="text-center">{{ server.serialnum }}</td>
-                    <td class="text-center">{{ server.inventorynum1 }}</td>
-                    <td class="text-center">{{ server.inventorynum2 }}</td>
+                    <td><a href="{{ certificate.pk }}">{{ server.name }} </a></td>
+                    <td class="text-center">{{ server.ip }}</td>
+                    <td class="text-center">{{ server.technic_id.serialnum }}</td>
+                    <td class="text-center">{{ server.technic_id.inventorynum1 }}</td>
+                    <td class="text-center">{{ server.technic_id.inventorynum2 }}</td>
                   </tr>
 
                   {% endfor %}
