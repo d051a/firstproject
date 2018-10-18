@@ -13,31 +13,34 @@
 {%endblock%}
 
 {%block body%}
-<div class="">
-
-
 <div class = "col-md-12">
     <table id="example" class="table table-hover" style="width:100;">
             <thead>
                 <tr>
                     <th>-</th>
-                    <th class="text-center">ФИО</th>
-                    <th class="text-center">Начало срока действия</th>
-                    <th class="text-center">Окончание срока действия</th>
-                    <th class="text-center">Добавлен</th>
-                    <th class="text-center">Сертификат</th>
+                    <th class="text-center">Статус</th>
+                    <th class="text-center">Приоритет</th>
+                    <th class="text-center">Типовая проблема</th>
+                    <th class="text-center">Проблема</th>
+                    <th class="text-center">Описание</th>
                 </tr>
             </thead>
             <tbody>
-                  {% for certificate in certs_list %}
+                  {% for ticket in ticketslist %}
 
-                  <tr>
+                  <tr {% if ticket.status == 'OPEN' %}
+                          class="table-warning"
+                      {% elif ticket.status == 'INWORK' %}
+                          class="table-primary"
+                      {% elif ticket.status == 'CLOSED' %}
+                          class="table-success"
+                      {% endif %}>
                     <td>{{ forloop.counter }}</td>
-                    <td><a href="{{ certificate.pk }}">{{ certificate.fullname }} </a></td>
-                    <td class="text-center">{{ certificate.validate_start_date |date:"Y-m-d" }}</td>
-                    <td class="text-center">{{ certificate.validate_end_date |date:"Y-m-d" }} </td>
-                    <td class="text-center">{{ certificate.adddate |date:"Y-m-d" }}</td>
-                    <td class="text-center"><a href="/media/{{ certificate.cert_file }}">Скачать</td>
+                    <td><a href="{{ ticket.pk }}">{{ ticket.status }} </a></td>
+                    <td class="text-center">{{ ticket.get_priority_display }}</td>
+                    <td class="text-center">{{ ticket.mainproblem }} </td>
+                    <td class="text-center">{{ ticket.subproblem }}</td>
+                    <td class="text-center">{{ ticket.description|truncatechars:40 }} </td>
                   </tr>
 
                   {% endfor %}
@@ -45,7 +48,7 @@
             </tbody>
         </table>
 </div>
-</div>
+
 
 {%endblock body%}
 

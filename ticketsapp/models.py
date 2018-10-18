@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Ticket(models.Model):
     STATUSES = (
@@ -12,29 +13,31 @@ class Ticket(models.Model):
         ('HIGH', 'Высокий'),)
     status = models.CharField('Статус заявки', max_length=50,
         blank=False,
-        choices=STATUSES,)
+        choices=STATUSES,
+        default='OPEN')
     priority = models.CharField('Приоритет', max_length=50,
             blank=False,
-            choices=PRIORITY,)
+            choices=PRIORITY,
+            default='NORMAL')
     description = models.CharField('Описание проблемы', max_length=300)
     timestarted = models.DateTimeField('Дата и время подачи заявки', auto_now_add=True)
-    timeclosed = models.DateTimeField('Дата и время закрытия заявки',)
+    timeclosed = models.DateTimeField('Дата и время закрытия заявки', null=True,)
     mainproblem = models.ForeignKey(
-        'MainProblem', default=None)
+        'MainProblem', verbose_name='Типовая проблема', default=None)
     subproblem = models.ForeignKey(
-            'SubProblem', default=None)
+            'SubProblem', verbose_name='Проблема', default=None)
 
 
 class MainProblem(models.Model):
-    mainproblemname = models.CharField(max_length=30, null=True)
+    mainproblemname = models.CharField('Типовая проблема', max_length=30, null=True)
 
     def __str__(self):
         return self.mainproblemname
 
 
 class SubProblem(models.Model):
-    mainproblem = models.ForeignKey(MainProblem, on_delete=models.CASCADE, default=None)
-    subproblemname = models.CharField(max_length=30, null=True)
+    mainproblem = models.ForeignKey(MainProblem, verbose_name='Типовая проблема', on_delete=models.CASCADE, default=None)
+    subproblemname = models.CharField('Проблема',max_length=30, null=True)
 
     def __str__(self):
         return self.subproblemname
