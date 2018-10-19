@@ -26,6 +26,8 @@ class Ticket(models.Model):
         'MainProblem', verbose_name='Типовая проблема', default=None)
     subproblem = models.ForeignKey(
             'SubProblem', verbose_name='Проблема', default=None)
+    employee_start = models.CharField('Подал заявку', max_length=30, default='Иванов И.И.')
+    performer = models.CharField('Исполнитель', max_length=30, null=True, default=None)
 
 
 class MainProblem(models.Model):
