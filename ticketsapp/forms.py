@@ -26,11 +26,13 @@ class EditTicketForm(ModelForm):
                 'mainproblem',
                 'subproblem',
                 'performer',
+                'note'
                 ]
         widgets = {
         'status': forms.Select(attrs={'class': 'form-control'}),
         'priority': forms.Select(attrs={'class': 'form-control'}),
         'description': forms.Textarea(attrs={'class': 'form-control'}),
+        'note': forms.Textarea(attrs={'class': 'form-control'}),
         'mainproblem': forms.Select(attrs={'class': 'form-control'}),
         'subproblem': forms.Select(attrs={'class': 'form-control'}),
         'employee_start': forms.TextInput(attrs={'class': 'form-control'}),

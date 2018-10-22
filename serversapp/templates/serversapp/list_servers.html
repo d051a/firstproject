@@ -11,39 +11,38 @@
 {%endblock%}
 
 {%block body%}
-<div class="">
-
-
-<div class = "col-md-12">
-    <table id="example" class="table table-hover" style="width:100;">
-            <thead>
-                <tr>
-                    <th>-</th>
-                    <th class="text-center">Имя</th>
-                    <th class="text-center">IP-адрес</th>
-                    <th class="text-center">Серийный</th>
-                    <th class="text-center">Инвентарный#1</th>
-                    <th class="text-center">Инвентарный#2</th>
-                </tr>
-            </thead>
-            <tbody>
-                  {% for server in serverslist %}
-
+<div class="container">
+  <div class = "col-md-12">
+      <table id="example" class="table table-hover" style="width:100;">
+              <thead>
                   <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td><a href="{{ certificate.pk }}">{{ server.name }} </a></td>
-                    <td class="text-center">{{ server.ip }}</td>
-                    <td class="text-center">{{ server.technic_id.serialnum }}</td>
-                    <td class="text-center">{{ server.technic_id.inventorynum1 }}</td>
-                    <td class="text-center">{{ server.technic_id.inventorynum2 }}</td>
+                      <th>-</th>
+                      <th class="text-center">Имя</th>
+                      <th class="text-center">IP-адрес</th>
+                      <th class="text-center">Серийный</th>
+                      <th class="text-center">Инвентарный#1</th>
+                      <th class="text-center">Инвентарный#2</th>
                   </tr>
+              </thead>
+              <tbody>
+                    {% for server in serverslist %}
 
-                  {% endfor %}
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td><a href="{{ certificate.pk }}">{{ server.name }} </a></td>
+                      <td class="text-center">{{ server.ip }}</td>
+                      <td class="text-center">{{ server.technic_id.serialnum }}</td>
+                      <td class="text-center">{{ server.technic_id.inventorynum1 }}</td>
+                      <td class="text-center">{{ server.technic_id.inventorynum2 }}</td>
+                    </tr>
 
-            </tbody>
-        </table>
-</div>
-</div>
+                    {% endfor %}
+
+              </tbody>
+          </table>
+  </div>
+  </div>
+
 {%endblock body%}
 
 {%block scripts%}

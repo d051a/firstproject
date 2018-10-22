@@ -13,7 +13,8 @@
 {%endblock%}
 
 {%block body%}
-<div class = "col-md-12">
+<div class = "row justify-content-center">
+  <div class="col-8">
     <table id="example" class="table table-hover" style="width:100;">
             <thead>
                 <tr>
@@ -24,15 +25,16 @@
                     <th class="text-center">Типовая проблема</th>
                     <th class="text-center">Проблема</th>
                     <th class="text-center">Статус</th>
+                    <th class="text-center">Заявка открыта</th>
                 </tr>
             </thead>
             <tbody>
                   {% for ticket in ticketslist %}
 
                   <tr {% if ticket.status == 'OPEN' %}
-                          class="table-warning"
+                          class="table-light"
                       {% elif ticket.status == 'INWORK' %}
-                          class="table-primary"
+                          class="table-warning"
                       {% elif ticket.status == 'CLOSED' %}
                           class="table-success"
                       {% endif %}>
@@ -43,12 +45,14 @@
                     <td class="text-center">{{ ticket.mainproblem }}</td>
                     <td class="text-center">{{ ticket.subproblem }}</td>
                     <td class="text-center">{{ ticket.get_status_display }}</td>
+                    <td class="text-center">{{ ticket.timestarted |date:"Y-m-d H-i" }}</td>
                   </tr>
 
                   {% endfor %}
 
             </tbody>
         </table>
+    </div>
 </div>
 
 
