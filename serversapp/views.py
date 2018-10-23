@@ -13,6 +13,7 @@ def list_servers(request):
         'serverslist': allservers})
 
 
+
 def add_server(request):
     pagename = 'Новый сервер'
     if request.method == 'POST':

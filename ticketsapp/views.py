@@ -2,17 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView
 from .forms import TicketForm, EditTicketForm
-from .models import Ticket
+from .models import Ticket, SubProblem
 
 
 
-def list_tickets(request):
-    pagename = 'Все заявки'
-    ticketslist = Ticket.objects.all()
-    return render(request, 'ticketsapp/list_tickets.html', {
-        'pagename': pagename,
-        'object_list': ticketslist,
-        })
 
 class TicketListView(ListView):
     template_name = 'ticketsapp/list_tickets.html'
@@ -46,5 +39,6 @@ class TicketAddView(CreateView):
 
 def load_subproblems(request):
     mainmproblem_id = request.GET.get('mainproblem')
-    subproblem = SubProblem.objects.filter(mainmproblem_id=mainmproblem_id).order_by('subproblemname')
+    print(mainmproblem_id)
+    subproblem = SubProblem.objects.filter(id=mainmproblem_id).order_by('subproblemname')
     return render(request,)
