@@ -17,20 +17,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    # Django default admin panel
     url(r'^admin/', admin.site.urls),
-    # Main app
+    url(r'^auth/', include('authapp.urls', namespace='authapp')),
     url(r'^', include('mainapp.urls', namespace='mainapp')),
-    # Project admin panel
     url(r'^administration/', include('adminapp.urls', namespace='adminapp')),
-    # Register of copying and multiplying equipment
     url(r'^cmt/', include('cmtapp.urls', namespace='cmtapp')),
-    # Register of employees
     url(r'^employees/', include('employeesapp.urls', namespace='employeesapp')),
-    # Register of servers
     url(r'^servers/', include('serversapp.urls', namespace='serversapp')),
-    # Ticket system
     url(r'^tickets/', include('ticketsapp.urls', namespace='ticketsapp')),
-    # Register of workstations
     url(r'^workstations/', include('workstationsapp.urls', namespace='workstationsapp')),
+
 ]

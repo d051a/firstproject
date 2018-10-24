@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bootstrap Login Form Template</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href={% static "authapp/bootstrap/css/bootstrap.min.css" %}>
+        <link rel="stylesheet" href={% static "authapp/font-awesome/css/font-awesome.min.css"%}>
+		    <link rel="stylesheet" href={% static "authapp/css/form-elements.css" %}>
+        <link rel="stylesheet" href={% static "authapp/css/style.css" %}>
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href={% static "authapp/ico/favicon.png"%}>
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href={% static "authapp/ico/apple-touch-icon-144-precomposed.png"%}>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href={% static "authapp/ico/apple-touch-icon-114-precomposed.png"%}>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href={% static "authapp/ico/apple-touch-icon-72-precomposed.png"%}>
+        <link rel="apple-touch-icon-precomposed" href={% static "authapp/ico/apple-touch-icon-57-precomposed.png"%}>
+
+        <style>
+         body {
+          background: #c7b39b url({% static "authapp/img/backgrounds/1.jpg" %}); /* Цвет фона и путь к файлу */
+          color: #fff; /* Цвет текста */
+         }
+        </style>
+    </head>
+
+    <body>
+      <nav class="navbar navbar-inverse navbar-static-top" style="margin-bottom: 0px; border-radius: 0px;" >
+        <div class="container">
+          <div class="row">
+              <div class="col-sm-8 col-sm-offset-2 text">
+                  <h3><strong>Учет сертификатов</strong></h3>
+              </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </nav>
+        <!-- Top content -->
+        <div class="top-content">
+
+            <div class="inner-bg">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Регистрация</h3>
+                            		<p>Зарегистрируйтесь в системе для входа:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-lock"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+                              <form role="form" action="" method="post" class="login-form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                <label class="sr-only" for="form-username">{{ form.username.label }}</label>
+                                <input type="text" name="{{ form.username.html_name }}" placeholder="Логин..." class="form-username form-control" id="{{ form.username.html_name }}">
+                                <p></p>
+                                {% if form.username.errors %}
+                                <p>{{ form.username.errors }}</p>
+                                {% endif %}
+                                <div class="form-group">
+                                <label class="sr-only" for="form-email">{{ form.email.label }}</label>
+                                <input type="text" name="{{ form.email.html_name }}" placeholder="Email..." class="form-username form-control" id="{{ form.email.html_name }}">
+                                <p></p>
+                                {% if form.email.errors %}
+                                <p>{{ form.email.errors }}</p>
+                                {% endif %}
+                                <label class="sr-only" for="form-password">{{ form.password1.label }}</label>
+                                <input type="password" name="{{ form.password1.html_name }}" placeholder="Пароль..." class="form-password form-control" id="{{ form.password1.html_name }}">
+                                <p></p>
+                                {% if form.password1.errors %}
+                                <p>{{ form.password1.errors }}</p>
+                                {% endif %}
+                                <label class="sr-only" for="form-password">{{ form.password2.label }}</label>
+                                <input type="password" name="{{ form.password2.html_name }}" placeholder="Повторите пароль..." class="form-password form-control" id="{{ form.password2.html_name }}">
+                                <p></p>
+                                {% if form.password2.errors %}
+                                <p>{{ form.password2.errors }}</p>
+                                {% endif %}
+                              <button type="submit" class="btn">Зарегистрироваться</button>
+                              </form>
+
+		                    </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-sm-offset-3 social-login">
+                        	<h3>...или <a href="{% url 'authapp:login' %}">Войдите!</a></h3>
+
+                        	</div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Javascript -->
+        <script src={% static "authapp/js/jquery-1.11.1.min.js" %}></script>
+        <script src={% static "authapp/bootstrap/js/bootstrap.min.js" %}></script>
+        <script src={% static "authapp/js/jquery.backstretch.min.js" %}></script>
+
+
+        <!--[if lt IE 10]>
+            <script src="{% static "authapp/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>
