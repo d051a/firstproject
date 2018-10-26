@@ -22,7 +22,8 @@ def add_server(request):
         if serverform.is_valid() and technicform.is_valid():
             technicform = technicform.save()
             serverform = serverform.save(commit=False)
-            serverform.technic_id = technicform
+
+            serverform.technic_id = technicform.id
             serverform.save()
             technicform.technictype = 'SERVER'
             technicform.save()

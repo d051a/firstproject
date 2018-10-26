@@ -119,14 +119,14 @@
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a class="dropdown-item" href="#">Настройки</a></li>
           <div class="dropdown-divider"></div>
-          <li><a class="dropdown-item" href="#">Выйти</a></li>
+          <li><a class="dropdown-item" href="{% url 'authapp:logout' %}">Выйти</a></li>
         </ul>
       </li>
     </ul>
     {% else %}
     <div class="">
-      <a <button href="#" type="button" class="btn btn-light">Войти</a>
-      <a <button href="#" type="button" class="btn btn-light">Регистрация</a>
+      <a <button href="{% url 'authapp:login' %}" type="button" class="btn btn-light">Войти</a>
+      <a <button href="{% url 'authapp:registration' %}" type="button" class="btn btn-light">Регистрация</a>
     </div>
     {% endif %}
     {%endblock navibar%}
