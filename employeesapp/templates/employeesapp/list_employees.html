@@ -10,4 +10,40 @@
 {%endblock%}
 
 {%block body%}
+<div class="container">
+  <div class = "col-md-12">
+      <table id="example" class="table table-hover" style="width:100;">
+              <thead>
+                  <tr>
+                      <th>-</th>
+                      <th class="text-center">ФИО</th>
+                      <th class="text-center">Дата рождения</th>
+                      <th class="text-center">Телефонный номер</th>
+                      <th class="text-center">Номер кабинета</th>
+                      <th class="text-center">Управление</th>
+                      <th class="text-center">Отдел</th>
+                      <th class="text-center">Должность</th>
+                  </tr>
+              </thead>
+              <tbody>
+                    {% for employee in employeelist %}
+
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td><a href="{{ certificate.pk }}">{{ employee.fio }}</a></td>
+                      <td class="text-center">{{ employee.birthdate }}</td>
+                      <td class="text-center">{{ employee.telephonenum }}</td>
+                      <td class="text-center">{{ employee.location }}</td>
+                      <td class="text-center">{{ employee.department }}</td>
+                      <td class="text-center">{{ employee.subdevision }}</td>
+                      <td class="text-center">{{ employee.post }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+              </tbody>
+          </table>
+  </div>
+  </div>
+
 {%endblock body%}

@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'ticketsapp',
     'adminapp',
     'authapp',
-    'employeeapp',
 ]
 
 MIDDLEWARE = [

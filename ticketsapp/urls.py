@@ -9,10 +9,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^$', views.TicketListView.as_view(), name='list_tickets'),
     #url(r'^$', views.list_tickets, name='list_tickets'),
-    url(r'^edit/(?P<pk>\d+)$', views.TicketEditView.as_view(), name='edit_ticket'),
+    url(r'^edit/(?P<pk>\d+)$', views.TicketEditView.as_view(),
+        name='edit_ticket'),
     #url(r'^edit/(\d+)$', views.edit_ticket, name='edit_ticket'),
     url(r'^add/$', views.TicketAddView.as_view(), name='add_ticket'),
     #url(r'^add/$', views.add_ticket, name='add_ticket'),
-
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

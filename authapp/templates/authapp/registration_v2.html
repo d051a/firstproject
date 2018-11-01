@@ -60,7 +60,7 @@
                               <form role="form" action="" method="post" class="login-form">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                <input type="text" name="{{ form.username.html_name }}" placeholder="Логин..." class="form-username form-control" id="{{ form.username.html_name }}">
+                                <input type="text" name="{{ form.username.html_name }}" placeholder="Логин *U0--" class="form-username form-control" id="{{ form.username.html_name }}">
                                 <p></p>
                                 {% if form.username.errors %}
                                 <p>{{ form.username.errors }}</p>

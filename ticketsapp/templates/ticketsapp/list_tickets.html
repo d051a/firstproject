@@ -1,5 +1,6 @@
 {% extends 'base_template.html' %}
 {% load static %}
+
 {%block head%}
 {%endblock%}
 {%block navimenu%}
@@ -14,7 +15,7 @@
 
 {%block body%}
 <div class = "row justify-content-center">
-  <div class="col-8">
+  <div class="col-9">
     <table id="example" class="table table-hover" style="width:100;">
             <thead>
                 <tr>
@@ -22,7 +23,7 @@
                     <th class="text-center">Описание</th>
                     <th class="text-center">Подал заявку</th>
                     <th class="text-center">Приоритет</th>
-                    <th class="text-center">Типовая проблема</th>
+                    <th class="text-center">Исполнитель</th>
                     <th class="text-center">Проблема</th>
                     <th class="text-center">Статус</th>
                     <th class="text-center">Заявка открыта</th>
@@ -42,7 +43,7 @@
                     <td><a href="edit/{{ ticket.pk }}">{{ ticket.description|truncatechars:150 }}</a></td>
                     <td class="text-center">{{ ticket.employee_start }}</td>
                     <td class="text-center">{{ ticket.get_priority_display }}</td>
-                    <td class="text-center">{{ ticket.mainproblem }}</td>
+                    <td class="text-center">{{ ticket.performer }}</td>
                     <td class="text-center">{{ ticket.subproblem }}</td>
                     <td class="text-center">{{ ticket.get_status_display }}</td>
                     <td class="text-center">{{ ticket.timestarted |date:"Y-m-d H-i" }}</td>
@@ -59,8 +60,4 @@
 {%endblock body%}
 
 {%block scripts%}
-<script type="text/javascript" language="javascript" src={% static "base_js/jquery-3.3.1.min.js" %}></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/jquery.dataTables.min.js"%} ></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.bootstrap4.min.js"%} ></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.settings.js"%} ></script>
 {%endblock scripts%}

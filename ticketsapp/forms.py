@@ -6,49 +6,49 @@ from .models import Ticket, SubProblem
 class TicketForm(ModelForm):
     class Meta():
         model = Ticket
-        fields = ['priority',
-                'mainproblem',
-                'subproblem',
-                'description',
-                ]
+        fields = [
+            'priority',
+            'mainproblem',
+            'subproblem',
+            'description',
+            'employee_start']
         widgets = {
-        'priority': forms.Select(attrs={'class': 'form-control'}),
-        'description': forms.Textarea(attrs={'class': 'form-control'}),
-        'mainproblem': forms.Select(attrs={'class': 'form-control'}),
-        'subproblem': forms.Select(attrs={'class': 'form-control'}),
-        }
+            'employee_start': forms.Select(attrs={'class': 'form-control'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'mainproblem': forms.Select(attrs={'class': 'form-control'}),
+            'subproblem': forms.Select(attrs={'class': 'form-control'})}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['subproblem'].queryset = SubProblem.objects.none()
-        print(self.fields['subproblem'])
-
-        if 'mainmproblem' in self.data:
+        if 'mainproblem' in self.data:
             try:
-                mainmproblem_id = int(self.data.get('mainmproblem'))
-                self.fields['subproblem'].queryset = SubProblem.objects.filter(mainmproblem_id=mainmproblem_id).order_by('mainproblemname')
+                mainproblem_id = int(self.data.get('mainproblem'))
+                self.fields['subproblem'].queryset = SubProblem.objects.filter(
+                    mainproblem_id=mainproblem_id).order_by('mainproblemname')
             except (ValueError, TypeError):
-                pass  # invalid input from the client; ignore and fallback to empty subproblem queryset
+                pass
         elif self.instance.pk:
-            self.fields['subproblem'].queryset = self.instance.mainmproblem.subproblem_set.order_by('subproblem')
+            self.fields['subproblem'].queryset = \
+                self.instance.mainproblem.subproblem_set.order_by('subproblem')
+
 
 class EditTicketForm(ModelForm):
     class Meta():
         model = Ticket
         fields = [
-                'status',
-                'mainproblem',
-                'subproblem',
-                'performer',
-                'note'
-                ]
+            'status',
+            'mainproblem',
+            'subproblem',
+            'performer',
+            'note']
         widgets = {
-        'status': forms.Select(attrs={'class': 'form-control'}),
-        'priority': forms.Select(attrs={'class': 'form-control'}),
-        'description': forms.Textarea(attrs={'class': 'form-control'}),
-        'note': forms.Textarea(attrs={'class': 'form-control'}),
-        'mainproblem': forms.Select(attrs={'class': 'form-control'}),
-        'subproblem': forms.Select(attrs={'class': 'form-control'}),
-        'employee_start': forms.TextInput(attrs={'class': 'form-control'}),
-        'performer': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'note': forms.Textarea(attrs={'class': 'form-control'}),
+            'mainproblem': forms.Select(attrs={'class': 'form-control'}),
+            'subproblem': forms.Select(attrs={'class': 'form-control'}),
+            'employee_start': forms.TextInput(attrs={'class': 'form-control'}),
+            'performer': forms.Select(attrs={'class': 'form-control'})}

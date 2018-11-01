@@ -1,17 +1,18 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import Server
 from mainapp.models import Technic
 from serversapp.forms import ServerModelForm
 from mainapp.forms import TechnicModelForm
-from django.http import HttpResponse, HttpResponseRedirect
+
 
 
 def list_servers(request):
     pagename = 'Все'
     allservers = Server.objects.all()
-    return render(request, 'serversapp/list_servers.html', {'pagename': pagename,
+    return render(request, 'serversapp/list_servers.html', {
+        'pagename': pagename,
         'serverslist': allservers})
-
 
 
 def add_server(request):
@@ -22,8 +23,7 @@ def add_server(request):
         if serverform.is_valid() and technicform.is_valid():
             technicform = technicform.save()
             serverform = serverform.save(commit=False)
-
-            serverform.technic_id = technicform.id
+            serverform.technic_id = technicform
             serverform.save()
             technicform.technictype = 'SERVER'
             technicform.save()
@@ -31,11 +31,13 @@ def add_server(request):
     else:
         serverform = ServerModelForm()
         technicform = TechnicModelForm()
-    return render(request, 'serversapp/add_server.html', {'pagename': pagename,
-            'serverform': serverform,
-            'technicform': technicform,})
+    return render(request, 'serversapp/add_server.html', {
+        'pagename': pagename,
+        'serverform': serverform,
+        'technicform': technicform})
 
 
 def edit_server(request):
     pagename = 'Изменить данные сервера'
-    return render(request, 'serversapp/edit_server.html', {'pagename': pagename})
+    return render(request, 'serversapp/edit_server.html', {
+        'pagename': pagename})

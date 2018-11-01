@@ -7,7 +7,11 @@
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+    <h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{%endblock%}
+
+{%block header_end%}
+      <a role="button" class="btn btn-secondary" href="{% url 'serversapp:add_server' %}">Новый</a>
 {%endblock%}
 
 {%block body%}
@@ -46,8 +50,4 @@
 {%endblock body%}
 
 {%block scripts%}
-<script type="text/javascript" language="javascript" src={% static "base_js/jquery-3.3.1.min.js" %}></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/jquery.dataTables.min.js"%} ></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.bootstrap4.min.js"%} ></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.settings.js"%} ></script>
 {%endblock scripts%}

@@ -9,5 +9,7 @@ def main(request):
 
 def load_subproblems(request):
     mainproblem_id = request.GET.get('mainproblem')
-    subproblem = SubProblem.objects.filter(mainproblem_id=mainproblem_id).order_by('subproblemname')
-    return render(request, 'subproblems_dropdown_list_options.html', {'subproblems': subproblem})
+    subproblem = SubProblem.objects.filter(
+        mainproblem_id=mainproblem_id).order_by('subproblemname')
+    return render(request, 'subproblems_dropdown_list_options.html',
+        {'subproblems': subproblem})

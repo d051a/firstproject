@@ -1,4 +1,6 @@
 {% load static %}
+{% load mainapp_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,11 +70,11 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Заявки
+              Заявки <span class="badge badge-light">{% tickets_count user.id 'ALL' %}</span>
             </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ticketsapp:list_tickets' %}">Все заявки</a>
-            <a class="dropdown-item" href="#">Мои заявки</a>
+            <a class="dropdown-item" href="#">Мои заявки <span class="badge badge-dark">{% tickets_count user.id 'OPEN' %}</span> <span class="badge badge-warning">{% tickets_count user.id 'INWORK' %}</span></a>
             <a class="dropdown-item" href="{% url 'ticketsapp:add_ticket' %}">Подать заявку</a>
           </div>
         </li>
@@ -85,20 +87,19 @@
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item dropdown-toggle" href="#">Подразделения</a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Все подразделения</a></li>
-                    <li><a class="dropdown-item" href="#">Добавить новое</a></li>
+                    <li><a class="dropdown-item" href="#">Управления</a></li>
+                    <li><a class="dropdown-item" href="#">Отделы</a></li>
                   </ul>
                 </li>
-                <li><a class="dropdown-item dropdown-toggle" href="#">Отделы</a>
+                <li><a class="dropdown-item dropdown-toggle" href="#">Заявки</a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Все отделы</a></li>
-                    <li><a class="dropdown-item" href="#">Добавить новый</a></li>
+                    <li><a class="dropdown-item" href="#">Типовые проблемы</a></li>
+                    <li><a class="dropdown-item" href="#">Проблемы</a></li>
                   </ul>
                 </li>
                 <li><a class="dropdown-item dropdown-toggle" href="#">Должности</a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Все должности</a></li>
-                    <li><a class="dropdown-item" href="#">Добавить новую</a></li>
                   </ul>
                 </li>
               </ul>
@@ -131,26 +132,38 @@
     {% endif %}
     {%endblock navibar%}
   </nav>
-
   <div class="container">
     <ol class="breadcrumb">
       {%block navimenu%}
       {%endblock%}
     </ol>
 
-    {%block header%}
-    {%endblock%}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          {%block header%}
+          {%endblock%}
+        </div>
+        <div class="col-content-end">
+          {%block header_end%}
+          {%endblock%}
+        </div>
+      </div>
+    </div>
   </div>
-
     {%block body%}
     {%endblock%}
 
+  <script type="text/javascript" language="javascript" src={% static "base_js/jquery.min.js" %}></script>
+  <script type="text/javascript" language="javascript" src={% static "base_js/bootstrap.min.js" %}></script>
+  <script type="text/javascript" language="javascript" src={% static "base_js/bootstrap-4-navbar.js" %}></script>
+  <script type="text/javascript" language="javascript" src={% static "base_js/jquery-3.3.1.min.js" %}></script>
+  <script type="text/javascript" language="javascript" src={% static "base_js/jquery.dataTables.min.js"%} ></script>
+  <script type="text/javascript" language="javascript" src={% static "base_js/dataTables.bootstrap4.min.js"%} ></script>
+  <script type="text/javascript" language="javascript" src={% static "base_js/dataTables.settings.js"%}></script>
 
-  <script src={% static "base_js/jquery.min.js" %}></script>
-  <script src={% static "base_js/bootstrap.min.js" %}></script>
-  <script src={% static "base_js/bootstrap-4-navbar.js" %}></script>
   {%block scripts%}
   {%endblock%}
-</body>
 
+</body>
 </html>
