@@ -28,7 +28,7 @@
                     <td>{{ forloop.counter }}</td>
                     <td><img alt="logo" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="50" height="50" ></td>
                     <td><a href="{{ certificate.pk }}">{{ employee.fio }}</a></td>
-                    <td class="text-center">{{ employee.birthdate |date:"Y-m-d"}}</td>
+                      <td class="text-center">{{ employee.birthdate |date:"Y-m-d"}}</td>
                   </tr>
 
                   {% endfor %}

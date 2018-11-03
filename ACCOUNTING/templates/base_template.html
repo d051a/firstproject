@@ -14,8 +14,10 @@
   <link href={% static "base_css/dataTables.bootstrap4.min.css" %} rel="stylesheet">
   <link href={% static "base_css/bootstrap-4-navbar.css" %} rel="stylesheet">
   <link href={% static "base_css/bootstrap.css" %} rel="stylesheet">
+  <link href={% static "base_css/customstyle.css" %} rel="stylesheet">
   {%block head%}
   {%endblock%}
+
 </head>
 
 <body>
@@ -70,11 +72,11 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Заявки <span class="badge badge-light">{% tickets_count user.id 'ALL' %}</span>
+              Заявки <span class="badge badge-light">{% tickets_all_count user.id %}</span>
             </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ticketsapp:list_tickets' %}">Все заявки</a>
-            <a class="dropdown-item" href="#">Мои заявки <span class="badge badge-dark">{% tickets_count user.id 'OPEN' %}</span> <span class="badge badge-warning">{% tickets_count user.id 'INWORK' %}</span></a>
+            <a class="dropdown-item" href="#">Мои заявки <span class="badge badge-dark">{% tickets_open_count user.id %}</span> <span class="badge badge-warning">{% tickets_inwork_count user.id%}</span></a>
             <a class="dropdown-item" href="{% url 'ticketsapp:add_ticket' %}">Подать заявку</a>
           </div>
         </li>
@@ -97,11 +99,7 @@
                     <li><a class="dropdown-item" href="#">Проблемы</a></li>
                   </ul>
                 </li>
-                <li><a class="dropdown-item dropdown-toggle" href="#">Должности</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Все должности</a></li>
-                  </ul>
-                </li>
+                <li><a class="dropdown-item" href="{% url 'employeesapp:list_posts' %}">Должности</a></li>
               </ul>
             </li>
             <li><a class="dropdown-item" href="{% url 'adminapp:access_rights' %}">Права доступа</a></li>
@@ -151,6 +149,8 @@
       </div>
     </div>
   </div>
+
+
     {%block body%}
     {%endblock%}
 

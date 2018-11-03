@@ -7,6 +7,9 @@ from django.conf.urls.static import static
 # app_name = 'mainapp'
 
 urlpatterns = [
+    url(r'^posts/$', views.PostListView.as_view(), name='list_posts'),
+    url(r'^posts/edit/(?P<pk>\d+)$', views.PostEditView.as_view(), name='edit_post'),
+    url(r'^posts/add/$', views.PostAddView.as_view(), name='add_post'),
     url(r'^$', views.EmployeeListView.as_view(), name='list_employees'),
     url(r'^$', views.list_employees, name='list_employees'),
     url(r'^edit/$', views.edit_employee, name='edit_employee'),

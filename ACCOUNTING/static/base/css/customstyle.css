@@ -1,0 +1,16 @@
+.pagination>li.active>a {
+    background-color: gray !important;
+    border-color: gray !important;
+}
+
+.pagination>li>a {
+  color: DarkGreen;
+}
+
+.breadcrumb .breadcrumb-item>a {
+    color: DarkGreen;
+}
+
+td>a {
+    color: DarkGreen;
+}

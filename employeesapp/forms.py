@@ -1,5 +1,5 @@
 from django import forms
-from .models import Employee
+from .models import Employee, Post
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -32,3 +32,13 @@ class EmployeeForm(forms.ModelForm):
                 'class': 'form-control form-control-lg', 'type': 'text'}),
             'subdevision': forms.Select(attrs={'class': 'form-control'}),
             'post': forms.Select(attrs={'class': 'form-control'})}
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = (
+            'postname',
+                )
+        widgets = {
+            'postname': forms.TextInput(attrs={
+                'class': 'form-control', 'placeholder': 'Название должности'})}

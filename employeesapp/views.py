@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
-from .forms import EmployeeForm
-from .models import Employee
+from .forms import EmployeeForm, PostForm
+from .models import Employee, Post
 
 
 
@@ -41,16 +42,54 @@ def telephone_book(request):
     return render(request, 'employeesapp/telephone_book.html', {
         'pagename': pagename})
 
+
 class BirthdaysListView(ListView):
     template_name = 'employeesapp/birthdays.html'
     model = Employee
     context_object_name = 'employeelist'
+
     def get_context_data(self, **kwargs):
         context = super(BirthdaysListView, self).get_context_data(**kwargs)
         context['pagename'] = 'Дни рождения сотрудников'
         return context
 
+
 def birthdays(request):
     pagename = 'Дни рождения сотрудников'
     return render(request, 'employeesapp/birthdays.html', {
         'pagename': pagename})
+
+
+class PostListView(ListView):
+    template_name = 'employeesapp/list_posts.html'
+    model = Post
+    context_object_name = 'postslist'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        context['pagename'] = 'Все должности'
+        return context
+
+
+class PostEditView(UpdateView):
+    template_name = 'employeesapp/edit_post.html'
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('employeesapp:list_posts')
+
+    def get_context_data(self, **kwargs):
+        context = super(PostEditView, self).get_context_data(**kwargs)
+        context['pagename'] = 'Изменение должности'
+        return context
+
+
+class PostAddView(CreateView):
+    template_name = 'employeesapp/add_post.html'
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('employeesapp:list_posts')
+
+    def get_context_data(self, **kwargs):
+        context = super(PostAddView, self).get_context_data(**kwargs)
+        context['pagename'] = 'Новая должность'
+        return context
