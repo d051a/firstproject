@@ -32,34 +32,14 @@
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 Реестры
-             </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item dropdown-toggle" href="#">Серверы</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'serversapp:list_servers' %}">Все серверы</a></li>
-                <li><a class="dropdown-item" href="{% url 'serversapp:add_server' %}">Добавить новый</a></li>
-              </ul>
-            </li>
-            <li><a class="dropdown-item dropdown-toggle" href="#">Компьютеры</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'workstationsapp:list_workstations' %}">Все компьютеры</a></li>
-                <li><a class="dropdown-item" href="{% url 'workstationsapp:add_workstation' %}">Добавить новый</a></li>
-              </ul>
-            </li>
-            <li><a class="dropdown-item dropdown-toggle" href="#">Персонал</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'employeesapp:list_employees' %}">Весь персонал</a></li>
-                <li><a class="dropdown-item" href="{% url 'employeesapp:add_employee' %}">Добавить новый</a></li>
-              </ul>
-            </li>
-            <li><a class="dropdown-item dropdown-toggle" href="#">КМТ</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'cmtapp:list_cmts' %}">Вся КМТ</a></li>
-                <li><a class="dropdown-item" href="{% url 'cmtapp:add_cmt' %}">Добавить новую</a></li>
-              </ul>
-            </li>
-          </ul>
+            Реестры
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'serversapp:list_servers' %}">Серверы</a>
+            <a class="dropdown-item" href="{% url 'workstationsapp:list_workstations' %}">Компьютеры</a>
+            <a class="dropdown-item" href="{% url 'employeesapp:list_employees' %}">Сотрудники</a>
+            <a class="dropdown-item" href="{% url 'cmtapp:list_cmts' %}">КМТ</a>
+          </div>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -72,11 +52,11 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Заявки <span class="badge badge-light">{% tickets_all_count user.id %}</span>
+              Заявки <span class="badge badge-light">{% all_tickets_count user.id %}</span>
             </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ticketsapp:list_tickets' %}">Все заявки</a>
-            <a class="dropdown-item" href="#">Мои заявки <span class="badge badge-dark">{% tickets_open_count user.id %}</span> <span class="badge badge-warning">{% tickets_inwork_count user.id%}</span></a>
+            <a class="dropdown-item" href="#">Мои заявки <span class="badge badge-dark">{% open_tickets_count user.id %}</span> <span class="badge badge-warning">{% inwork_tickets_count user.id%}</span></a>
             <a class="dropdown-item" href="{% url 'ticketsapp:add_ticket' %}">Подать заявку</a>
           </div>
         </li>
@@ -95,8 +75,8 @@
                 </li>
                 <li><a class="dropdown-item dropdown-toggle" href="#">Заявки</a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Типовые проблемы</a></li>
-                    <li><a class="dropdown-item" href="#">Проблемы</a></li>
+                    <li><a class="dropdown-item" href="{% url 'ticketsapp:list_problems' %}">Типовые проблемы</a></li>
+                    <li><a class="dropdown-item" href="{% url 'ticketsapp:list_subproblems' %}">Проблемы</a></li>
                   </ul>
                 </li>
                 <li><a class="dropdown-item" href="{% url 'employeesapp:list_posts' %}">Должности</a></li>

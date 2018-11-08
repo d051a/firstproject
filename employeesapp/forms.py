@@ -29,7 +29,7 @@ class EmployeeForm(forms.ModelForm):
             'location': forms.TextInput(attrs={
                 'class': 'form-control', 'placeholder': 'Номер кабинета'}),
             'department': forms.Select(attrs={
-                'class': 'form-control form-control-lg', 'type': 'text'}),
+                'class': 'form-control form-control', 'type': 'text'}),
             'subdevision': forms.Select(attrs={'class': 'form-control'}),
             'post': forms.Select(attrs={'class': 'form-control'})}
 

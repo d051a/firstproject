@@ -6,7 +6,11 @@
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+<h2 style="margin-left: 20px;">Список сотрудников</h2>
+{%endblock%}
+
+{%block header_end%}
+      <a role="button" class="btn btn-secondary" href="{% url 'employeesapp:add_employee' %}"><b>+</b></a>
 {%endblock%}
 
 {%block body%}
@@ -30,7 +34,7 @@
 
                     <tr>
                       <td>{{ forloop.counter }}</td>
-                      <td><a href="{{ certificate.pk }}">{{ employee.fio }}</a></td>
+                      <td><a href="edit/{{ employee.pk }}">{{ employee.fio }}</a></td>
                       <td class="text-center">{{ employee.birthdate }}</td>
                       <td class="text-center">{{ employee.telephonenum }}</td>
                       <td class="text-center">{{ employee.location }}</td>

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Ticket, SubProblem
+from .models import Ticket, SubProblem, MainProblem
 
 
 class TicketForm(ModelForm):
@@ -52,3 +52,25 @@ class EditTicketForm(ModelForm):
             'subproblem': forms.Select(attrs={'class': 'form-control'}),
             'employee_start': forms.TextInput(attrs={'class': 'form-control'}),
             'performer': forms.Select(attrs={'class': 'form-control'})}
+
+
+class MainProblemForm(forms.ModelForm):
+    class Meta:
+        model = MainProblem
+        fields = (
+            'mainproblemname',)
+        widgets = {
+            'mainproblemname': forms.TextInput(attrs={
+                'class': 'form-control', 'placeholder': 'Укажите название типовой проблемы'})}
+
+
+class SubProblemForm(forms.ModelForm):
+    class Meta:
+        model = SubProblem
+        fields = (
+            'mainproblem',
+            'subproblemname')
+        widgets = {
+            'subproblemname': forms.TextInput(attrs={
+                'class': 'form-control', 'placeholder': 'Укажите название проблемы'}),
+                'mainproblem': forms.Select(attrs={'class': 'form-control'})}

@@ -1,0 +1,41 @@
+{% extends 'base_template.html' %}
+{%block navimenu%}
+  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'employeesapp:list_employees' %}">Реестр сотрудников</a></li>
+  <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
+{%endblock%}
+
+{%block header%}
+<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{%endblock%}
+
+{%block header_end%}
+      <a role="button" class="btn btn-secondary" href="{% url 'ticketsapp:add_problem' %}"><b>+</b></a>
+{%endblock%}
+
+{%block body%}
+<div class="container">
+  <div class = "col-md-12">
+      <table id="example" class="table table-hover" style="width:100;">
+              <thead>
+                  <tr>
+                      <th>-</th>
+                      <th class="text-center">Название</th>
+                  </tr>
+              </thead>
+              <tbody>
+                    {% for problem in mainproblemslist %}
+
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td><a href="edit/{{ problem.pk }}">{{ problem.mainproblemname }}</a></td>
+                    </tr>
+
+                    {% endfor %}
+
+              </tbody>
+          </table>
+  </div>
+  </div>
+
+{%endblock body%}
