@@ -4,6 +4,7 @@ from django.views.generic import ListView, CreateView, UpdateView
 from .forms import TicketForm, EditTicketForm, MainProblemForm, SubProblemForm
 from .models import Ticket, SubProblem, MainProblem
 from django.urls import reverse_lazy
+from employeesapp.models import Employee
 
 class TicketListView(ListView):
     template_name = 'ticketsapp/list_tickets.html'
@@ -33,6 +34,13 @@ class TicketAddView(CreateView):
     model = Ticket
     form_class = TicketForm
     success_url = '/tickets'
+
+    def form_valid(self, form):
+        try:
+            form.instance.employee_start = Employee.objects.get(user__exact=self.request.user.id)
+        except:
+            form.instance.employee_start = None
+        return super(TicketAddView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(TicketAddView, self).get_context_data(**kwargs)

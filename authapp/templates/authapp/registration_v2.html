@@ -65,11 +65,7 @@
                                 {% if form.username.errors %}
                                 <p>{{ form.username.errors }}</p>
                                 {% endif %}
-                                <input type="text" name="{{ form.email.html_name }}" placeholder="Email..." class="form-username form-control" id="{{ form.email.html_name }}">
-                                <p></p>
-                                {% if form.email.errors %}
-                                <p>{{ form.email.errors }}</p>
-                                {% endif %}
+                                
                                 <input type="password" name="{{ form.password1.html_name }}" placeholder="Пароль..." class="form-password form-control" id="{{ form.password1.html_name }}">
                                 <p></p>
                                 {% if form.password1.errors %}

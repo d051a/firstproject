@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from .models import Ticket, SubProblem, MainProblem
 
 
+
 class TicketForm(ModelForm):
     class Meta():
         model = Ticket
@@ -10,8 +11,7 @@ class TicketForm(ModelForm):
             'priority',
             'mainproblem',
             'subproblem',
-            'description',
-            'employee_start']
+            'description',]
         widgets = {
             'employee_start': forms.Select(attrs={'class': 'form-control'}),
             'priority': forms.Select(attrs={'class': 'form-control'}),
@@ -39,8 +39,6 @@ class EditTicketForm(ModelForm):
         model = Ticket
         fields = [
             'status',
-            'mainproblem',
-            'subproblem',
             'performer',
             'note']
         widgets = {

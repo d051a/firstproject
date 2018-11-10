@@ -47,7 +47,7 @@
                     <td><a href="edit/{{ ticket.pk }}">{{ ticket.description|truncatechars:150 }}</a></td>
                     <td class="text-center">{{ ticket.employee_start }}</td>
                     <td class="text-center">{{ ticket.get_priority_display }}</td>
-                    <td class="text-center">{{ ticket.performer }}</td>
+                    <td class="text-center">{%if ticket.performer is None %}не назначен {%else%}{{ ticket.performer }}{%endif%}</td>
                     <td class="text-center">{{ ticket.subproblem }}</td>
                     <td class="text-center">{{ ticket.get_status_display }}</td>
                     <td class="text-center">{{ ticket.timestarted |date:"Y-m-d H-i" }}</td>

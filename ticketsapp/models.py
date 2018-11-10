@@ -46,9 +46,13 @@ class Ticket(models.Model):
         verbose_name='Проблема',
         default=None)
     employee_start = models.ForeignKey(
-        'employeesapp.Employee', null=True, related_name='employee_start', verbose_name='Отправитель',)
+        'employeesapp.Employee', related_name='employee_start',
+        verbose_name='Отправитель',
+        blank=True, null=True)
     performer = models.ForeignKey(
-        'employeesapp.Employee', null=True, verbose_name='Исполнитель',)
+        'employeesapp.Employee', verbose_name='Исполнитель',
+        blank=True,
+        null=True)
 
     class Meta:
         ordering = ['-timestarted']

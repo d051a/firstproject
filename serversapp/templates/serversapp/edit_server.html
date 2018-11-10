@@ -10,4 +10,45 @@
 {%endblock%}
 
 {%block body%}
+<div class="container">
+    <div class="row m-y-2">
+        <div class="col-lg-8 push-lg-4">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                  <a href="" data-target="#edit" data-toggle="tab" class="nav-link active">Данные</a>
+              </li>
+                <li class="nav-item">
+                   <a href="" data-target="#profile" data-toggle="tab" class="nav-link">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#messages" data-toggle="tab" class="nav-link">Настройки</a>
+                </li>
+
+            </ul>
+            <div class="tab-content p-b-3">
+              <div class="tab-pane active" id="user">
+                  <h4 class="m-y-2">Edit Profile</h4>
+                  ----------------------ФОРМА ТУТ----------------------
+              </div>
+                <div class="tab-pane" id="profile">
+                    <h4 class="m-y-2">User Profile</h4>
+                  ----------------------ФОРМА ТУТ----------------------
+                </div>
+                <div class="tab-pane" id="settings">
+                    <h4 class="m-y-2">Recent Messages &amp; Notifications</h4>
+                  ----------------------ФОРМА ТУТ----------------------
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 pull-lg-8 text-xs-center">
+            <img src="//placehold.it/150" class="m-x-auto img-fluid rounded-circle" alt="avatar">
+            <p></p>
+            <h6 class="m-t-2">Добавить другое фото</h6>
+            <label class="custom-file">
+                <input type="reset" class="btn btn-secondary" value="Выберите файл">
+            </label>
+        </div>
+    </div>
+</div>
+<hr>
 {%endblock body%}

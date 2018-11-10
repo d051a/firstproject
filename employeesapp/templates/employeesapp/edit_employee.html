@@ -11,13 +11,25 @@
 
 {%block body%}
 <div class="container">
-  <div class="col-sm">
-    <form class = "col-md-6" id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}">
-      {% csrf_token %}
-      {{form.as_p}}
-      <p></p>
-        <button type="submit" class="btn btn-default" name="button">Изменить</button>
-      </form>
+  <div class="row">
+    <div class="col-md-6">
+      <form id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}">
+        {% csrf_token %}
+        {{form.as_p}}
+        <p></p>
+          <button type="submit" class="btn btn-default" name="button">Изменить</button>
+        </form>
+      </div>
+    <div class="col-md-6">
+        <img src="//placehold.it/150" class="m-x-auto img-fluid rounded-circle" alt="avatar">
+        <p></p>
+        <h6 class="m-t-2">Добавить другое фото</h6>
+        <input type="reset" class="btn btn-secondary" value="Выберите файл">
     </div>
+  </div>
 </div>
+
+
+
+
 {%endblock body%}
