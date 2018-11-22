@@ -31,6 +31,11 @@ class Ticket(models.Model):
         null=True,
         blank=True,
         default='-')
+    userhostname = models.CharField(
+        'Имя компьютера',
+        max_length=10,
+        null=True,
+        blank=True)
     timestarted = models.DateTimeField(
         'Дата и время подачи заявки',
         auto_now_add=True)

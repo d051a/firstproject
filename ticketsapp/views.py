@@ -5,114 +5,93 @@ from .forms import TicketForm, EditTicketForm, MainProblemForm, SubProblemForm
 from .models import Ticket, SubProblem, MainProblem
 from django.urls import reverse_lazy
 from employeesapp.models import Employee
+from ACCOUNTING.generic.mixins import ContextPageMixin
 
-class TicketListView(ListView):
+class TicketListView(ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
     context_object_name = 'ticketslist'
-
-    def get_context_data(self, **kwargs):
-        context = super(TicketListView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Все заявки'
-        return context
+    pagename = 'Все заявки'
 
 
-class TicketEditView(UpdateView):
+class UserTicketListView(ContextPageMixin, ListView):
+    template_name = 'ticketsapp/list_tickets.html'
+    model = Ticket
+    context_object_name = 'ticketslist'
+    pagename = 'Мои заявки'
+
+    def get_queryset(self):
+        user = Employee.objects.get(user__exact=self.request.user.id)
+        object_list = super(UserTicketListView, self).get_queryset()
+        object_list = Ticket.objects.filter(performer__exact=user)
+        return object_list
+
+
+class TicketEditView(ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_ticket.html'
     model = Ticket
     form_class = EditTicketForm
     success_url = '/tickets'
-
-    def get_context_data(self, **kwargs):
-        context = super(TicketEditView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Изменение заявки'
-        return context
+    pagename = 'Изменение заявки'
 
 
-class TicketAddView(CreateView):
+class TicketAddView(ContextPageMixin, CreateView):
     template_name = 'ticketsapp/add_ticket.html'
     model = Ticket
     form_class = TicketForm
     success_url = '/tickets'
+    pagename = 'Новая заявка'
 
     def form_valid(self, form):
+        form.instance.userhostname = self.request.META['REMOTE_ADDR']
         try:
             form.instance.employee_start = Employee.objects.get(user__exact=self.request.user.id)
         except:
             form.instance.employee_start = None
         return super(TicketAddView, self).form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super(TicketAddView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Новая заявка'
-        return context
 
-
-class MainProblemListView(ListView):
+class MainProblemListView(ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_mainproblems.html'
     model = MainProblem
     context_object_name = 'mainproblemslist'
-
-    def get_context_data(self, **kwargs):
-        context = super(MainProblemListView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Все типовые проблемы'
-        return context
+    pagename = 'Все типовые проблемы'
 
 
-class MainProblemEditView(UpdateView):
+class MainProblemEditView(ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_mainproblem.html'
     model = MainProblem
     form_class = MainProblemForm
     success_url = reverse_lazy('ticketsapp:list_problems')
-
-    def get_context_data(self, **kwargs):
-        context = super(MainProblemEditView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Измененение типовой проблемы'
-        return context
+    pagename = 'Измененение типовой проблемы'
 
 
-class MainProblemAddView(CreateView):
+class MainProblemAddView(ContextPageMixin, CreateView):
     template_name = 'ticketsapp/add_mainproblem.html'
     model = MainProblem
     form_class = MainProblemForm
     success_url = reverse_lazy('ticketsapp:list_problems')
-
-    def get_context_data(self, **kwargs):
-        context = super(MainProblemAddView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Новая типовая проблема'
-        return context
+    pagename = 'Новая типовая проблема'
 
 
-class SubProblemListView(ListView):
+class SubProblemListView(ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_subproblems.html'
     model = SubProblem
     context_object_name = 'subproblemlist'
-
-    def get_context_data(self, **kwargs):
-        context = super(SubProblemListView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Все'
-        return context
+    pagename = 'Все'
 
 
-class SubProblemEditView(UpdateView):
+class SubProblemEditView(ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_subproblem.html'
     model = SubProblem
     form_class = SubProblemForm
     success_url = reverse_lazy('ticketsapp:list_subproblems')
-
-    def get_context_data(self, **kwargs):
-        context = super(SubProblemEditView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Измененить проблему'
-        return context
+    pagename = 'Измененить проблему'
 
 
-class SubProblemAddView(CreateView):
+class SubProblemAddView(ContextPageMixin, CreateView):
     template_name = 'ticketsapp/add_subproblem.html'
     model = SubProblem
     form_class = SubProblemForm
     success_url = reverse_lazy('ticketsapp:list_subproblems')
-
-    def get_context_data(self, **kwargs):
-        context = super(SubProblemAddView, self).get_context_data(**kwargs)
-        context['pagename'] = 'Новая проблема :)'
-        return context
+    pagename = 'Новая проблема :)'

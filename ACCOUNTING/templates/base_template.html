@@ -56,7 +56,7 @@
             </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{% url 'ticketsapp:list_tickets' %}">Все заявки</a>
-            <a class="dropdown-item" href="#">Мои заявки <span class="badge badge-dark">{% open_tickets_count user.id %}</span> <span class="badge badge-warning">{% inwork_tickets_count user.id%}</span></a>
+            <a class="dropdown-item" href="{% url 'ticketsapp:user_list_tickets' %}">Мои заявки <span class="badge badge-dark">{% open_tickets_count user.id %}</span> <span class="badge badge-warning">{% inwork_tickets_count user.id%}</span></a>
             <a class="dropdown-item" href="{% url 'ticketsapp:add_ticket' %}">Подать заявку</a>
           </div>
         </li>
@@ -96,7 +96,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img src="https://image.flaticon.com/icons/png/512/149/149071.png" alt="Avatar" style="width:30px">  {{ user.username }}<span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a class="dropdown-item" href="#">Настройки</a></li>
+          <li><a class="dropdown-item" href="{% url 'authapp:settings' %}">Настройки</a></li>
           <div class="dropdown-divider"></div>
           <li><a class="dropdown-item" href="{% url 'authapp:logout' %}">Выйти</a></li>
         </ul>
