@@ -1,7 +1,7 @@
 {% extends 'base_template.html' %}
 {%block navimenu%}
   <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'employeesapp:list_employees' %}">Сотрудники</a></li>
+  <li class="breadcrumb-item"><a href="">Сотрудники</a></li>
   <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
 {%endblock%}
 
@@ -10,8 +10,8 @@
 {%endblock%}
 
 {%block body%}
-  <div class = "row justify-content-center">
-    <div class="col-7">
+<div class = "container">
+  <div class="col-12">
       <table id="example" class="table table-hover" style="width:100;">
               <thead>
                 <tr>
@@ -24,8 +24,12 @@
                   {% for employee in employeelist %}
 
                   <tr>
-                    <td class="text-center"><img alt="logo" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="50" height="50" ></td>
-                    <td class="text-center"><a href="{{ certificate.pk }}">{{ employee.fio }}</a></td>
+                    {% if employee.img %}
+                   <td><img class="rounded-circle" src="{{ employee.img.url }}" width="50" height="50"></td>
+                   {%else%}
+                   <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="50" height="50"></td>
+                   {% endif %}
+                    <td class="text-center"><a href="{{ employee.pk }}">{{ employee.fio }}</a></td>
                       <td class="text-center">{{ employee.birthdate |date:"d E"}}</td>
                   </tr>
 

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from mainapp.models import Department, SubDevision
+from ACCOUNTING.settings import MEDIA_ROOT
 
 class Employee(models.Model):
     user = models.OneToOneField(
@@ -40,6 +41,9 @@ class Employee(models.Model):
         'Post',
         null=True,
         verbose_name='Должность')
+    img = models.ImageField(upload_to=MEDIA_ROOT,
+        null=True,
+        blank=True)
 
     class Meta:
         ordering = ['fio']

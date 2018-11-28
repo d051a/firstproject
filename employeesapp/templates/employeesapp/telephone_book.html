@@ -6,7 +6,7 @@
 {%endblock%}
 {%block navimenu%}
   <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'employeesapp:list_employees' %}">Сотрудники</a></li>
+  <li class="breadcrumb-item"><a href="">Сотрудники</a></li>
   <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
 {%endblock%}
 
@@ -15,15 +15,14 @@
 {%endblock%}
 
 {%block body%}
-  <div class = "row justify-content-center">
-    <div class="col-8">
+<div class = "container">
+  <div class="col-12">
       <table id="example" class="table table-hover" style="width:100;">
               <thead>
                 <tr>
                     <th>-</th>
                     <th class="text-center"></th>
                     <th class="text-center">ФИО</th>
-                    <th class="text-center">Дата рождения</th>
                     <th class="text-center">Телефонный номер</th>
                     <th class="text-center">Номер кабинета</th>
                     <th class="text-center">Управление</th>
@@ -36,9 +35,12 @@
 
                   <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td><img alt="logo" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="70" height="70" ></td>
-                    <td><a href="{{ certificate.pk }}">{{ employee.fio }}</a></td>
-                    <td class="text-center">{{ employee.birthdate }}</td>
+                    {% if employee.img %}
+                   <td><img class="rounded-circle" src="{{ employee.img.url }}" width="60" height="60"></td>
+                   {%else%}
+                   <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="60" height="60"></td>
+                   {% endif %}
+                    <td><a href="{{ employee.pk }}">{{ employee.fio }}</a></td>
                     <td class="text-center">{{ employee.telephonenum }}</td>
                     <td class="text-center">{{ employee.location }}</td>
                     <td class="text-center">{{ employee.department }}</td>

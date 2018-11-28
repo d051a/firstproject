@@ -18,9 +18,10 @@
 {%endblock%}
 
 {%block body%}
-<div class = "row justify-content-center">
-  <div class="col-9">
-    <table id="example" class="table table-hover" style="width:100;">
+<div class = "container">
+  <div class = "row">
+    <div class="col-12">
+    <table id="example" class="table table-hover">
             <thead>
                 <tr>
                     <th>#</th>
@@ -35,7 +36,6 @@
             </thead>
             <tbody>
                   {% for ticket in ticketslist %}
-
                   <tr {% if ticket.status == 'OPEN' %}
                           class="table-light"
                       {% elif ticket.status == 'INWORK' %}
@@ -52,15 +52,13 @@
                     <td class="text-center">{{ ticket.get_status_display }}</td>
                     <td class="text-center">{{ ticket.timestarted |date:"Y-m-d H-i" }}</td>
                   </tr>
-
                   {% endfor %}
 
             </tbody>
         </table>
     </div>
 </div>
-
-
+</div>
 {%endblock body%}
 
 {%block scripts%}

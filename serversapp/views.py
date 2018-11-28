@@ -8,7 +8,7 @@ from mainapp.forms import TechnicModelForm
 
 
 def list_servers(request):
-    pagename = 'Все'
+    pagename = 'Все серверы'
     allservers = Server.objects.all()
     return render(request, 'serversapp/list_servers.html', {
         'pagename': pagename,

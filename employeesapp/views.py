@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView
-from .forms import EmployeeForm, PostForm
+from .forms import EmployeeForm, PostForm, EmployeeDisabledForm
 from .models import Employee, Post
 from authapp.forms import UserCreateForm
 from ACCOUNTING.generic.mixins import ContextPageMixin
+from django.db.models.functions import Extract
+
 
 class EmployeeListView(ContextPageMixin, ListView):
     template_name = 'employeesapp/list_employees.html'
@@ -29,12 +31,28 @@ class TelephoneBookView(ContextPageMixin, ListView):
     pagename = 'Телефонный справочник'
 
 
+class TelephoneBookEmployee(UpdateView):
+    template_name = 'employeesapp/telephone_employee.html'
+    model = Employee
+    form_class = EmployeeDisabledForm
+    success_url = reverse_lazy('employeesapp:telephone_book')
+
+
 class BirthdaysListView(ContextPageMixin, ListView):
     template_name = 'employeesapp/birthdays.html'
     model = Employee
     context_object_name = 'employeelist'
     pagename = 'Дни рождения сотрудников'
+    def get_queryset(self):
+        object_list = super(BirthdaysListView, self).get_queryset()
+        object_list = Employee.objects.annotate(month=Extract('birthdate', 'month'),day=Extract('birthdate', 'day')).order_by('month','day')
+        return object_list
 
+class BirthdaysEmployee(UpdateView):
+    template_name = 'employeesapp/birthdays_employee.html'
+    model = Employee
+    form_class = EmployeeDisabledForm
+    success_url = reverse_lazy('employeesapp:telephone_book')
 
 class PostListView(ContextPageMixin, ListView):
     template_name = 'employeesapp/list_posts.html'

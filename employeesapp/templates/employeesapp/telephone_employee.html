@@ -1,0 +1,34 @@
+{% extends 'base_template.html' %}
+{%block navimenu%}
+  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
+  <li class="breadcrumb-item"><a href="">Сотрудники</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'employeesapp:telephone_book' %}">Телефонный справочник</a></li>
+  <li class="breadcrumb-item active" aria-current="page">{{ employee.fio }} </li>
+{%endblock%}
+
+{%block header%}
+<h2 style="margin-left: 20px;">Карточка сотрудника:</h2>
+{%endblock%}
+
+{%block body%}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <fieldset disabled>
+      <form id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        </form>
+      </div>
+    <div class="col-md-6">
+      {% if employee.img %}
+     <td><img class="rounded-circle" src="{{ employee.img.url }}" width="200" height="200"></td>
+     {%else%}
+     <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="200" height="200"></td>
+     {% endif %}
+        <p></p>
+      </div>
+    <fieldset disabled>
+  </div>
+</div>
+{%endblock body%}

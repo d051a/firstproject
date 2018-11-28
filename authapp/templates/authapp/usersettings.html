@@ -20,10 +20,11 @@
         </form>
       </div>
     <div class="col-md-6">
-        <img src="//placehold.it/150" class="m-x-auto img-fluid rounded-circle" alt="avatar">
-        <p></p>
-        <h6 class="m-t-2">Добавить другое фото</h6>
-        <input type="reset" class="btn btn-secondary" value="Выберите файл">
+      {% if employee.img %}
+      <img src="{{ employee.img.url }}" class="m-x-auto img-fluid rounded-circle" alt="avatar" width="200px";>
+      {%else%}
+      <img src="//placehold.it/150" class="rounded-circle" alt="avatar" width="200px">
+      {% endif %}
     </div>
   </div>
 </div>

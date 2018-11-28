@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^edit/(?P<pk>\d+)$', views.EmployeeEditView.as_view(), name='edit_employee'),
     url(r'^add/$', views.register_user, name='add_employee'),
     url(r'^telephone_book/$', views.TelephoneBookView.as_view(), name='telephone_book'),
+    url(r'^telephone_book/(?P<pk>\d+)$', views.TelephoneBookEmployee.as_view(), name='telephone_employee'),
     url(r'^birthdays/$', views.BirthdaysListView.as_view(), name='birthdays'),
-
+    url(r'^birthdays/(?P<pk>\d+)$', views.BirthdaysEmployee.as_view(), name='birthdays_employee'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

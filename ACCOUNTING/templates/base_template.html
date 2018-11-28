@@ -21,7 +21,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'mainapp:main' %}">
         <img alt="logo" src="http://www.mindfulhca.com/wp-content/uploads/2017/04/Family-Room-Portal-Icon.png"width="35" height="35" >
       </a>
@@ -94,7 +95,13 @@
       {% if user.is_authenticated %}
       <li class="dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="https://image.flaticon.com/icons/png/512/149/149071.png" alt="Avatar" style="width:30px">  {{ user.username }}<span class="caret"></span></a>
+          {% if employee.img %}
+         <td><img class="rounded-circle" src="{{ employee.img.url }}" width="30" height="30"></td>
+         {%else%}
+         <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="30" height="30"></td>
+         {% endif %}
+            {{ user.username }}<span class="caret"></span>
+        </a>
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a class="dropdown-item" href="{% url 'authapp:settings' %}">Настройки</a></li>
           <div class="dropdown-divider"></div>
@@ -110,8 +117,9 @@
     {% endif %}
     {%endblock navibar%}
   </nav>
+
   <div class="container">
-    <ol class="breadcrumb">
+    <ol class="sticky-top breadcrumb position-sticky"  style="margin-top:70px">
       {%block navimenu%}
       {%endblock%}
     </ol>
@@ -122,14 +130,13 @@
           {%block header%}
           {%endblock%}
         </div>
-        <div class="col-content-end">
+        <div class=".col-md-4 .offset-md-4">
           {%block header_end%}
           {%endblock%}
         </div>
       </div>
     </div>
   </div>
-
 
     {%block body%}
     {%endblock%}
