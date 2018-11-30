@@ -1,7 +1,10 @@
 /*! jQuery v1.12.4 | (c) jQuery Foundation | jquery.org/license */
 $(document).ready(function() {
     $('#example').DataTable({
-    language: {
+      "scrollY":        "550px",
+      "scrollCollapse": true,
+      "paging":         true,
+      language: {
       processing:     "Traitement en cours...",
       search:         "Фильтр",
       lengthMenu:    "Показать _MENU_ элементов",
@@ -21,4 +24,3 @@ $(document).ready(function() {
     }
 });
 } );
-

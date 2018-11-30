@@ -6,11 +6,11 @@
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{{ pagename }}
 {%endblock%}
 
 {%block header_end%}
-      <a role="button" class="btn btn-secondary" href="{% url 'employeesapp:add_post' %}"><b>+</b></a>
+      <a style="margin-right: 20px;" role="button" class="btn btn-secondary" href="{% url 'employeesapp:add_post' %}"><b>+</b></a>
 {%endblock%}
 
 {%block body%}

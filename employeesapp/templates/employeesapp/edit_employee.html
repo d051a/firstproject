@@ -6,13 +6,12 @@
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{{ pagename }}
 {%endblock%}
 
 {%block body%}
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
       <form id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
@@ -20,7 +19,7 @@
           <button type="submit" class="btn btn-default" name="button">Изменить</button>
         </form>
       </div>
-    <div class="col-md-6">
+    <div class="col-md-2">
       {% if employee.img %}
      <td><img class="rounded-circle" src="{{ employee.img.url }}" width="200" height="200"></td>
      {%else%}
@@ -29,5 +28,5 @@
         <p></p>
       </div>
   </div>
-</div>
+
 {%endblock body%}

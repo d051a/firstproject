@@ -16,7 +16,7 @@ def list_servers(request):
 
 
 def add_server(request):
-    pagename = 'Новый сервер'
+    pagename = 'Добавить новый сервер'
     if request.method == 'POST':
         serverform = ServerModelForm(request.POST)
         technicform = TechnicModelForm(request.POST)

@@ -6,11 +6,11 @@
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">Список сотрудников</h2>
+{{ pagename }}
 {%endblock%}
 
 {%block header_end%}
-      <a role="button" class="btn btn-secondary" href="{% url 'employeesapp:add_employee' %}"><b>+</b></a>
+      <a style="margin-right: 20px;" role="button" class="btn btn-secondary" href="{% url 'employeesapp:add_employee' %}"><b>+</b></a>
 {%endblock%}
 
 {%block body%}
@@ -20,6 +20,7 @@
               <thead>
                   <tr>
                       <th>-</th>
+                      <th class="text-center"></th>
                       <th class="text-center">ФИО</th>
                       <th class="text-center">Дата рождения</th>
                       <th class="text-center">Телефонный номер</th>
@@ -34,6 +35,11 @@
 
                     <tr>
                       <td>{{ forloop.counter }}</td>
+                      {% if employee.img %}
+                     <td><img class="rounded-circle" src="{{ employee.img.url }}" width="60" height="60"></td>
+                     {%else%}
+                     <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="60" height="60"></td>
+                     {% endif %}
                       <td><a href="edit/{{ employee.pk }}">{{ employee.fio }}</a></td>
                       <td class="text-center">{{ employee.birthdate }}</td>
                       <td class="text-center">{{ employee.telephonenum }}</td>

@@ -14,6 +14,18 @@ class TicketListView(ContextPageMixin, ListView):
     pagename = 'Все заявки'
 
 
+class UserPerformerTicketListView(ContextPageMixin, ListView):
+    template_name = 'ticketsapp/list_tickets.html'
+    model = Ticket
+    context_object_name = 'ticketslist'
+    pagename = 'Назначенные мне заявки'
+
+    def get_queryset(self):
+        user = Employee.objects.get(user__exact=self.request.user.id)
+        object_list = super(UserPerformerTicketListView, self).get_queryset()
+        object_list = Ticket.objects.filter(performer__exact=user)
+        return object_list
+
 class UserTicketListView(ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
@@ -23,9 +35,8 @@ class UserTicketListView(ContextPageMixin, ListView):
     def get_queryset(self):
         user = Employee.objects.get(user__exact=self.request.user.id)
         object_list = super(UserTicketListView, self).get_queryset()
-        object_list = Ticket.objects.filter(performer__exact=user)
+        object_list = Ticket.objects.filter(employee_start__exact=user)
         return object_list
-
 
 class TicketEditView(ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_ticket.html'

@@ -31,10 +31,11 @@ class TelephoneBookView(ContextPageMixin, ListView):
     pagename = 'Телефонный справочник'
 
 
-class TelephoneBookEmployee(UpdateView):
+class TelephoneBookEmployee(ContextPageMixin, UpdateView):
     template_name = 'employeesapp/telephone_employee.html'
     model = Employee
     form_class = EmployeeDisabledForm
+    pagename = 'Карточка сотрудника'
     success_url = reverse_lazy('employeesapp:telephone_book')
 
 
@@ -48,10 +49,11 @@ class BirthdaysListView(ContextPageMixin, ListView):
         object_list = Employee.objects.annotate(month=Extract('birthdate', 'month'),day=Extract('birthdate', 'day')).order_by('month','day')
         return object_list
 
-class BirthdaysEmployee(UpdateView):
+class BirthdaysEmployee(ContextPageMixin, UpdateView):
     template_name = 'employeesapp/birthdays_employee.html'
     model = Employee
     form_class = EmployeeDisabledForm
+    pagename = 'Карточка сотрудника'
     success_url = reverse_lazy('employeesapp:telephone_book')
 
 class PostListView(ContextPageMixin, ListView):

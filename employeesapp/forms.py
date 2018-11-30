@@ -26,9 +26,9 @@ class EmployeeForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Дата рождения *ДД.ММ.ГГГГ*'}),
             'telephonenum': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'Номер телефона'}),
+                'class': 'form-control', 'placeholder': 'Телефон'}),
             'location': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'Номер кабинета'}),
+                'class': 'form-control', 'placeholder': 'Кабинет'}),
             'department': forms.Select(attrs={
                 'class': 'form-control form-control', 'type': 'text'}),
             'subdevision': forms.Select(attrs={'class': 'form-control'}),

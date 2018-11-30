@@ -6,11 +6,11 @@
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{{ pagename }}
 {%endblock%}
 
 {%block header_end%}
-      <a role="button" class="btn btn-secondary" href="{% url 'ticketsapp:add_subproblem' %}"><b>+</b></a>
+      <a style="margin-right: 20px;" role="button" class="btn btn-secondary" href="{% url 'ticketsapp:add_subproblem' %}"><b>+</b></a>
 {%endblock%}
 
 {%block body%}
@@ -19,7 +19,7 @@
       <table id="example" class="table table-hover" style="width:100;">
               <thead>
                   <tr>
-                      <th>-</th>
+                      <th class="text-center">-</th>
                       <th class="text-center">Название</th>
                   </tr>
               </thead>
@@ -27,15 +27,15 @@
                     {% for problem in subproblemlist %}
 
                     <tr>
-                      <td>{{ forloop.counter }}</td>
-                      <td><a href="edit/{{ problem.pk }}">{{ problem.subproblemname }}</a></td>
+                      <td class="text-center">{{ forloop.counter }}</td>
+                      <td class="text-center"><a href="edit/{{ problem.pk }}">{{ problem.subproblemname }}</a></td>
                     </tr>
 
                     {% endfor %}
 
               </tbody>
           </table>
-  </div>
-  </div>
+    </div>
+</div>
 
 {%endblock body%}

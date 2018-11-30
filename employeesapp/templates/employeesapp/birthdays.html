@@ -1,23 +1,25 @@
 {% extends 'base_template.html' %}
 {%block navimenu%}
-  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
-  <li class="breadcrumb-item"><a href="">Сотрудники</a></li>
-  <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
+<h3 style="text-aligne: 20px;">{{ pagename }}</h3>
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{{ pagename }}
 {%endblock%}
 
 {%block body%}
-<div class = "container">
+<div class = "container col-8">
   <div class="col-12">
       <table id="example" class="table table-hover" style="width:100;">
               <thead>
                 <tr>
                     <th class="text-center"></th>
                     <th class="text-center">ФИО</th>
-                    <th class="text-center">Дата рождения</th>
+                    <th class="text-center w-25">Дата рождения</th>
+                    <th class="text-center">Должность</th>
+                    <th class="text-center">Управление</th>
+                    <th class="text-center">Отдел</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +32,11 @@
                    <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="50" height="50"></td>
                    {% endif %}
                     <td class="text-center"><a href="{{ employee.pk }}">{{ employee.fio }}</a></td>
-                      <td class="text-center">{{ employee.birthdate |date:"d E"}}</td>
+                    <td class="text-center">{{ employee.birthdate |date:"d E"}}</td>
+                    <td class="text-center">{{ employee.post }}</td>
+                    <td class="text-center">{{ employee.department }}</td>
+                    <td class="text-center">{{ employee.subdevision }}</td>
+
                   </tr>
 
                   {% endfor %}

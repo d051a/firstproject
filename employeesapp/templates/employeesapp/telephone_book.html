@@ -4,18 +4,16 @@
 {%block head%}
   <link href={% static "base_css/dataTables.bootstrap4.min.css" %} rel="stylesheet">
 {%endblock%}
+
 {%block navimenu%}
-  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
-  <li class="breadcrumb-item"><a href="">Сотрудники</a></li>
-  <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{{ pagename }}
 {%endblock%}
 
 {%block body%}
-<div class = "container">
+<div class = "container col-8">
   <div class="col-12">
       <table id="example" class="table table-hover" style="width:100;">
               <thead>
@@ -23,8 +21,8 @@
                     <th>-</th>
                     <th class="text-center"></th>
                     <th class="text-center">ФИО</th>
-                    <th class="text-center">Телефонный номер</th>
-                    <th class="text-center">Номер кабинета</th>
+                    <th class="text-center">Телефон</th>
+                    <th class="text-center">Кабинет</th>
                     <th class="text-center">Управление</th>
                     <th class="text-center">Отдел</th>
                     <th class="text-center">Должность</th>
@@ -57,4 +55,5 @@
 {%endblock body%}
 
 {%block scripts%}
+
 {%endblock scripts%}
