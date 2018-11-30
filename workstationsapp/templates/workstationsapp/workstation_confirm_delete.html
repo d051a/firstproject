@@ -1,0 +1,19 @@
+{% extends 'base_template.html' %}
+{%block navimenu%}
+  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'workstationsapp:list_workstations' %}">Реестр рабочих станций</a></li>
+  <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
+{%endblock%}
+
+{%block header%}
+<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{%endblock%}
+
+{%block body%}
+<form method="post">
+    {% csrf_token %}
+    <h3>Вы действительно хотите удалить компьютер?</h3>
+    {{ object }}
+    <input type="submit" value="Подтвердить">
+</form>
+{%endblock body%}

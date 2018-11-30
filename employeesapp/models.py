@@ -57,7 +57,7 @@ class Employee(models.Model):
 class Post(models.Model):
     postname = models.CharField(
         'Должность',
-        max_length=30,)
+        max_length=75,)
     class Meta:
         ordering = ['postname']
         verbose_name = 'Должность'

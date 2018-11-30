@@ -42,7 +42,7 @@ class Technic (models.Model):
 class Department(models.Model):
     departmentmname = models.CharField(
         'Департамент',
-        max_length=50,
+        max_length=100,
         null=True)
 
     class Meta:
@@ -62,7 +62,7 @@ class SubDevision(models.Model):
         default=None)
     subdevisionname = models.CharField(
         'Отдел',
-        max_length=50,
+        max_length=100,
         null=True)
 
     class Meta:

@@ -1,4 +1,5 @@
 {% extends 'base_template.html' %}
+{% load static %}
 {%block navimenu%}
   <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
   <li class="breadcrumb-item"><a href="{% url 'workstationsapp:list_workstations' %}">Реестр рабочих станций</a></li>
@@ -9,5 +10,32 @@
 <h2 style="margin-left: 20px;">{{ pagename }}</h2>
 {%endblock%}
 
-{%block body%}
-{%endblock body%}
+{% block body %}
+  <table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>Наименование</th>
+            <th>Модель</th>
+            <th>Редактировать</th>
+            <th>Удалить</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in object_list %}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.model }}</td>
+            <td><a href="{% url 'workstationsapp:edit_workstation' pk=item.pk %}">Редактировать</a></td>
+            <td><a href="{% url 'workstationsapp:delete_workstation' pk=item.pk %}">Удалить</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock body %}
+
+{%block scripts%}
+<script type="text/javascript" language="javascript" src={% static "base_js/jquery-3.2.1.min.js" %}></script>
+<script type="text/javascript" language="javascript" src={% static "base_js/jquery.dataTables.min.js"%} ></script>
+<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.bootstrap4.min.js"%} ></script>
+<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.settings.js"%} ></script>
+{%endblock scripts%}

@@ -22,7 +22,7 @@ class EmployeeForm(forms.ModelForm):
             'patronymic': forms.TextInput(attrs={
                 'class': 'form-control form-control-lg',
                 'placeholder': 'Отчество'}),
-            'birthdate': forms.TextInput(attrs={
+            'birthdate': forms.DateInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Дата рождения *ДД.ММ.ГГГГ*'}),
             'telephonenum': forms.TextInput(attrs={

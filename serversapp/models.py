@@ -9,6 +9,7 @@ class Server (models.Model):
         on_delete=models.CASCADE,)
     ip = models.CharField('Ip-адрес', max_length=50,)
     name = models.CharField('Имя', max_length=50,)
+    
     class Meta:
         ordering = ['name']
         verbose_name = 'Сервер'
