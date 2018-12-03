@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .forms import TicketForm, EditTicketForm, MainProblemForm, SubProblemForm
 from .models import Ticket, SubProblem, MainProblem
 from django.urls import reverse_lazy
 from employeesapp.models import Employee
 from ACCOUNTING.generic.mixins import ContextPageMixin
+
 
 class TicketListView(ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_tickets.html'
@@ -26,6 +27,7 @@ class UserPerformerTicketListView(ContextPageMixin, ListView):
         object_list = Ticket.objects.filter(performer__exact=user)
         return object_list
 
+
 class UserTicketListView(ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
@@ -37,6 +39,7 @@ class UserTicketListView(ContextPageMixin, ListView):
         object_list = super(UserTicketListView, self).get_queryset()
         object_list = Ticket.objects.filter(employee_start__exact=user)
         return object_list
+
 
 class TicketEditView(ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_ticket.html'
@@ -56,10 +59,16 @@ class TicketAddView(ContextPageMixin, CreateView):
     def form_valid(self, form):
         form.instance.userhostname = self.request.META['REMOTE_ADDR']
         try:
-            form.instance.employee_start = Employee.objects.get(user__exact=self.request.user.id)
+            form.instance.employee_start = Employee.objects.get(
+                user__exact=self.request.user.id)
         except:
             form.instance.employee_start = None
         return super(TicketAddView, self).form_valid(form)
+
+
+class TicketDeleteView(DeleteView):
+    model = Ticket
+    success_url = reverse_lazy('ticketsapp:list_tickets')
 
 
 class MainProblemListView(ContextPageMixin, ListView):

@@ -49,6 +49,7 @@ class Employee(models.Model):
         ordering = ['fio']
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.fio
@@ -62,6 +63,7 @@ class Post(models.Model):
         ordering = ['postname']
         verbose_name = 'Должность'
         verbose_name_plural = 'Должности'
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.postname

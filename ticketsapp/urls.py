@@ -46,5 +46,7 @@ urlpatterns = [
     url(r'^add/$',
         views.TicketAddView.as_view(),
         name='add_ticket'),
-
+    url(r'^edit/(?P<pk>\d+)/delete$',
+        views.TicketDeleteView.as_view(),
+        name='delete_ticket'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

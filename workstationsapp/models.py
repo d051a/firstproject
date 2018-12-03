@@ -9,8 +9,9 @@ class ComputerModel(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = 'ComputerModel'
-        verbose_name_plural = 'ComputerModels'
+        verbose_name = 'Модель компьютера'
+        verbose_name_plural = 'Модели компьютера'
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.computermodelname
@@ -29,8 +30,9 @@ class Computer(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = 'Computer'
-        verbose_name_plural = 'Computers'
+        verbose_name = 'Компьютер'
+        verbose_name_plural = 'Компьютеры'
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.name

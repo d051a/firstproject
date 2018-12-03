@@ -63,6 +63,7 @@ class Ticket(models.Model):
         ordering = ['-timestarted']
         verbose_name = 'Заявка'
         verbose_name_plural = 'Заявки'
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.description
@@ -73,6 +74,12 @@ class MainProblem(models.Model):
         'Типовая проблема',
         max_length=50,
         null=True)
+
+    class Meta:
+        ordering = ['mainproblemname']
+        verbose_name = 'Типовая проблема'
+        verbose_name_plural = 'Типовые проблемы'
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.mainproblemname
@@ -85,6 +92,12 @@ class SubProblem(models.Model):
         on_delete=models.CASCADE,
         default=None)
     subproblemname = models.CharField('Проблема', max_length=50, null=True)
+
+    class Meta:
+        ordering = ['subproblemname']
+        verbose_name = 'Проблема'
+        verbose_name_plural = 'Проблемы'
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.subproblemname

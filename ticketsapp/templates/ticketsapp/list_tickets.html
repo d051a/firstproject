@@ -14,11 +14,16 @@
 {%endblock%}
 
 {%block header_end%}
+
+{% if perms.ticketsapp.add_ticket %}
       <a style="margin-right: 20px;" role="button" class="btn btn-secondary" href="{% url 'ticketsapp:add_ticket' %}"><b>+</b></a>
+{% endif %}
+
 {%endblock%}
 
 {%block body%}
-<div class = "container">
+<div class = "container col-8">
+  <div class="col-12">
     <table id="example" class="table table-hover">
             <thead>
                 <tr>
@@ -55,7 +60,7 @@
             </tbody>
         </table>
     </div>
-
+</div>
 {%endblock body%}
 
 {%block scripts%}
