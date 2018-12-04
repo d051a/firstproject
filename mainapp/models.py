@@ -34,7 +34,6 @@ class Technic (models.Model):
         ordering = ['technic_id']
         verbose_name = 'Техника'
         verbose_name_plural = 'Техника'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return '{} {}'.format(self.technic_id, self.technictype)
@@ -50,7 +49,6 @@ class Department(models.Model):
         ordering = ['departmentmname']
         verbose_name = 'Департамент'
         verbose_name_plural = 'Департаменты'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.departmentmname
@@ -71,7 +69,6 @@ class SubDevision(models.Model):
         ordering = ['subdevisionname']
         verbose_name = 'Отдел'
         verbose_name_plural = 'Отделы'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.subdevisionname
@@ -89,7 +86,6 @@ class News (models.Model):
         ordering = ['title']
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.title

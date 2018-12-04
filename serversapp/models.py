@@ -14,7 +14,6 @@ class Server (models.Model):
         ordering = ['name']
         verbose_name = 'Сервер'
         verbose_name_plural = 'Серверы'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.name

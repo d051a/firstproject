@@ -60,10 +60,19 @@ class Ticket(models.Model):
         null=True)
 
     class Meta:
+        permissions = (
+            ('can_view_allticketslist', 'Может просматривать все заявки'),
+            ('can_view_myticketslist', 'Может просматривать свои заявки'),
+            ('can_view_imperformer_ticketslist',
+                'Может просматривать назначенные заявки'),
+            ('can_add_tickets', 'Может добавлять заявки'),
+            ('can_edit_all_tickets', 'Может изменять все заявки'),
+            ('can_edit_my_tickets', 'Может изменять свои заявки'),
+            ('can_delete_my_tickets', 'Может удалять свои заявки'),
+        )
         ordering = ['-timestarted']
         verbose_name = 'Заявка'
         verbose_name_plural = 'Заявки'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.description
@@ -79,7 +88,6 @@ class MainProblem(models.Model):
         ordering = ['mainproblemname']
         verbose_name = 'Типовая проблема'
         verbose_name_plural = 'Типовые проблемы'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.mainproblemname
@@ -97,7 +105,6 @@ class SubProblem(models.Model):
         ordering = ['subproblemname']
         verbose_name = 'Проблема'
         verbose_name_plural = 'Проблемы'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.subproblemname

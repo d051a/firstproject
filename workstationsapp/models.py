@@ -11,7 +11,6 @@ class ComputerModel(models.Model):
     class Meta:
         verbose_name = 'Модель компьютера'
         verbose_name_plural = 'Модели компьютера'
-        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.computermodelname
@@ -32,7 +31,7 @@ class Computer(models.Model):
     class Meta:
         verbose_name = 'Компьютер'
         verbose_name_plural = 'Компьютеры'
-        default_permissions = ('add', 'change', 'delete', 'view')
+
 
     def __str__(self):
         return self.name
