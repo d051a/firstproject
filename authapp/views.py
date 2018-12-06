@@ -1,18 +1,21 @@
+from django.views.generic import UpdateView
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, logout
 from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .forms import UserCreateForm
 from employeesapp.forms import EmployeeForm
 from employeesapp.models import Employee
 from ACCOUNTING.generic.mixins import ContextPageMixin
-from django.views.generic import UpdateView
-from django.shortcuts import get_object_or_404
 from employeesapp.models import Employee
+
+
 
 class RegisterFormView(FormView):
     form_class = UserCreateForm
@@ -32,7 +35,6 @@ class LoginFormView(FormView):
     def form_valid(self, form):
         self.user = form.get_user()
         login(self.request, self.user)
-        print(dir(AuthenticationForm))
         return super(LoginFormView, self).form_valid(form)
 
 class LogoutView(View):
@@ -62,6 +64,8 @@ def register_user(request):
             employee = employee_form.save(commit=False)
             employee.user_id = user.id
             employee.save()
+            group = Group.objects.get(name='tickets_users')
+            user.groups.add(group)
             messages.success(request, 'Ваш профиль был успешно обновлен!')
             return HttpResponseRedirect('/')
         else:

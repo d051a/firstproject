@@ -32,14 +32,16 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
+          {% if perms.serversapp.can_view_serverslist or perms.workstationsapp.can_view_workstationslist or perms.employeesapp.can_view_employeeslist or perms.cmtapp.can_view_cmtlist %}
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Реестры
           </a>
+          {%endif%}
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'serversapp:list_servers' %}">Серверы</a>
-            <a class="dropdown-item" href="{% url 'workstationsapp:list_workstations' %}">Компьютеры</a>
-            <a class="dropdown-item" href="{% url 'employeesapp:list_employees' %}">Сотрудники</a>
-            <a class="dropdown-item" href="{% url 'cmtapp:list_cmts' %}">КМТ</a>
+            {% if perms.serversapp.can_view_serverslist %}<a class="dropdown-item" href="{% url 'serversapp:list_servers' %}">Серверы</a>{% endif %}
+            {% if perms.workstationsapp.can_view_workstationslist %}<a class="dropdown-item" href="{% url 'workstationsapp:list_workstations' %}">Компьютеры</a>{% endif %}
+            {% if perms.employeesapp.can_view_employeeslist %}<a class="dropdown-item" href="{% url 'employeesapp:list_employees' %}">Сотрудники</a>{% endif %}
+            {% if perms.cmtapp.can_view_cmtlist %}<a class="dropdown-item" href="{% url 'cmtapp:list_cmts' %}">КМТ</a>{% endif %}
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -52,16 +54,21 @@
           </div>
         </li>
         <li class="nav-item dropdown">
+          {% if perms.ticketsapp.can_view_allticketslist or perms.ticketsapp.can_view_myticketslist or perms.ticketsapp.can_view_imperformer_ticketslist or perms.ticketsapp.can_add_tickets %}
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Заявки <span class="badge badge-light">{% all_tickets_count user.id %}</span>
-            </a>
+              Заявки
+              {% if perms.ticketsapp.can_view_imperformer_ticketslist %}<span class="badge badge-light">{% all_tickets_count user.id %}</span>{% endif %}
+          </a>
+          {% endif %}
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'ticketsapp:list_tickets' %}">Все заявки</a>
-            <a class="dropdown-item" href="{% url 'ticketsapp:user_list_tickets' %}">Мои заявки</a>
-            <a class="dropdown-item" href="{% url 'ticketsapp:userperformer_list_tickets' %}">Назначенные мне <span class="badge badge-dark">{% open_tickets_count user.id %}</span> <span class="badge badge-warning">{% inwork_tickets_count user.id%}</span></a>
-            <a class="dropdown-item" href="{% url 'ticketsapp:add_ticket' %}">Подать заявку</a>
+            {% if perms.ticketsapp.can_view_allticketslist %}<a class="dropdown-item" href="{% url 'ticketsapp:list_tickets' %}">Все заявки</a>{% endif %}
+            {% if perms.ticketsapp.can_view_myticketslist %}<a class="dropdown-item" href="{% url 'ticketsapp:user_list_tickets' %}">Мои заявки</a>{% endif %}
+            {% if perms.ticketsapp.can_view_imperformer_ticketslist %}<a class="dropdown-item" href="{% url 'ticketsapp:userperformer_list_tickets' %}">Назначенные мне <span class="badge badge-dark">{% open_tickets_count user.id %}</span> <span class="badge badge-warning">{% inwork_tickets_count user.id%}</span></a>{% endif %}
+            {% if perms.ticketsapp.can_add_tickets %}<a class="dropdown-item" href="{% url 'ticketsapp:add_ticket' %}">Подать заявку</a>{% endif %}
           </div>
         </li>
+        {% for group in  request.user.groups.all %}
+          {%  if group.name == 'adminpanel' %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Администрирование
@@ -88,6 +95,8 @@
             <li><a class="dropdown-item" href="{% url 'adminapp:settings' %}">Настройки</a></li>
           </ul>
         </li>
+        {% endif %}
+        {% endfor %}
       </ul>
     </div>
 

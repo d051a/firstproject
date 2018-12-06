@@ -17,10 +17,9 @@
         {% csrf_token %}
         {{form.as_p}}
         <p></p>
-        <button type="submit" class="btn btn-default" name="button">Добавить</button>
+        {% if perms.ticketsapp.can_add_tickets %}<button type="submit" class="btn btn-default" name="button">Добавить</button>{%endif%}
       </form>
     </div>
-
 
 
 <script src={% static "base_js/jquery-3.3.1.js" %}></script>

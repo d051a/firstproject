@@ -11,6 +11,12 @@ class Server (models.Model):
     name = models.CharField('Имя', max_length=50,)
 
     class Meta:
+        permissions = (
+        ('can_view_serverslist', 'Может просматривать список серверов'),
+        ('can_add_servers', 'Может добавлять серверы'),
+        ('can_edit_servers', 'Может изменять карточки серверов'),
+        ('can_delete_servers', 'Может удалять карточки серверов'),
+        )
         ordering = ['name']
         verbose_name = 'Сервер'
         verbose_name_plural = 'Серверы'

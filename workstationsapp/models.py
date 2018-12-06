@@ -29,6 +29,12 @@ class Computer(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     class Meta:
+        permissions = (
+        ('can_view_workstationslist', 'Может просматривать список компьютеров'),
+        ('can_add_workstations', 'Может добавлять компьютер'),
+        ('can_edit_workstations', 'Может изменять карточки компьютеров'),
+        ('can_delete_workstations', 'Может удалять карточки компьютеров'),
+        )
         verbose_name = 'Компьютер'
         verbose_name_plural = 'Компьютеры'
 

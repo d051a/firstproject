@@ -22,6 +22,7 @@
                       <th>-</th>
                       <th class="text-center"></th>
                       <th class="text-center">ФИО</th>
+                      <th class="text-center">Логин</th>
                       <th class="text-center">Дата рождения</th>
                       <th class="text-center">Телефонный номер</th>
                       <th class="text-center">Номер кабинета</th>
@@ -41,6 +42,7 @@
                      <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="60" height="60"></td>
                      {% endif %}
                       <td><a href="edit/{{ employee.pk }}">{{ employee.fio }}</a></td>
+                      <td class="text-center">{{ employee.user }}</td>
                       <td class="text-center">{{ employee.birthdate }}</td>
                       <td class="text-center">{{ employee.telephonenum }}</td>
                       <td class="text-center">{{ employee.location }}</td>

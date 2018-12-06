@@ -46,6 +46,12 @@ class Employee(models.Model):
         blank=True)
 
     class Meta:
+        permissions = (
+        ('can_view_employeeslist', 'Может просматривать список сотрудников'),
+        ('can_add_employees', 'Может добавлять сотрудников'),
+        ('can_edit_employees', 'Может изменять карточки сотрудников'),
+        ('can_delete_employees', 'Может удалять карточки сотрудников'),
+        )
         ordering = ['fio']
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
