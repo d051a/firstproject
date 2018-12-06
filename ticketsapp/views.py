@@ -1,21 +1,22 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from .forms import TicketForm, EditTicketForm, MainProblemForm, SubProblemForm
 from .models import Ticket, SubProblem, MainProblem
 from django.urls import reverse_lazy
 from employeesapp.models import Employee
 from ACCOUNTING.generic.mixins import ContextPageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class TicketListView(ContextPageMixin, ListView):
+class TicketListView(LoginRequiredMixin, ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
     context_object_name = 'ticketslist'
     pagename = 'Все заявки'
 
 
-class UserPerformerTicketListView(ContextPageMixin, ListView):
+class UserPerformerTicketListView(LoginRequiredMixin, ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
     context_object_name = 'ticketslist'
@@ -28,7 +29,7 @@ class UserPerformerTicketListView(ContextPageMixin, ListView):
         return object_list
 
 
-class UserTicketListView(ContextPageMixin, ListView):
+class UserTicketListView(LoginRequiredMixin, ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
     context_object_name = 'ticketslist'
@@ -41,7 +42,7 @@ class UserTicketListView(ContextPageMixin, ListView):
         return object_list
 
 
-class TicketEditView(ContextPageMixin, UpdateView):
+class TicketEditView(LoginRequiredMixin, ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_ticket.html'
     model = Ticket
     form_class = EditTicketForm
@@ -49,7 +50,7 @@ class TicketEditView(ContextPageMixin, UpdateView):
     pagename = 'Изменение заявки'
 
 
-class TicketAddView(ContextPageMixin, CreateView):
+class TicketAddView(LoginRequiredMixin, ContextPageMixin, CreateView):
     template_name = 'ticketsapp/add_ticket.html'
     model = Ticket
     form_class = TicketForm
@@ -66,19 +67,19 @@ class TicketAddView(ContextPageMixin, CreateView):
         return super(TicketAddView, self).form_valid(form)
 
 
-class TicketDeleteView(DeleteView):
+class TicketDeleteView(LoginRequiredMixin, DeleteView):
     model = Ticket
     success_url = reverse_lazy('ticketsapp:list_tickets')
 
 
-class MainProblemListView(ContextPageMixin, ListView):
+class MainProblemListView(LoginRequiredMixin, ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_mainproblems.html'
     model = MainProblem
     context_object_name = 'mainproblemslist'
     pagename = 'Все типовые проблемы'
 
 
-class MainProblemEditView(ContextPageMixin, UpdateView):
+class MainProblemEditView(LoginRequiredMixin, ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_mainproblem.html'
     model = MainProblem
     form_class = MainProblemForm
@@ -86,7 +87,7 @@ class MainProblemEditView(ContextPageMixin, UpdateView):
     pagename = 'Измененение типовой проблемы'
 
 
-class MainProblemAddView(ContextPageMixin, CreateView):
+class MainProblemAddView(LoginRequiredMixin, ContextPageMixin, CreateView):
     template_name = 'ticketsapp/add_mainproblem.html'
     model = MainProblem
     form_class = MainProblemForm
@@ -94,14 +95,14 @@ class MainProblemAddView(ContextPageMixin, CreateView):
     pagename = 'Новая типовая проблема'
 
 
-class SubProblemListView(ContextPageMixin, ListView):
+class SubProblemListView(LoginRequiredMixin, ContextPageMixin, ListView):
     template_name = 'ticketsapp/list_subproblems.html'
     model = SubProblem
     context_object_name = 'subproblemlist'
     pagename = 'Все'
 
 
-class SubProblemEditView(ContextPageMixin, UpdateView):
+class SubProblemEditView(LoginRequiredMixin, ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_subproblem.html'
     model = SubProblem
     form_class = SubProblemForm
@@ -109,7 +110,7 @@ class SubProblemEditView(ContextPageMixin, UpdateView):
     pagename = 'Измененить проблему'
 
 
-class SubProblemAddView(ContextPageMixin, CreateView):
+class SubProblemAddView(LoginRequiredMixin, ContextPageMixin, CreateView):
     template_name = 'ticketsapp/add_subproblem.html'
     model = SubProblem
     form_class = SubProblemForm

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from ticketsapp.models import SubProblem
 from django.views.generic import ListView
 from .models import News
-# сreate your views here.
+from ACCOUNTING.generic.mixins import ContextPageMixin
 
 
 def main(request):
@@ -16,7 +16,7 @@ def load_subproblems(request):
     return render(request, 'subproblems_dropdown_list_options.html',
         {'subproblems': subproblem})
 
-class NewsList(ListView):
+class NewsList(ContextPageMixin, ListView):
     template_name = 'main.html'
     model = News
     context_object_name = 'newslist'

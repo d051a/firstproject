@@ -1,35 +1,26 @@
 {% extends 'base_template.html' %}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{{ pagename }}
 {%endblock%}
 
 {%block body%}
-<!-- Page Content -->
+
    <div class="container">
-
      <div class="row">
-
-       <!-- Blog Entries Column -->
        <div class="col-md-8">
-         <!-- Blog Post -->
          {% for new in newslist %}
          <div class="card mb-4">
-           <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
            <div class="card-body">
-             <h2 class="card-title">{{ new.title }}</h2>
+             <a href="#"><h2 class="card-title">{{ new.title }}</h2></a>
              <p class="card-text">{{ new.content }}</p>
-             <a href="#" class="btn btn-primary">Read More &rarr;</a>
            </div>
            <div class="card-footer text-muted">
-             Posted on {{new.datetime}} by
-             <a href="#">{{new.type}}</a>
+             Опубликовано: {{new.datetime}} <a href="#">{{new.type}}</a>
            </div>
          </div>
          {% endfor %}
 
-
-         <!-- Pagination -->
          <ul class="pagination justify-content-center mb-4">
            <li class="page-item">
              <a class="page-link" href="#">&larr; Older</a>
@@ -38,6 +29,26 @@
              <a class="page-link" href="#">Newer &rarr;</a>
            </li>
          </ul>
+
+         {% for new in newslist %}
+         <div class="card">
+           <div class="row no-gutters">
+           <div class="col-auto">
+             <img src="//placehold.it/250x150" class="img-fluid" alt="">
+           </div>
+           <div class="col">
+           <div class="card-block px-2">
+             <h2 class="card-title" style="margin-left: 15px;">{{ new.title }}</h2>
+             <p class="card-text" style="margin-left: 20px;">{{ new.content }}</p>
+           </div>
+           </div>
+           <div class="card-footer w-100 text-muted">
+             Posted on {{new.datetime}} by
+             <a href="#">{{new.type}}</a>
+           </div>
+         </div>
+         </div>
+         {% endfor %}
 
        </div>
 

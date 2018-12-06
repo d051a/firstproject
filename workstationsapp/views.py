@@ -2,7 +2,7 @@ import os
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 from .models import Computer, ComputerModel
@@ -11,7 +11,7 @@ from .forms import ExcelForm, ComputerForm
 from .excelparser import ExcelParser
 
 
-class AddFromExcel(View):
+class AddFromExcel(LoginRequiredMixin, View):
 
     def get(self, request):
         form = ExcelForm()
@@ -42,26 +42,26 @@ class AddFromExcel(View):
         return render(request, 'workstationsapp/excel_parser.html')
 
 
-class ListWorkstations(ListView):
+class ListWorkstations(LoginRequiredMixin, ListView):
 
     model = Computer
     template_name = 'workstationsapp/list_workstations.html'
 
 
-class AddWorkstation(CreateView):
+class AddWorkstation(LoginRequiredMixin, CreateView):
     model = Computer
     form_class = ComputerForm
     template_name = 'workstationsapp/add_workstation.html'
     success_url = reverse_lazy('workstationsapp:list_workstations')
 
 
-class EditWorkstation(UpdateView):
+class EditWorkstation(LoginRequiredMixin, UpdateView):
     model = Computer
     form_class = ComputerForm
     template_name = 'workstationsapp/edit_workstation.html'
     success_url = reverse_lazy('workstationsapp:list_workstations')
 
 
-class DeleteWorkstation(DeleteView):
+class DeleteWorkstation(LoginRequiredMixin, DeleteView):
     model = Computer
     success_url = reverse_lazy('workstationsapp:list_workstations')
