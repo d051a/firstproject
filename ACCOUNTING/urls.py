@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^servers/', include('serversapp.urls', namespace='serversapp')),
     url(r'^tickets/', include('ticketsapp.urls', namespace='ticketsapp')),
     url(r'^workstations/', include('workstationsapp.urls', namespace='workstationsapp')),
+    url(r'^holidays/', include('holidaysapp.urls', namespace='holidaysapp')),
 
 ]

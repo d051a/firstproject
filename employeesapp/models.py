@@ -41,7 +41,7 @@ class Employee(models.Model):
         'Post',
         null=True,
         verbose_name='Должность')
-    img = models.ImageField(upload_to=MEDIA_ROOT,
+    img = models.ImageField(
         null=True,
         blank=True)
 

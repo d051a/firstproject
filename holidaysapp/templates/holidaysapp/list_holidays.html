@@ -1,0 +1,51 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{%block head%}
+{%endblock%}
+{%block navimenu%}
+  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'ticketsapp:list_tickets' %}">Заявки</a></li>
+  <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
+{%endblock%}
+
+{%block header%}
+{{ pagename }}
+{%endblock%}
+
+{%block header_end%}
+
+{% if perms.ticketsapp.can_add_tickets %}
+      <a role="button" class="btn btn-secondary" href="{% url 'ticketsapp:add_ticket' %}"><b>+</b></a>
+{% endif %}
+
+{%endblock%}
+
+{%block body%}
+<div class = "container col-8">
+  <div class="col-12">
+    <table id="example" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th class="text-center">Название</th>
+                    <th class="text-center">Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for holiday in holidayslist %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{{ holiday.pk }}">{{ holiday.title }}</a></td>
+                    <td class="text-center" style="width: 25%">{{ holiday.date |date:"d E"}}</td>
+                  </tr>
+                  {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock body%}
+
+{%block scripts%}
+{%endblock scripts%}
