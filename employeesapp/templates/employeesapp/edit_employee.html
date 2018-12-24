@@ -1,4 +1,5 @@
 {% extends 'base_template.html' %}
+{% load static %}
 {%block navimenu%}
   <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
   <li class="breadcrumb-item"><a href="{% url 'employeesapp:list_employees' %}">Реестр сотрудников</a></li>
@@ -12,7 +13,7 @@
 {%block body%}
   <div class="row justify-content-center">
     <div class="col-md-4">
-      <form id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}" enctype="multipart/form-data">
+      <form method="post" id="editForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <p></p>
@@ -34,13 +35,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Удаление заявки</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Удаление сотрудника</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Вы действительно хотите удалить эту заявку?</p>
+          <p>Вы действительно хотите удалить этого сотрудника из базы?</p>
         </div>
         <div class="modal-footer">
           <form class = "col-md-12" action="{{ employee.id }}/delete" method="post">
@@ -51,4 +52,24 @@
       </div>
     </div>
   </div>
+
+
+  <script src={% static "base_js/jquery-3.3.1.js" %}></script>
+  <script>
+    $("#id_department").change(function () {
+      var url = $("#editForm").attr("data-departments-url");
+      var departmentId = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'department': departmentId
+        },
+        success: function (data) {
+          $("#id_subdevision").html(data);
+        }
+      });
+
+    });
+  </script>
 {%endblock body%}

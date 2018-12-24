@@ -44,10 +44,12 @@ class BirthdaysListView(ContextPageMixin, ListView):
     model = Employee
     context_object_name = 'employeelist'
     pagename = 'Дни рождения сотрудников'
+
     def get_queryset(self):
         object_list = super(BirthdaysListView, self).get_queryset()
         object_list = Employee.objects.annotate(month=Extract('birthdate', 'month'),day=Extract('birthdate', 'day')).order_by('month','day')
         return object_list
+
 
 class BirthdaysEmployee(ContextPageMixin, UpdateView):
     template_name = 'employeesapp/birthdays_employee.html'
@@ -55,6 +57,7 @@ class BirthdaysEmployee(ContextPageMixin, UpdateView):
     form_class = EmployeeDisabledForm
     pagename = 'Карточка сотрудника'
     success_url = reverse_lazy('employeesapp:telephone_book')
+
 
 class PostListView(ContextPageMixin, ListView):
     template_name = 'employeesapp/list_posts.html'

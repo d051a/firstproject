@@ -1,5 +1,7 @@
 from django import forms
 from .models import Employee, Post
+from mainapp.models import SubDevision
+
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -33,7 +35,20 @@ class EmployeeForm(forms.ModelForm):
                 'class': 'form-control form-control', 'type': 'text'}),
             'subdevision': forms.Select(attrs={'class': 'form-control'}),
             'post': forms.Select(attrs={'class': 'form-control'})
-            }
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['subdevision'].queryset = SubDevision.objects.none()
+        if 'subdevision' in self.data:
+            try:
+                department_id = int(self.data.get('department'))
+                self.fields['subdevision'].queryset = SubDevision.objects.filter(department_id=department_id).order_by('department')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['subdevision'].queryset = self.instance.department.subdevision_set.order_by('subdevisionname')
+            print(self.fields['subdevision'].queryset)
 
 
 

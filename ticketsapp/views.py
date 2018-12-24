@@ -2,21 +2,31 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from .forms import TicketForm, EditTicketForm, MainProblemForm, SubProblemForm
+from .forms import TicketForm, EditTicketForm, EditMyTicketForm, MainProblemForm, SubProblemForm
 from .models import Ticket, SubProblem, MainProblem
 from django.urls import reverse_lazy
 from employeesapp.models import Employee
 from ACCOUNTING.generic.mixins import ContextPageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TicketListView(LoginRequiredMixin, ContextPageMixin, ListView):
+class TicketListView(
+        PermissionRequiredMixin,
+        LoginRequiredMixin,
+        ContextPageMixin,
+        ListView):
+    permission_required = 'ticketsapp.can_view_allticketslist'
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
     context_object_name = 'ticketslist'
     pagename = 'Все заявки'
 
 
-class UserPerformerTicketListView(LoginRequiredMixin, ContextPageMixin, ListView):
+class UserPerformerTicketListView(
+        PermissionRequiredMixin,
+        LoginRequiredMixin,
+        ContextPageMixin,
+        ListView):
+    permission_required = 'ticketsapp.can_view_imperformer_ticketslist'
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
     context_object_name = 'ticketslist'
@@ -29,7 +39,12 @@ class UserPerformerTicketListView(LoginRequiredMixin, ContextPageMixin, ListView
         return object_list
 
 
-class UserTicketListView(LoginRequiredMixin, ContextPageMixin, ListView):
+class UserTicketListView(
+        PermissionRequiredMixin,
+        LoginRequiredMixin,
+        ContextPageMixin,
+        ListView):
+    permission_required = 'ticketsapp.can_view_myticketslist'
     template_name = 'ticketsapp/list_tickets.html'
     model = Ticket
     context_object_name = 'ticketslist'
@@ -50,11 +65,19 @@ class TicketEditView(LoginRequiredMixin, ContextPageMixin, UpdateView):
     pagename = 'Изменение заявки'
 
 
+class MyTicketEditView(LoginRequiredMixin, ContextPageMixin, UpdateView):
+    template_name = 'ticketsapp/edit_ticket.html'
+    model = Ticket
+    form_class = EditMyTicketForm
+    success_url = '/tickets'
+    pagename = 'Изменение заявки'
+
+
 class TicketAddView(LoginRequiredMixin, ContextPageMixin, CreateView):
     template_name = 'ticketsapp/add_ticket.html'
     model = Ticket
     form_class = TicketForm
-    success_url = '/tickets'
+    success_url = '/tickets/my/'
     pagename = 'Новая заявка'
 
     def form_valid(self, form):

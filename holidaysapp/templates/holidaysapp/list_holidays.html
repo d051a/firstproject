@@ -37,7 +37,7 @@
                   <tr>
                     <td>{{ forloop.counter }}</td>
                     <td><a href="{{ holiday.pk }}">{{ holiday.title }}</a></td>
-                    <td class="text-center" style="width: 25%">{{ holiday.date |date:"d E"}}</td>
+                    <td class="text-center" style="width: 25%">{{ holiday.date | date:"d.m"}}</td>
                   </tr>
                   {% endfor %}
 

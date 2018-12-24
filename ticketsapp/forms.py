@@ -8,7 +8,6 @@ class TicketForm(ModelForm):
     class Meta():
         model = Ticket
         fields = [
-            'priority',
             'mainproblem',
             'subproblem',
             'description',]
@@ -50,6 +49,17 @@ class EditTicketForm(ModelForm):
             'subproblem': forms.Select(attrs={'class': 'form-control'}),
             'employee_start': forms.TextInput(attrs={'class': 'form-control'}),
             'performer': forms.Select(attrs={'class': 'form-control'})}
+
+
+class EditMyTicketForm(ModelForm):
+    class Meta():
+        model = Ticket
+        fields = [
+            'status',
+            'description']
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'})}
 
 
 class MainProblemForm(forms.ModelForm):

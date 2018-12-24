@@ -57,7 +57,7 @@
                         		</div>
                             </div>
                             <div class="form-bottom">
-                              <form role="form" action="" method="post" class="login-form">
+                              <form role="form" action="" method="post" class="login-form" id="registerForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}">
                                 {% csrf_token %}
                                 <div class="form-group">
                                 <input type="text" name="{{ form.username.html_name }}" placeholder="Логин *U0--" class="form-username form-control" id="{{ form.username.html_name }}">
@@ -100,15 +100,28 @@
         </div>
 
 
-        <!-- Javascript -->
         <script src={% static "authapp/js/jquery-1.11.1.min.js" %}></script>
         <script src={% static "authapp/bootstrap/js/bootstrap.min.js" %}></script>
         <script src={% static "authapp/js/jquery.backstretch.min.js" %}></script>
 
+        <script src={% static "base_js/jquery-3.3.1.js" %}></script>
+        <script>
+          $("#id_department").change(function () {
+            var url = $("#registerForm").attr("data-departments-url");
+            var departmentId = $(this).val();
 
-        <!--[if lt IE 10]>
-            <script src="{% static "authapp/js/placeholder.js"></script>
-        <![endif]-->
+            $.ajax({
+              url: url,
+              data: {
+                'department': departmentId
+              },
+              success: function (data) {
+                $("#id_subdevision").html(data);
+              }
+            });
+
+          });
+        </script>
 
     </body>
 

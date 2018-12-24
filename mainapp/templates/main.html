@@ -30,26 +30,6 @@
            </li>
          </ul>
 
-         {% for new in newslist %}
-         <div class="card">
-           <div class="row no-gutters">
-           <div class="col-auto">
-             <img src="//placehold.it/250x150" class="img-fluid" alt="">
-           </div>
-           <div class="col">
-           <div class="card-block px-2">
-             <h2 class="card-title" style="margin-left: 15px;">{{ new.title }}</h2>
-             <p class="card-text" style="margin-left: 20px;">{{ new.content }}</p>
-           </div>
-           </div>
-           <div class="card-footer w-100 text-muted">
-             Posted on {{new.datetime}} by
-             <a href="#">{{new.type}}</a>
-           </div>
-         </div>
-         </div>
-         {% endfor %}
-
        </div>
 
        <!-- Sidebar Widgets Column -->
