@@ -16,17 +16,6 @@ from ACCOUNTING.generic.mixins import ContextPageMixin
 from employeesapp.models import Employee
 
 
-
-class RegisterFormView(FormView):
-    form_class = UserCreateForm
-    success_url = '/auth/login/'
-    template_name = 'authapp/registration.html'
-
-    def form_valid(self, form):
-        form.save()
-        return super(RegisterFormView, self).form_valid(form)
-
-
 class LoginFormView(FormView):
     form_class = AuthenticationForm
     success_url = '/'
@@ -43,7 +32,7 @@ class LogoutView(View):
         return HttpResponseRedirect('/auth/login/')
 
 
-class TestRegisterFormView(FormView):
+class RegisterFormView(FormView):
     template_name = 'authapp/registration_v2.html'
     def get(self, request, *args, **kwargs):
         user_form = UserCreateForm(request.POST)
@@ -73,7 +62,7 @@ def register_user(request):
     else:
         user_form = UserCreateForm()
         employee_form = EmployeeForm()
-    return render(request, 'authapp/registration_v2.html', {
+    return render(request, 'authapp/registration.html', {
         'form': user_form,
         'employee_form': employee_form
     })

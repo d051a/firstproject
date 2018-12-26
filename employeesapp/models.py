@@ -43,7 +43,8 @@ class Employee(models.Model):
         verbose_name='Должность')
     img = models.ImageField(
         null=True,
-        blank=True)
+        blank=True,
+        verbose_name='Фотография')
 
     class Meta:
         permissions = (

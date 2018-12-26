@@ -43,7 +43,6 @@
         <!-- Top content -->
         <div class="top-content">
 
-            <div class="inner-bg">
                 <div class="container">
 
                     <div class="row">
@@ -58,62 +57,75 @@
                         		</div>
                             </div>
                             <div class="form-bottom">
-                              <form role="form" action="" method="post" class="login-form">
+                              <form role="form" action="" method="post" class="login-form" id="registerForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                <label class="sr-only" for="form-username">{{ form.username.label }}</label>
-                                <input type="text" name="{{ form.username.html_name }}" placeholder="Логин..." class="form-username form-control" id="{{ form.username.html_name }}">
+                                <input type="text" name="{{ form.username.html_name }}" placeholder="Логин *U0--" class="form-username form-control" id="{{ form.username.html_name }}">
                                 <p></p>
                                 {% if form.username.errors %}
                                 <p>{{ form.username.errors }}</p>
                                 {% endif %}
-                                <div class="form-group">
-                                <label class="sr-only" for="form-email">{{ form.email.label }}</label>
+
+                                {% comment %}
                                 <input type="text" name="{{ form.email.html_name }}" placeholder="Email..." class="form-username form-control" id="{{ form.email.html_name }}">
                                 <p></p>
                                 {% if form.email.errors %}
                                 <p>{{ form.email.errors }}</p>
                                 {% endif %}
-                                <label class="sr-only" for="form-password">{{ form.password1.label }}</label>
+                                {% endcomment %}
+
                                 <input type="password" name="{{ form.password1.html_name }}" placeholder="Пароль..." class="form-password form-control" id="{{ form.password1.html_name }}">
                                 <p></p>
                                 {% if form.password1.errors %}
                                 <p>{{ form.password1.errors }}</p>
                                 {% endif %}
-                                <label class="sr-only" for="form-password">{{ form.password2.label }}</label>
                                 <input type="password" name="{{ form.password2.html_name }}" placeholder="Повторите пароль..." class="form-password form-control" id="{{ form.password2.html_name }}">
                                 <p></p>
                                 {% if form.password2.errors %}
                                 <p>{{ form.password2.errors }}</p>
                                 {% endif %}
+                                {% for field in employee_form%}
+                                <p>{{field}}</p>
+                                {% endfor%}
                               <button type="submit" class="btn">Зарегистрироваться</button>
                               </form>
 
-		                    </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-sm-offset-3 social-login">
-                        	<h3>...или <a href="{% url 'authapp:login' %}">Войдите!</a></h3>
+                        	<h3>или <a href="{% url 'authapp:login' %}">Войдите!</a></h3>
 
                         	</div>
                         </div>
                       </div>
                     </div>
-                </div>
             </div>
 
         </div>
 
 
-        <!-- Javascript -->
         <script src={% static "authapp/js/jquery-1.11.1.min.js" %}></script>
         <script src={% static "authapp/bootstrap/js/bootstrap.min.js" %}></script>
         <script src={% static "authapp/js/jquery.backstretch.min.js" %}></script>
 
+        <script src={% static "base_js/jquery-3.3.1.js" %}></script>
+        <script>
+          $("#id_department").change(function () {
+            var url = $("#registerForm").attr("data-departments-url");
+            var departmentId = $(this).val();
 
-        <!--[if lt IE 10]>
-            <script src="{% static "authapp/js/placeholder.js"></script>
-        <![endif]-->
+            $.ajax({
+              url: url,
+              data: {
+                'department': departmentId
+              },
+              success: function (data) {
+                $("#id_subdevision").html(data);
+              }
+            });
+
+          });
+        </script>
 
     </body>
 
