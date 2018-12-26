@@ -69,7 +69,7 @@ class MyTicketEditView(LoginRequiredMixin, ContextPageMixin, UpdateView):
     template_name = 'ticketsapp/edit_ticket.html'
     model = Ticket
     form_class = EditMyTicketForm
-    success_url = '/tickets'
+    success_url = '/tickets/my/'
     pagename = 'Изменение заявки'
 
 

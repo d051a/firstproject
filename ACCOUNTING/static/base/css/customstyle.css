@@ -1,9 +1,17 @@
+a {
+    color: DarkGreen;
+}
+
 .pagination>li.active>a {
   background-color: gray !important;
   border-color: gray !important;
 }
 
 .pagination>li>a {
+  color: DarkGreen;
+}
+
+.text_anounce_colore{
   color: DarkGreen;
 }
 

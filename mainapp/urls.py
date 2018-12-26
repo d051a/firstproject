@@ -8,7 +8,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', views.NewsList.as_view(), name='main'),
-    url(r'^$', views.main, name='main'),
     url(r'^ajax/load-subproblems/$', views.load_subproblems, name='ajax_load_subproblems'),
     url(r'^ajax/load-subdevisions/$', views.load_subdevisions, name='ajax_load_subdevisions'),
 
