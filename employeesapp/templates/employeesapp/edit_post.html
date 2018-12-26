@@ -36,6 +36,7 @@
       </div>
       <div class="modal-footer">
         <form class = "col-md-12" action="{{ ticket.id }}/delete" method="post">
+          {% csrf_token %}
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
           <button type="submit" class="btn btn-danger">Да</button>
         </form>
