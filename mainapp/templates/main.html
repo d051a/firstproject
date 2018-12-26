@@ -13,7 +13,7 @@
          <div class="card mb-4">
            <div class="card-body">
              <a href="#"><h2 class="text_anounce_colore">{{ new.title }}</h2></a>
-             <p class="card-text">{{ new.content }}</p>
+             <p class="card-text">{{ new.content | truncatewords:55 }}</p>
            </div>
            <div class="card-footer text-muted">
              Опубликовано: {{new.datetime}} <a href="#">{{new.type}}</a>
