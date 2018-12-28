@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from ticketsapp.models import SubProblem
 from mainapp.models import SubDevision
-from django.views.generic import ListView
-from .models import News
+from django.views.generic import ListView, CreateView
 from holidaysapp.models import Holiday
 from employeesapp.models import Employee
 from ACCOUNTING.generic.mixins import ContextPageMixin
@@ -22,21 +21,3 @@ def load_subdevisions(request):
         department=department_id).order_by('subdevisionname')
     return render(request, 'subdevisions_dropdown_list_options.html',
         {'subdevisions': subdevision})
-
-class NewsList(ContextPageMixin, ListView):
-    template_name = 'main.html'
-    model = News
-    context_object_name = 'newslist'
-    pagename = 'Новости Департамента'
-    paginate_by = 3
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        today = datetime.now().date()
-        holiday_list_gte = Holiday.objects.filter(date__day__gte=today.day,
-            date__month__gte=today.month)
-        birthdays_list_gte = Employee.objects.filter(birthdate__day__gte=today.day,
-            birthdate__month__gte=today.month)
-        context['holidays_list'] = holiday_list_gte[:5]
-        context['birthdays_list'] = birthdays_list_gte[:5]
-        return context

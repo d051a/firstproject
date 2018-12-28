@@ -7,7 +7,6 @@ from django.conf.urls.static import static
 #app_name = 'mainapp'
 
 urlpatterns = [
-    url(r'^ajax/load-subproblems/$', views.load_subproblems, name='ajax_load_subproblems'),
-    url(r'^ajax/load-subdevisions/$', views.load_subdevisions, name='ajax_load_subdevisions'),
+    url(r'^$', views.NewsList.as_view(), name='main'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

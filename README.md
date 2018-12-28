@@ -14,10 +14,15 @@ Django==1.11
 - move to cloned repository folder
 - python manage.py makemigrations
 - python manage.py migrate
-- django-admin createsuperuser *username*
+- python manage.py createsuperuser
 - python manage.py runserver
+# load Dump-data / Установка
+- python manage.py loaddata dump_groups.json
+- python manage.py loaddata dump_groups_perms.json
+- python manage.py loaddata dump_holidays.json
+- python manage.py loaddata dump_maindata.json
+# runserver / запуск серевера
 - Open http://127.0.0.1:8000/ in web browser.
-
 
 # Основные подсистемы и фичи:
 ## Система заявок(ticketsapp)

@@ -72,20 +72,3 @@ class SubDevision(models.Model):
 
     def __str__(self):
         return self.subdevisionname
-
-
-class News (models.Model):
-    NEWSTYPE = (('Главные', 'MAIN'),
-                ('Побочные', 'SECOND'))
-    title = models.CharField('Заголовок', max_length=50, null=False)
-    content = models.CharField('Контент', max_length=1000, null=False)
-    type = models.CharField('Тип новости', max_length=50, null=False, choices=NEWSTYPE)
-    datetime = models.DateTimeField('Дата и время создания', auto_now_add=True)
-
-    class Meta:
-        ordering = ['title']
-        verbose_name = 'Новость'
-        verbose_name_plural = 'Новости'
-
-    def __str__(self):
-        return self.title

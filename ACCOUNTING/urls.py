@@ -19,6 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('authapp.urls', namespace='authapp')),
+    url(r'^', include('newsapp.urls', namespace='newsapp')),
     url(r'^', include('mainapp.urls', namespace='mainapp')),
     url(r'^administration/', include('adminapp.urls', namespace='adminapp')),
     url(r'^cmt/', include('cmtapp.urls', namespace='cmtapp')),
@@ -27,5 +28,6 @@ urlpatterns = [
     url(r'^tickets/', include('ticketsapp.urls', namespace='ticketsapp')),
     url(r'^workstations/', include('workstationsapp.urls', namespace='workstationsapp')),
     url(r'^holidays/', include('holidaysapp.urls', namespace='holidaysapp')),
+    url(r'^summernote/', include('django_summernote.urls')),
 
 ]

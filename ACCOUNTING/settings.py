@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'adminapp',
     'authapp',
     'holidaysapp',
+    'newsapp',
+    'django_summernote'
 
 ]
 
@@ -144,3 +146,8 @@ STATICFILES_DIRS = (
 LOGIN_URL = "authapp:login"  #ссылка на страницу входа через имя указанное в привязке url
 LOGOUT_URL = "authapp:logout"  #ссылка на страницу выхода через имя указанное в привязке url
 LOGIN_REDIRECT_URL = "/certificates/" #прямая ссылка на страницу перенаправления после успешного входа
+
+SUMMERNOTE_THEME = 'bs4'
+SUMMERNOTE_CONFIG = {
+    'lang': None,
+}

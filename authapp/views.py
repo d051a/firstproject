@@ -29,7 +29,7 @@ class LoginFormView(FormView):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect('/auth/login/')
+        return HttpResponseRedirect('/')
 
 
 class RegisterFormView(FormView):
@@ -56,7 +56,7 @@ def register_user(request):
             group = Group.objects.get(name='tickets_users')
             user.groups.add(group)
             messages.success(request, 'Ваш профиль был успешно обновлен!')
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/auth/login/')
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки.')
     else:
