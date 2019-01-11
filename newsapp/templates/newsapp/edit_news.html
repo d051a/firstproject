@@ -1,4 +1,7 @@
 {% extends 'base_template.html' %}
+{% load static %}
+{%block navimenu%}
+{%endblock%}
 
 {%block header%}
 {{ pagename }}
@@ -9,17 +12,12 @@
    <div class="container">
      <div class="row">
        <div class="col-md-8">
-         {% for new in newslist %}
          <div class="card mb-4">
            <div class="card-body">
-             <a href="/news/{{ new.pk }}"><h2 class="text_anounce_colore">{{ new.title }}</h2></a>
-             <p class="card-text">{{ new.content | truncatewords:55 | safe }}</p>
-           </div>
-           <div class="card-footer text-muted">
-             Опубликовано: {{new.datetime}} <a href="#">{{new.type}}</a>
+             <h2>{{ news.title }}</h2>
+             <p class="card-text">{{ news.content | safe }}</p>
            </div>
          </div>
-         {% endfor %}
 
 
 <nav aria-label="Page navigation">
