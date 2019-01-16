@@ -13,7 +13,7 @@
          <div class="card mb-4">
            <div class="card-body">
              <a href="/news/{{ new.pk }}"><h2 class="text_anounce_colore">{{ new.title }}</h2></a>
-             <p class="card-text">{{ new.content | truncatewords:55 | safe }}</p>
+             <p class="card-text">{{ new.description | safe }}</p>
            </div>
            <div class="card-footer text-muted">
              Опубликовано: {{new.datetime}} <a href="#">{{new.type}}</a>

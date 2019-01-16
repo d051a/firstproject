@@ -150,4 +150,5 @@ LOGIN_REDIRECT_URL = "/certificates/" #прямая ссылка на стран
 SUMMERNOTE_THEME = 'bs4'
 SUMMERNOTE_CONFIG = {
     'lang': None,
+    'attachment_filesize_limit': 999999999999,
 }
