@@ -8,6 +8,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', views.NewsList.as_view(), name='main'),
-    url(r'^news/(?P<pk>\d+)$', views.NewsPageView.as_view(), name='newspage')
+    url(r'^(?P<pk>\d+)$', views.NewsPageView.as_view(), name='newspage')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

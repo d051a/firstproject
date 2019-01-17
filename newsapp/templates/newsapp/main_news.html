@@ -12,7 +12,7 @@
          {% for new in newslist %}
          <div class="card mb-4">
            <div class="card-body">
-             <a href="/news/{{ new.pk }}"><h2 class="text_anounce_colore">{{ new.title }}</h2></a>
+             <a href="/{{ new.pk }}"><h4 class="text_anounce_colore">{{ new.title }}</h4></a>
              <p class="card-text">{{ new.description | safe }}</p>
            </div>
            <div class="card-footer text-muted">
@@ -55,12 +55,14 @@
          <div class="card my-4">
            <h5 class="card-header">Поиск новостей</h5>
            <div class="card-body">
-             <div class="input-group">
-               <input type="text" class="form-control" placeholder="Search for...">
-               <span class="input-group-btn">
-                 <button class="btn btn-secondary" type="button">Искать!</button>
-               </span>
-             </div>
+               <form class="" action="\ee" method="get">
+                <div class="input-group">
+                 <input type="text" class="form-control" placeholder="Search for...">
+                 <span class="input-group-btn">
+                   <button class="btn btn-secondary" type="submit">Искать!</button>
+                 </span>
+              </div>
+               </form>
            </div>
          </div>
 
