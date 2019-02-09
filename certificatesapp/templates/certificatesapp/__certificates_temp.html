@@ -1,0 +1,90 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{%block navibar%}
+<ul class="nav navbar-nav navbar-right">
+  {% if user.is_authenticated %}
+  <a <button href="{% url 'authapp:logout' %}" type="button" class="btn btn-default navbar-btn">Выйти {{ user.username }}</a>
+  {% else %}
+  <a <button href="{% url 'authapp:login' %}" type="button" class="btn btn-default navbar-btn">LogIn</a>
+  <a href="{% url 'authapp:registration' %}" type="button" class="btn btn-default navbar-btn">Registration</a>
+  {% endif %}
+</ul>
+{%endblock navibar%}
+
+{%block menu_recepient_active%}class="active"{%endblock%}
+
+{%block navimenu%}
+<li><a href="">Сертификаты</a></li>
+<li class="active">Все сертификаты</li>
+{{user.get_short_name}}
+{%endblock%}
+
+{%block header%}
+<h2 style="margin-left: 20px;">Сертификаты</h2>
+{%endblock%}
+
+{%block body%}
+<div class = "col-md-12">
+    <table id="example" class="display" style="width:100;">
+
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Дата окончани действия</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for certificate in certs_list %}
+                  {% if user.is_authenticated %}
+                  <tr>
+                    <td>{{ certificate.pk }}</td>
+                    <td><a href="certificate/{{ certificate.pk }}/">{{ certificate.surname }} </a></td>
+                    <td>{{ certificate.name }}</td>
+                    <td>{{ rcertificate.patronymic }}</td>
+                    <td>{{ certificate.validate_end_date }}</td>
+                    <td>
+                  </tr>
+
+                  {% endif %}
+                  {% endfor %}
+
+            </tbody>
+        </table>
+</div>
+
+
+{%endblock%}
+
+{%block scripts%}
+<script src={% static "mainapp/jquery-3.2.1.min.js" %}></script>
+<script type="text/javascript" language="javascript" src={% static "mainapp/js/jquery.dataTables.min.js"%} ></script>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable({
+    language: {
+      processing:     "Traitement en cours...",
+      search:         "Фильтр",
+      lengthMenu:    "Показать _MENU_ элементов",
+      info:           "Показано _START_ из _END_ из _TOTAL_ элементов",
+      infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+      infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+      infoPostFix:    "",
+      loadingRecords: "Chargement en cours...",
+      zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+      emptyTable:     "Aucune donnée disponible dans le tableau",
+      paginate: {
+            first:      "Первый",
+            previous:   "Предыдущий",
+            next:       "Следующий",
+            last:       "Последний"
+        },
+    }
+});
+} );
+</script>
+{%endblock%}

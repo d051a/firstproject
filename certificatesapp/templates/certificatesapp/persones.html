@@ -1,0 +1,48 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+
+{%block head%}
+<link rel="stylesheet" type="text/css" href={% static "mainapp/css/jquery.dataTables.min.css"%}>
+{%endblock%}
+
+{%block menu_recepient_active%}class="active"{%endblock%}
+
+{%block header%}
+Владельцы
+{%endblock%}
+
+{%block body%}
+<div class = "container col-8">
+<div class = "col-md-12">
+    <table id="example" class="table table-hover" style="width:100;">
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th >ФИО</th>
+                    <th class="text-center">СНИЛС</th>
+                    <th class="text-center">ИНН</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for persone in persones_list %}
+
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{{ persone.pk }}">{{ persone.fullname }} </a></td>
+                    <td class="text-center">{{ persone.snils }}</td>
+                    <td class="text-center">{{ persone.inn }} </td>
+                  </tr>
+
+
+                  {% endfor %}
+
+            </tbody>
+        </table>
+      </div>
+</div>
+
+{%endblock%}
+
+{%block scripts%}
+{%endblock%}

@@ -1,0 +1,80 @@
+{% extends 'base_template.html' %}
+{% load mainapp_tags %}
+
+{%block header%}
+{{ fullname }}
+{%endblock%}
+
+{%block body%}
+<div class="">
+  <form class = "col-md-6" method="post" enctype="multipart/form-data">
+    <fieldset disabled>
+    {% csrf_token %}
+    {% for field in form%}
+    <label for="label">{{ field.label }}</label>
+    {{ field }}
+    {% endfor %}
+    <p></p>
+  </fieldset>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Удалить владельца</button>
+  </form>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Удаление владельца сертификата</h4>
+        </div>
+        <div class="modal-body">
+          <p>Вы действительно хотите удалить владельца сертификата(-ов)?</p>
+          <div class="alert alert-danger" role="alert">Все связанные с владельцем сертификаты будут удалены!</div>
+        </div>
+        <div class="modal-footer">
+          <form class = "col-md-12" method="get">
+            <input type="hidden" class="form-control" id=""  maxlength="100" name="del" value="true">
+            <button type="submit" class="btn btn-default" >УДАЛИТЬ</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="">
+
+</div>
+<div class = "col-md-12">
+  <h3 style="margin-center: 20px;">Сертификаты:</h3>
+    <table id="example" class="table table-hover" style="width:100;">
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th class="text-center">Начало срока действия</th>
+                    <th class="text-center">Окончание срока действия</th>
+                    <th class="text-center">Добавлен</th>
+                    <th class="text-center">Сертификат</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for certificate in certificate_list %}
+
+                  <tr {{ certificate.validate_end_date|notoverdue_add_td_tag }}>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="text-center">{{ certificate.validate_start_date |date:"Y-m-d" }}</td>
+                    <td class="text-center">{{ certificate.validate_end_date |date:"Y-m-d" }} </td>
+                    <td class="text-center">{{ certificate.adddate |date:"Y-m-d" }}</td>
+                    <td class="text-center"><a href="/media/{{ certificate.cert_file }}">Скачать</td>
+                  </tr>
+
+                  {% endfor %}
+
+            </tbody>
+        </table>
+</div>
+
+
+{%endblock body%}

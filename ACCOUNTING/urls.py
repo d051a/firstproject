@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^tickets/', include('ticketsapp.urls', namespace='ticketsapp')),
     url(r'^workstations/', include('workstationsapp.urls', namespace='workstationsapp')),
     url(r'^holidays/', include('holidaysapp.urls', namespace='holidaysapp')),
+    url(r'^certificates/', include('certificatesapp.urls', namespace='certificatesapp')),
     url(r'^summernote/', include('django_summernote.urls')),
 
 ]

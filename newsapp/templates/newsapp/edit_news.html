@@ -20,29 +20,33 @@
          </div>
 
 
-<nav aria-label="Page navigation">
-           {% if is_paginated %}
-  <ul class="pagination justify-content-center">
-    {% if page_obj.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a></li>
-    {% else %}
-    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Назад</a></li>
-  {% endif %}
-  {% for i in paginator.page_range %}
-    {% if page_obj.number == i %}
-      <li class="page-item disabled"><a class="page-link" href="#">{{ i }}</a></li>
-    {% else %}
-      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-    {% endif %}
-  {% endfor %}
-    {% if page_obj.has_next %}
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a></li>
-    {% else %}
-    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Вперед</a></li>
-    {% endif %}
-  </ul>
-{% endif %}
-</nav>
+         <!-- Blog Post -->
+
+
+         <!-- Pagination -->
+         <nav aria-label="Page navigation">
+                    {% if is_paginated %}
+           <ul class="pagination justify-content-center">
+             {% if page_obj.has_previous %}
+               <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a></li>
+             {% else %}
+             <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Назад</a></li>
+           {% endif %}
+           {% for i in paginator.page_range %}
+             {% if page_obj.number == i %}
+               <li class="page-item disabled"><a class="page-link" href="#">{{ i }}</a></li>
+             {% else %}
+               <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+             {% endif %}
+           {% endfor %}
+             {% if page_obj.has_next %}
+               <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a></li>
+             {% else %}
+             <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Вперед</a></li>
+             {% endif %}
+           </ul>
+         {% endif %}
+         </nav>
 
        </div>
 
@@ -53,37 +57,39 @@
          <div class="card my-4">
            <h5 class="card-header">Поиск новостей</h5>
            <div class="card-body">
-             <div class="input-group">
-               <input type="text" class="form-control" placeholder="Search for...">
-               <span class="input-group-btn">
-                 <button class="btn btn-secondary" type="button">Искать!</button>
-               </span>
-             </div>
+               <form class="" action="/search" method="GET">
+                <div class="input-group">
+                 <input type="text" class="form-control" placeholder="Введите запрос..." name="search">
+                 <span class="input-group-btn">
+                   <button class="btn btn-secondary" type="submit">Искать!</button>
+                 </span>
+              </div>
+               </form>
            </div>
          </div>
 
 
-         <!-- Side Widget -->
          <div class="card my-4">
            <h5 class="card-header">Дни рождения</h5>
            <div class="card-body">
              <ul class="list-unstyled">
                {% for employee in birthdays_list%}
-
-     <li class="media">
-       {% if employee.img %}
-        <img class="mr-3 rounded-circle" src="{{ employee.img.url }}" width="30" height="30">
-        {%else%}
-        <img class="mr-3 rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="30" height="30">
-        {% endif %}
-            <div class="media-body">
-                <a href="employees/birthdays/{{ employee.pk }}"><h5 class="mt-0 mb-1">{{employee}}</h5></a>
-                  {{employee.birthdate | date:"d E"}}
-            </div>
-       {%endfor%}
-       </li>
+             <li class="media">
+               {% if employee.img %}
+                <img class="mr-3 rounded-circle" src="{{ employee.img.url }}" width="30" height="30">
+                {%else%}
+                <img class="mr-3 rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="30" height="30">
+                {% endif %}
+                    <div class="media-body">
+                        <a href="employees/birthdays/{{ employee.pk }}"><h5 class="mt-0 mb-1">{{employee}}</h5></a>
+                          {{employee.birthdate | date:"d E"}}
+                    </div>
+               {%endfor%}
+               </li>
+               </ul>
            </div>
          </div>
+
 
          <!-- Side Widget -->
          <div class="card my-4">
@@ -99,15 +105,35 @@
                </div>
                {%endfor%}
              </li>
+            </ul>
            </div>
          </div>
 
+         <!-- Categories Widget -->
+         <div class="card my-4">
+           <h5 class="card-header">Категории</h5>
+           <div class="card-body">
+             <div class="row">
+               <div class="col-lg-6">
+                 <ul class="list-unstyled mb-0">
+                   <li>
+                     <a href="#">Web Design</a>
+                   </li>
+                   <li>
+                     <a href="#">HTML</a>
+                   </li>
+                   <li>
+                     <a href="#">Freebies</a>
+                   </li>
+                 </ul>
+               </div>
+
+             </div>
+           </div>
+         </div>
 
        </div>
 
      </div>
-     <!-- /.row -->
-
-   </div>
-   <!-- /.container -->
+  <!-- /.container -->
 {%endblock body%}

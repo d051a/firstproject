@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'authapp',
     'holidaysapp',
     'newsapp',
-    'django_summernote'
+    'django_summernote',
+    'certificatesapp'
 
 ]
 

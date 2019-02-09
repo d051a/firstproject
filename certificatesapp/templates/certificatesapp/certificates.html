@@ -1,0 +1,64 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% load certificates_tags %}
+
+
+{%block head%}
+{%endblock%}
+
+{%block menu_recepient_active%}class="active"{%endblock%}
+
+{%block navimenu%}
+<li><a href="">Сертификаты</a></li>
+<li class="active">Все сертификаты</li>
+{{user.get_short_name}}
+{%endblock%}
+
+{%block header%}
+Сертификаты
+{%endblock%}
+
+{%block header_end%}
+<a style="margin-right: 20px;" role="button" class="btn btn-secondary" href="{% url 'certificatesapp:certificate_add' %}"><b>+</b></a>
+{%endblock%}
+
+{%block body%}
+<div class = "container col-8">
+<div class = "col-md-12">
+    <table id="example" class="table table-hover" style="width:100;">
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th class="text-center">ФИО</th>
+                    <th class="text-center">Начало срока действия</th>
+                    <th class="text-center">Окончание срока действия</th>
+                    <th class="text-center">Добавлен</th>
+                    <th class="text-center">Сертификат</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for certificate in certs_list %}
+
+                  <tr {{ certificate.validate_end_date|notoverdue_add_td_tag }}>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{{ certificate.pk }}">{{ certificate.fullname }} </a></td>
+                    <td class="text-center">{{ certificate.validate_start_date |date:"Y-m-d" }}</td>
+                    <td class="text-center">{{ certificate.validate_end_date |date:"Y-m-d" }} </td>
+                    <td class="text-center">{{ certificate.adddate |date:"Y-m-d" }}</td>
+                    <td class="text-center"><a href="/media/{{ certificate.cert_file }}">Скачать</td>
+                  </tr>
+
+                  {% endfor %}
+
+            </tbody>
+        </table>
+      </div>
+</div>
+
+{%endblock%}
+
+{%block scripts%}
+
+
+
+{%endblock%}
