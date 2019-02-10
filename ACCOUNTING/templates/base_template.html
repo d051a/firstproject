@@ -40,7 +40,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             {% if perms.serversapp.can_view_serverslist %}<a class="dropdown-item" href="{% url 'serversapp:list_servers' %}">Серверы</a>{% endif %}
             <a class="dropdown-item" href="{% url 'certificatesapp:certificates' %}">Сертификаты</a>
-            {#{% if perms.workstationsapp.can_view_workstationslist %}<a class="dropdown-item" href="{% url 'workstationsapp:list_workstations' %}">Компьютеры</a>{% endif %}#}
+            {% if perms.workstationsapp.can_view_workstationslist %}<a class="dropdown-item" href="{% url 'workstationsapp:list_workstations' %}">Компьютеры</a>{% endif %}
             {% if perms.employeesapp.can_view_employeeslist %}<a class="dropdown-item" href="{% url 'employeesapp:list_employees' %}">Сотрудники</a>{% endif %}
             {#{% if perms.cmtapp.can_view_cmtlist %}<a class="dropdown-item" href="{% url 'cmtapp:list_cmts' %}">КМТ</a>{% endif %}#}
           </div>

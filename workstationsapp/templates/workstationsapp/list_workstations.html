@@ -7,35 +7,45 @@
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{{ pagename }}
+{%endblock%}
+
+{%block header_end%}
+
+{% if perms.ticketsapp.can_add_tickets %}
+      <a style="margin-right: 20px;" role="button" class="btn btn-secondary" href="{% url 'workstationsapp:add_workstation' %}"><b>+</b></a>
+{% endif %}
+
 {%endblock%}
 
 {% block body %}
-  <table id="table_id" class="display">
+<div class="container">
+  <div class = "col-md-12">
+      <table id="example" class="table table-hover" style="width:100;">
     <thead>
         <tr>
             <th>Наименование</th>
             <th>Модель</th>
-            <th>Редактировать</th>
-            <th>Удалить</th>
+            <th>ip-адрес</th>
+            <th>серийный</th>
+            <th>инвентарный</th>
         </tr>
     </thead>
     <tbody>
     {% for item in object_list %}
         <tr>
-            <td>{{ item.title }}</td>
-            <td>{{ item.model }}</td>
-            <td><a href="{% url 'workstationsapp:edit_workstation' pk=item.pk %}">Редактировать</a></td>
-            <td><a href="{% url 'workstationsapp:delete_workstation' pk=item.pk %}">Удалить</a></td>
+            <td><a href="{% url 'workstationsapp:edit_workstation' pk=item.pk %}">{{ item.name }}</a></td>
+            <td>{{ item.computermodelname }}</td>
+            <td>{{ item.ip }}</td>
+            <td>{{ item.serialnum }}</td>
+            <td>{{ item.inventorynum }}</td>
         </tr>
     {% endfor %}
-    </tbody>
-</table>
+     </tbody>
+    </table>
+  </div>
+</div>
 {% endblock body %}
 
 {%block scripts%}
-<script type="text/javascript" language="javascript" src={% static "base_js/jquery-3.2.1.min.js" %}></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/jquery.dataTables.min.js"%} ></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.bootstrap4.min.js"%} ></script>
-<script type="text/javascript" language="javascript" src={% static "base_js/dataTables.settings.js"%} ></script>
 {%endblock scripts%}

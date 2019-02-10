@@ -1,10 +1,10 @@
 from django import forms
-from .models import Computer
+from .models import Workstation
 
 
-class ComputerForm(forms.ModelForm):
+class WorkstationForm(forms.ModelForm):
     class Meta:
-        model = Computer
+        model = Workstation
         fields = (
             'inventorynum',
             'serialnum',
@@ -16,17 +16,17 @@ class ComputerForm(forms.ModelForm):
         )
         widgets = {
             'inventorynum': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'Инвентарный номер'}),
+                'class': 'form-control'}),
             'serialnum': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'Серийный номер'}),
+                'class': 'form-control'}),
             'name': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'Имя компьютера'}),
+                'class': 'form-control'}),
             'netbiosname': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'NETBIOS-имя'}),
+                'class': 'form-control'}),
             'ip': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'IP-адрес'}),
+                'class': 'form-control'}),
             'macaddress': forms.TextInput(attrs={
-                'class': 'form-control', 'placeholder': 'MAC-адрес'}),
+                'class': 'form-control'}),
             'computermodelname': forms.Select(attrs={
                 'class': 'form-control form-control', 'type': 'text'}),
         }

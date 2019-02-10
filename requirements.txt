@@ -3,3 +3,5 @@ pytz==2018.7
 xlrd==1.1.0
 Pillow==5.3.0
 django-summernote==0.8.11.1
+pyopenssl
+

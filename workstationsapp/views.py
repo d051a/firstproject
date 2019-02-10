@@ -5,10 +5,11 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
-from .models import Computer, ComputerModel
+from .models import Workstation, WorkstationModel
 from django.urls import reverse_lazy
-from .forms import ExcelForm, ComputerForm
+from .forms import ExcelForm, WorkstationForm
 from .excelparser import ExcelParser
+from ACCOUNTING.generic.mixins import ContextPageMixin
 
 
 class AddFromExcel(LoginRequiredMixin, View):
@@ -42,26 +43,28 @@ class AddFromExcel(LoginRequiredMixin, View):
         return render(request, 'workstationsapp/excel_parser.html')
 
 
-class ListWorkstations(LoginRequiredMixin, ListView):
-
-    model = Computer
+class ListWorkstations(ContextPageMixin, LoginRequiredMixin, ListView):
+    pagename = 'Рабочие станции'
+    model = Workstation
     template_name = 'workstationsapp/list_workstations.html'
 
 
-class AddWorkstation(LoginRequiredMixin, CreateView):
-    model = Computer
-    form_class = ComputerForm
+class AddWorkstation(ContextPageMixin, LoginRequiredMixin, CreateView):
+    pagename = 'Новая рабочая станция'
+    model = Workstation
+    form_class = WorkstationForm
     template_name = 'workstationsapp/add_workstation.html'
     success_url = reverse_lazy('workstationsapp:list_workstations')
 
 
-class EditWorkstation(LoginRequiredMixin, UpdateView):
-    model = Computer
-    form_class = ComputerForm
+class EditWorkstation(ContextPageMixin, LoginRequiredMixin, UpdateView):
+    pagename = 'Новая рабочая станция'
+    model = Workstation
+    form_class = WorkstationForm
     template_name = 'workstationsapp/edit_workstation.html'
     success_url = reverse_lazy('workstationsapp:list_workstations')
 
 
 class DeleteWorkstation(LoginRequiredMixin, DeleteView):
-    model = Computer
+    model = Workstation
     success_url = reverse_lazy('workstationsapp:list_workstations')
