@@ -1,4 +1,5 @@
 from django.db import models
+from employeesapp.models import Employee
 
 
 class Technic (models.Model):
@@ -29,6 +30,12 @@ class Technic (models.Model):
         max_length=50,
         blank=False,
         choices=TECHNICTYPES,)
+    employee = models.ForeignKey(
+        'employeesapp.Employee',
+        null=True,
+        blank=True,
+        verbose_name='Ответственный сотрудник'
+    )
 
     class Meta:
         ordering = ['technic_id']

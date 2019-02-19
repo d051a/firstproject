@@ -33,7 +33,7 @@
 
                     <tr>
                       <td>{{ forloop.counter }}</td>
-                      <td><a href="{{ certificate.pk }}">{{ server.name }} </a></td>
+                      <td><a href="edit/{{ server.pk }}">{{ server.name }} </a></td>
                       <td class="text-center">{{ server.ip }}</td>
                       <td class="text-center">{{ server.technic_id.serialnum }}</td>
                       <td class="text-center">{{ server.technic_id.inventorynum1 }}</td>

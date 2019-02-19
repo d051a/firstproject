@@ -7,8 +7,9 @@ from mainapp.forms import TechnicModelForm
 class ServerModelForm(ModelForm):
     class Meta:
         model = Server
-        fields = ['ip', 'name',]
+        fields = ['ip', 'name']
         widgets = {
         'ip': forms.TextInput(attrs={'class': 'form-control'}),
         'name': forms.TextInput(attrs={'class': 'form-control'}),
+        'employee': forms.Select(attrs={'class': 'form-control'}),
         }
