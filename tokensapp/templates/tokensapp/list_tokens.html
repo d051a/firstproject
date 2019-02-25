@@ -9,7 +9,7 @@
 {%endblock%}
 
 {%block header_end%}
-      <a role="button" class="btn btn-secondary" href="{% url 'serversapp:add_server' %}"><b>+</b></a>
+      <a role="button" class="btn btn-secondary" href="{% url 'tokensapp:add_token' %}"><b>+</b></a>
 {%endblock%}
 
 {%block body%}
@@ -20,22 +20,20 @@
                   <tr>
                       <th>-</th>
                       <th class="text-center">Имя</th>
-                      <th class="text-center">IP-адрес</th>
                       <th class="text-center">Серийный</th>
                       <th class="text-center">Инвентарный#1</th>
                       <th class="text-center">Инвентарный#2</th>
                   </tr>
               </thead>
               <tbody>
-                    {% for server in serverslist %}
+                    {% for technic in tokenslist %}
 
                     <tr>
                       <td>{{ forloop.counter }}</td>
-                      <td><a href="edit/{{ server.pk }}">{{ server.name }} </a></td>
-                      <td class="text-center">{{ server.ip }}</td>
-                      <td class="text-center">{{ server.technic_id.serialnum }}</td>
-                      <td class="text-center">{{ server.technic_id.inventorynum1 }}</td>
-                      <td class="text-center">{{ server.technic_id.inventorynum2 }}</td>
+                      <td><a href="edit/{{ technic.pk }}">{{ technic.name }} </a></td>
+                      <td class="text-center">{{ technic.serialnum }}</td>
+                      <td class="text-center">{{ technic.inventorynum1 }}</td>
+                      <td class="text-center">{{ technic.inventorynum2 }}</td>
                     </tr>
 
                     {% endfor %}

@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'holidaysapp',
     'newsapp',
     'django_summernote',
-    'certificatesapp'
-
+    'certificatesapp',
+    'tokensapp'
 ]
 
 MIDDLEWARE = [

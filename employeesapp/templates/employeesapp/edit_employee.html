@@ -12,6 +12,8 @@
 
 {%block body%}
   <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="row justify-content-center">
     <div class="col-md-4">
       <form method="post" id="editForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}" enctype="multipart/form-data">
         {% csrf_token %}
@@ -50,6 +52,48 @@
           </form>
         </div>
       </div>
+    </div>
+  </div>
+        <br>
+<center><h3>Техника закрепленная за сотрудником</h3></center>
+<table id="example" class="table table-hover" style="width:100;">
+                    <thead>
+                        <tr>
+                            <th>-</th>
+                            <th class="text-center">Имя</th>
+                            <th class="text-center">Тип</th>
+                            <th class="text-center">Инвентарный</th>
+                            <th class="text-center">Инвентарный2</th>
+                            <th class="text-center">Серийный</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                          {% for usertechnic in usertechniclist %}
+
+                          <tr>
+                            <td>{{ forloop.counter }}</td>
+                              {% if usertechnic.technictype == 'SERVER'%}
+                           <td class="text-center">{{ usertechnic.server.name }}</td>
+                               {% elif usertechnic.technictype == 'TOKEN'%}
+                           <td class="text-center">{{ usertechnic.token.name }}</td>
+                              {% elif usertechnic.technictype == '-'%}
+                           <td class="text-center">{{ usertechnic.token.name }}</td>
+                              {% endif%}
+                            <td><a href="
+                            {% if usertechnic.technictype == 'SERVER'%}
+                            {% url 'serversapp:edit_server' usertechnic.pk %}
+                            {% endif%}
+                            ">{{ usertechnic.technictype  }}</a></td>
+                            <td class="text-center">{{ usertechnic.inventorynum1 }}</td>
+                            <td class="text-center">{{ usertechnic.inventorynum2 }}</td>
+                            <td class="text-center">{{ usertechnic.serialnum }}</td>
+                          </tr>
+
+                          {% endfor %}
+
+                    </tbody>
+                </table>
+
     </div>
   </div>
 

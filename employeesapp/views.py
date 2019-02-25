@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView
 from .forms import EmployeeForm, PostForm, EmployeeDisabledForm
 from .models import Employee, Post
+from mainapp.models import Technic
 from authapp.forms import UserCreateForm
 from ACCOUNTING.generic.mixins import ContextPageMixin
 from django.db.models.functions import Extract
@@ -21,7 +22,14 @@ class EmployeeEditView(ContextPageMixin, UpdateView):
     model = Employee
     form_class = EmployeeForm
     success_url = reverse_lazy('employeesapp:list_employees')
-    pagename = 'Изменить данные сотрудника'
+    pagename = 'Карточка сотрудника'
+
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeEditView, self).get_context_data(**kwargs)
+        usertechniclist = Technic.objects.filter(employee=self.kwargs['pk'])
+        print(usertechniclist)
+        context['usertechniclist'] = usertechniclist
+        return context
 
 
 class TelephoneBookView(ContextPageMixin, ListView):

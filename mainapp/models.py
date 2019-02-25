@@ -7,7 +7,7 @@ class Technic (models.Model):
         ('CMT', 'КМТ'),
         ('SERVER', 'Сервер'),
         ('WORKSTATION', 'Компьютер'),
-        ('CERT', 'Сертификат'),
+        ('CERTIFICATEß', 'Сертификат'),
         ('FLASH', 'Флеш-накопитель'),
         ('TOKEN', 'Токен'),
     )

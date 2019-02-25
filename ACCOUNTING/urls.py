@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^workstations/', include('workstationsapp.urls', namespace='workstationsapp')),
     url(r'^holidays/', include('holidaysapp.urls', namespace='holidaysapp')),
     url(r'^certificates/', include('certificatesapp.urls', namespace='certificatesapp')),
+    url(r'^tokens/', include('tokensapp.urls', namespace='tokensapp')),
     url(r'^summernote/', include('django_summernote.urls')),
 
 ]
