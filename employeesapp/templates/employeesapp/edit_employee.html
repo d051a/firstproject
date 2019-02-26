@@ -80,12 +80,11 @@
                               {% elif usertechnic.technictype == 'CMT'%}
                            <td class="text-center"><a href="{% url 'cmtapp:edit_cmt' usertechnic.pk %}">{{ usertechnic.cmt.name }}</a></td>
                                {% elif usertechnic.technictype == 'WORKSTATION'%}
-                           <td class="text-center"><a href="{% url 'workstationsapp:edit_workstations' usertechnic.pk %}">{{ usertechnic.workstation.name }}</a></td>
-
+                           <td class="text-center"><a href="{% url 'workstationsapp:edit_workstation' usertechnic.pk %}">{{ usertechnic.workstation.name }}</a></td>
                               {% else %}
                            <td class="text-center">{{ usertechnic.token.name }}</td>
                               {% endif%}
-                            <td class="text-center">{{ usertechnic.technictype  }}</td>
+                            <td class="text-center">{{ usertechnic.get_technictype_display }}</td>
                             <td class="text-center">{{ usertechnic.inventorynum1 }}</td>
                             <td class="text-center">{{ usertechnic.inventorynum2 }}</td>
                             <td class="text-center">{{ usertechnic.serialnum }}</td>
@@ -98,7 +97,7 @@
                 </div>
                 <div class="tab-pane" id="edit">
     <div class="col-md-8">
-      <form method="post" id="editForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <p></p>
@@ -122,24 +121,4 @@
     </div>
 </div>
 <hr>
-
-
-  <script src={% static "base_js/jquery-3.3.1.js" %}></script>
-  <script>
-    $("#id_department").change(function () {
-      var url = $("#editForm").attr("data-departments-url");
-      var departmentId = $(this).val();
-
-      $.ajax({
-        url: url,
-        data: {
-          'department': departmentId
-        },
-        success: function (data) {
-          $("#id_subdevision").html(data);
-        }
-      });
-
-    });
-  </script>
 {%endblock body%}

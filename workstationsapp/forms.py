@@ -1,36 +1,30 @@
 from django import forms
 from .models import Workstation
+from mainapp.forms import TechnicModelForm
 
 
-class WorkstationForm(forms.ModelForm):
+class WorkstationForm(TechnicModelForm):
+    def clean(self):
+        self.instance.technictype = "WORKSTATION"
+        return super().clean()
     class Meta:
         model = Workstation
-        fields = (
-            'inventorynum',
-            'serialnum',
-            'name',
-            'netbiosname',
-            'ip',
-            'macaddress',
-            'computermodelname',
-        )
+        fields = ('name', 'netbios_name', 'ip_address', 'mac_address', 'model_name',
+                  'inventorynum1', 'inventorynum2', 'serialnum', 'employee'
+                  )
         widgets = {
-            'inventorynum': forms.TextInput(attrs={
-                'class': 'form-control'}),
-            'serialnum': forms.TextInput(attrs={
-                'class': 'form-control'}),
-            'name': forms.TextInput(attrs={
-                'class': 'form-control'}),
-            'netbiosname': forms.TextInput(attrs={
-                'class': 'form-control'}),
-            'ip': forms.TextInput(attrs={
-                'class': 'form-control'}),
-            'macaddress': forms.TextInput(attrs={
-                'class': 'form-control'}),
-            'computermodelname': forms.Select(attrs={
-                'class': 'form-control form-control', 'type': 'text'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'netbios_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'ip_address': forms.TextInput(attrs={'class': 'form-control'}),
+            'mac_address': forms.TextInput(attrs={'class': 'form-control'}),
+            'model_name': forms.Select(attrs={'class': 'form-control'}),
+            'inventorynum1': forms.TextInput(attrs={'class': 'form-control'}),
+            'inventorynum2': forms.TextInput(attrs={'class': 'form-control'}),
+            'serialnum': forms.TextInput(attrs={'class': 'form-control'}),
+            'technictype': forms.Select(attrs={'class': 'form-control'}),
+            'employee': forms.Select(attrs={'class': 'form-control'}),
         }
 
-class ExcelForm(forms.Form):
 
+class ExcelForm(forms.Form):
     file = forms.FileField(label= "Выберите excel файл для загрузки")

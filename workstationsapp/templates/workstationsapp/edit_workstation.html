@@ -10,14 +10,35 @@
 {%endblock%}
 
 {%block body%}
-<div class="container">
-    <div class="col-sm">
-      <form class = "col-md-6" method="post" >
+ <div class="col-sm">
+      <form class = "col-md-6" id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}">
         {% csrf_token %}
-          {{form.as_p}}
+        {{ form.as_p }}
         <p></p>
-        <button type="submit" class="btn btn-default" name="button">Изменить</button>
-      </form>
-    </div>
-</div>
+      <button type="submit" class="btn btn-default" name="button">Изменить</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить<span class="glyphicon glyphicon-comment"></span></button>
+          </form>
+
+          <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Удаление карточки компьютера</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Вы действительно хотите удалить карточку компьютера?</p>
+                </div>
+                <div class="modal-footer">
+                  <form class = "col-md-12" action="{% url 'workstationsapp:delete_workstation' workstation.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                    <button type="submit" class="btn btn-danger">Да</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
 {%endblock body%}

@@ -32,13 +32,13 @@
         </tr>
     </thead>
     <tbody>
-    {% for item in object_list %}
+    {% for technic in workstations_list %}
         <tr>
-            <td><a href="{% url 'workstationsapp:edit_workstation' pk=item.pk %}">{{ item.name }}</a></td>
-            <td>{{ item.computermodelname }}</td>
-            <td>{{ item.ip }}</td>
-            <td>{{ item.serialnum }}</td>
-            <td>{{ item.inventorynum }}</td>
+            <td><a href="{% url 'workstationsapp:edit_workstation' pk=technic.pk %}">{{ technic.name }}</a></td>
+            <td>{{ technic.model_name }}</td>
+            <td>{{ technic.ip_address }}</td>
+            <td>{{ technic.serialnum }}</td>
+            <td>{{ technic.inventorynum1 }}</td>
         </tr>
     {% endfor %}
      </tbody>
