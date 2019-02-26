@@ -1,9 +1,6 @@
 {% extends 'base_template.html' %}
   {% load static %}
   {%block navimenu%}
-    <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'ticketsapp:list_tickets' %}">Заявки</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
   {%endblock%}
 
   {%block header%}
@@ -12,7 +9,7 @@
 
   {%block body%}
     <div class="col-sm">
-      <form class = "col-md-6" id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}">
+      <form class = "col-md-6" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <p></p>
@@ -24,13 +21,13 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Удаление заявки</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Удаление карточки техники</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <p>Вы действительно хотите удалить заявку?</p>
+                  <p>Вы действительно хотите удалить карточку токена?</p>
                 </div>
                 <div class="modal-footer">
                   <form class = "col-md-12" action="{{ ticket.id }}/delete" method="post">

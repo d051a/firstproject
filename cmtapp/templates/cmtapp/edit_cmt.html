@@ -1,5 +1,6 @@
 {% extends 'base_template.html' %}
   {% load static %}
+
   {%block navimenu%}
   {%endblock%}
 
@@ -9,7 +10,7 @@
 
   {%block body%}
     <div class="col-sm">
-      <form class = "col-md-6" id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}">
+      <form class = "col-md-6" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <p></p>

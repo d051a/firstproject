@@ -1,9 +1,6 @@
 {% extends 'base_template.html' %}
 {% load static %}
 {%block navimenu%}
-  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'workstationsapp:list_workstations' %}">Реестр рабочих станций</a></li>
-  <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
 {%endblock%}
 
 {%block header%}

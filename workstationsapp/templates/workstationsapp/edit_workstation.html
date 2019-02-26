@@ -1,8 +1,5 @@
 {% extends 'base_template.html' %}
 {%block navimenu%}
-  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'employeesapp:list_employees' %}">Реестр сотрудников</a></li>
-  <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
 {%endblock%}
 
 {%block header%}
@@ -11,7 +8,7 @@
 
 {%block body%}
  <div class="col-sm">
-      <form class = "col-md-6" id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}">
+      <form class = "col-md-6" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <p></p>

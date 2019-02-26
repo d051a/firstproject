@@ -15,7 +15,7 @@
     <div class="col-md-12">
       <div class="row justify-content-center">
     <div class="col-md-4">
-      <form method="post" id="editForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <p></p>

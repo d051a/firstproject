@@ -1,12 +1,9 @@
 {% extends 'base_template.html' %}
 {%block navimenu%}
-  <li class="breadcrumb-item"><a href="{% url 'mainapp:main' %}">Главная</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'employeesapp:list_employees' %}">Реестр сотрудников</a></li>
-  <li class="breadcrumb-item active" aria-current="page">{{ pagename }} </li>
 {%endblock%}
 
 {%block header%}
-<h2 style="margin-left: 20px;">{{ pagename }}</h2>
+{{ pagename }}
 {%endblock%}
 
 {%block body%}
