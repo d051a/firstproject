@@ -11,52 +11,53 @@
 {%endblock%}
 
 {%block body%}
-  <div class="row justify-content-center">
-    <div class="col-md-12">
-      <div class="row justify-content-center">
-    <div class="col-md-4">
-      <form method="post" id="editForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <p></p>
-          <button type="submit" class="btn btn-default" name="button">Изменить</button>
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить<span class="glyphicon glyphicon-comment"></span></button>
-        </form>
-      </div>
-    <div class="col-md-2">
-      {% if employee.img %}
-     <td><img class="rounded-circle" src="{{ employee.img.url }}" width="200" height="200"></td>
-     {%else%}
-     <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="200" height="200"></td>
-     {% endif %}
-        <p></p>
-      </div>
-  </div>
+<div class="container">
+    <div class="row m-y-2">
+        <div class="col-lg-8 push-lg-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#messages" data-toggle="tab" class="nav-link">Техника сотрудника</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Изменить</a>
+                </li>
+            </ul>
+            <div class="tab-content p-b-3">
+                <div class="tab-pane active" id="profile">
+                    <br>
+                    <h4 class="m-y-2">{{ employee.fio }}</h4>
+                    <div class="row">
+                        <div class="col-md-10">
+                    <p><strong>Должность: </strong> {{ employee.post }} </p>
+                    <p><strong>Дата рождения: </strong> {{ employee.birthdate | date:"d E"}} </p>
+                    <p><strong>Телефонный номер: </strong> {{ employee.telephonenum }} </p>
+                    <p><strong>Номер кабинета: </strong> {{ employee.location }} </p>
+                    <p><strong>Управление: </strong> {{ employee.department }} </p>
+                    <p><strong>Отдел: </strong> {{ employee.subdevision }} </p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
 
-  <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Удаление сотрудника</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Вы действительно хотите удалить этого сотрудника из базы?</p>
-        </div>
-        <div class="modal-footer">
-          <form class = "col-md-12" action="{{ employee.id }}/delete" method="post">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
-            <button type="submit" class="btn btn-danger">Да</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-        <br>
-<center><h3>Техника закрепленная за сотрудником</h3></center>
-<table id="example" class="table table-hover" style="width:100;">
+                        <div class="col-md-12">
+                            <h4 class="m-t-2"><span class="fa fa-clock-o ion-clock pull-xs-right"></span> Recent Activity</h4>
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>Abby</strong> joined ACME Project Team in <strong>`Collaboration`</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+                <div class="tab-pane" id="messages">
+                <table class="table table-hover" style="width:100;">
                     <thead>
                         <tr>
                             <th>-</th>
@@ -73,17 +74,18 @@
                           <tr>
                             <td>{{ forloop.counter }}</td>
                               {% if usertechnic.technictype == 'SERVER'%}
-                           <td class="text-center">{{ usertechnic.server.name }}</td>
+                           <td class="text-center"><a href="{% url 'serversapp:edit_server' usertechnic.pk %}">{{ usertechnic.server.name }}</a></td>
                                {% elif usertechnic.technictype == 'TOKEN'%}
-                           <td class="text-center">{{ usertechnic.token.name }}</td>
-                              {% elif usertechnic.technictype == '-'%}
+                           <td class="text-center"><a href="{% url 'tokensapp:edit_token' usertechnic.pk %}">{{ usertechnic.token.name }}</a></td>
+                              {% elif usertechnic.technictype == 'CMT'%}
+                           <td class="text-center"><a href="{% url 'cmtapp:edit_cmt' usertechnic.pk %}">{{ usertechnic.cmt.name }}</a></td>
+                               {% elif usertechnic.technictype == 'WORKSTATION'%}
+                           <td class="text-center"><a href="{% url 'workstationsapp:edit_workstations' usertechnic.pk %}">{{ usertechnic.workstation.name }}</a></td>
+
+                              {% else %}
                            <td class="text-center">{{ usertechnic.token.name }}</td>
                               {% endif%}
-                            <td><a href="
-                            {% if usertechnic.technictype == 'SERVER'%}
-                            {% url 'serversapp:edit_server' usertechnic.pk %}
-                            {% endif%}
-                            ">{{ usertechnic.technictype  }}</a></td>
+                            <td class="text-center">{{ usertechnic.technictype  }}</td>
                             <td class="text-center">{{ usertechnic.inventorynum1 }}</td>
                             <td class="text-center">{{ usertechnic.inventorynum2 }}</td>
                             <td class="text-center">{{ usertechnic.serialnum }}</td>
@@ -93,9 +95,33 @@
 
                     </tbody>
                 </table>
+                </div>
+                <div class="tab-pane" id="edit">
+    <div class="col-md-8">
+      <form method="post" id="editForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <p></p>
+          <button type="submit" class="btn btn-default" name="button">Изменить</button>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить<span class="glyphicon glyphicon-comment"></span></button>
+        </form>
+      </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 pull-lg-8 text-xs-center">
+            <img src="//placehold.it/150" class="m-x-auto img-fluid img-circle" alt="avatar">
+            <h6 class="m-t-2">Upload a different photo</h6>
+            <label class="custom-file">
+                <input type="file" id="file" class="custom-file-input">
+                <span class="custom-file-control">Choose file</span>
+            </label>
+        </div>
+
 
     </div>
-  </div>
+</div>
+<hr>
 
 
   <script src={% static "base_js/jquery-3.3.1.js" %}></script>

@@ -9,7 +9,7 @@
 {%endblock%}
 
 {%block header_end%}
-      <a role="button" class="btn btn-secondary" href="{% url 'serversapp:add_server' %}"><b>+</b></a>
+      <a role="button" class="btn btn-secondary" href="{% url 'cmtapp:add_cmt' %}"><b>+</b></a>
 {%endblock%}
 
 {%block body%}
@@ -27,7 +27,7 @@
                   </tr>
               </thead>
               <tbody>
-                    {% for technic in list_servers %}
+                    {% for technic in cmtslist %}
 
                     <tr>
                       <td>{{ forloop.counter }}</td>

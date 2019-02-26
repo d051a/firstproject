@@ -27,8 +27,10 @@ class EmployeeEditView(ContextPageMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(EmployeeEditView, self).get_context_data(**kwargs)
         usertechniclist = Technic.objects.filter(employee=self.kwargs['pk'])
-        print(usertechniclist)
+        user_data = Employee.objects.get(user_id=self.kwargs.get('pk'))
+        print(user_data)
         context['usertechniclist'] = usertechniclist
+        context['employee'] = user_data
         return context
 
 

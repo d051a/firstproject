@@ -1,4 +1,5 @@
 from django.db import models
+from mainapp.models import Technic
 
 
 class CMTModel(models.Model):
@@ -14,16 +15,13 @@ class CMTModel(models.Model):
         return self.computermodelname
 
 
-class CMT (models.Model):
-    inventorynum = models.CharField(verbose_name='Инвентарный номер', max_length=12)
-    serialnum = models.CharField(verbose_name='Серийный номер', max_length=20)
-    name = models.CharField(verbose_name='Имя компьютера', max_length=200)
-    netbiosname = models.CharField(verbose_name='NETBIOS-имя', max_length=200)
-    ip = models.GenericIPAddressField(verbose_name='IP-адрес')
-    macaddress = models.CharField(verbose_name='MAC-адрес', max_length=30)
-    cmtmodel = models.ForeignKey('CMTModel', on_delete=models.PROTECT, related_name='+')
-    created_at = models.DateTimeField(verbose_name='Дата добавления', auto_now_add=True)
-    modified = models.DateTimeField(verbose_name='Дата изменения', auto_now=True)
+class CMT(Technic):
+    name = models.CharField('Имя', max_length=200)
+    netbiosname = models.CharField('NETBIOS-имя', max_length=200)
+    ip = models.GenericIPAddressField('IP-адрес')
+    macaddress = models.CharField('MAC-адрес', max_length=30)
+    cmtmodel = models.ForeignKey('CMTModel', on_delete=models.PROTECT, verbose_name='Модель',related_name='+')
+
 
     class Meta:
         permissions = (

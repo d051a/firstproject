@@ -14,8 +14,7 @@
     <div class="col-sm">
       <form class = "col-md-6" id="problemForm" method="post" data-problems-url="{% url 'mainapp:ajax_load_subproblems' %}">
         {% csrf_token %}
-        {{serverform.as_p}}
-        {{technicform.as_p}}
+        {{ form.as_p }}
         <p></p>
           {% if perms.ticketsapp.can_edit_all_tickets or perms.ticketsapp.can_edit_my_tickets %}<button type="submit" class="btn btn-default" name="button">Изменить</button>{%endif%}
           {% if perms.ticketsapp.can_delete_my_tickets %}<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить<span class="glyphicon glyphicon-comment"></span></button>{%endif%}
@@ -31,7 +30,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <p>Вы действительно хотите удалить заявку?</p>
+                  <p>Вы действительно хотите удалить сервер?</p>
                 </div>
                 <div class="modal-footer">
                   <form class = "col-md-12" action="{{ ticket.id }}/delete" method="post">

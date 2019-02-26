@@ -2,15 +2,12 @@ import uuid
 from django.db import models
 from mainapp.models import Technic
 from employeesapp.models import Employee
+from mainapp.models import Technic
 
 # Create your models here.
-class Server (models.Model):
-    technic_id = models.OneToOneField(
-        Technic,
-        on_delete=models.CASCADE,)
-    ip = models.CharField('Ip-адрес', max_length=50,)
-    name = models.CharField('Имя', max_length=50,)
-    employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, verbose_name='Ответственный', blank=True, null=True)
+class Server (Technic):
+    name = models.CharField('Имя', max_length=50)
+    ip = models.CharField('Ip-адрес', max_length=50)
 
     class Meta:
         permissions = (

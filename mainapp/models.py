@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from employeesapp.models import Employee
 
 
@@ -36,6 +37,8 @@ class Technic (models.Model):
         blank=True,
         verbose_name='Ответственный сотрудник'
     )
+    created_time = models.DateTimeField('Дата добавления', auto_now_add=True)
+    modified_time = models.DateTimeField('Дата изменения', auto_now=True)
 
     class Meta:
         ordering = ['technic_id']
