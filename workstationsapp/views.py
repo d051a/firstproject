@@ -49,6 +49,7 @@ class ListWorkstations(ContextPageMixin, LoginRequiredMixin, ListView):
     template_name = 'workstationsapp/list_workstations.html'
     context_object_name = 'workstations_list'
 
+
 class AddWorkstation(ContextPageMixin, LoginRequiredMixin, CreateView):
     pagename = 'Новая рабочая станция'
     model = Workstation

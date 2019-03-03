@@ -15,9 +15,9 @@ class HolidaysListView(ContextPageMixin, ListView):
         object_list = super(HolidaysListView, self).get_queryset()
         today = datetime.now().date()
         object_list_gte = Holiday.objects.filter(date__day__gte=today.day,
-            date__month__gte=today.month)
+                                                 date__month__gte=today.month)
         object_list_lte = Holiday.objects.filter(date__day__lte=today.day,
-            date__month__lte=today.month)
+                                                 date__month__lte=today.month)
         object_list = chain(object_list_gte, object_list_lte)
         return object_list
 

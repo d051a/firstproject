@@ -1,7 +1,4 @@
-import uuid
 from django.db import models
-from mainapp.models import Technic
-from employeesapp.models import Employee
 from mainapp.models import Technic
 
 # Create your models here.

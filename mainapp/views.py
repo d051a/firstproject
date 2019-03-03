@@ -1,12 +1,6 @@
 from django.shortcuts import render
 from ticketsapp.models import SubProblem
 from mainapp.models import SubDevision
-from django.views.generic import ListView, CreateView
-from holidaysapp.models import Holiday
-from employeesapp.models import Employee
-from ACCOUNTING.generic.mixins import ContextPageMixin
-from datetime import datetime
-from itertools import chain
 
 
 def load_subproblems(request):

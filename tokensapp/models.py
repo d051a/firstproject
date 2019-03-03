@@ -1,6 +1,6 @@
 from django.db import models
 from mainapp.models import Technic
-# Create your models here.
+
 
 class Token(Technic):
     name = models.CharField('Имя токена', max_length=20)

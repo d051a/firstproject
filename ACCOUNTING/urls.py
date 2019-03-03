@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,6 +32,7 @@ urlpatterns = [
     url(r'^holidays/', include('holidaysapp.urls', namespace='holidaysapp')),
     url(r'^certificates/', include('certificatesapp.urls', namespace='certificatesapp')),
     url(r'^tokens/', include('tokensapp.urls', namespace='tokensapp')),
+    url(r'^certtickets/', include('certticketapp.urls', namespace='certticketapp')),
     url(r'^summernote/', include('django_summernote.urls')),
 
-]
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

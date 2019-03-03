@@ -1,6 +1,4 @@
 from django.db import models
-from datetime import datetime
-from employeesapp.models import Employee
 
 
 class Technic (models.Model):
@@ -12,31 +10,12 @@ class Technic (models.Model):
         ('FLASH', 'Флеш-накопитель'),
         ('TOKEN', 'Токен'),
     )
-    technic_id = models.AutoField(
-        primary_key=True,)
-    inventorynum1 = models.CharField(
-        'Инвентарный номер#1',
-        max_length=50,
-        blank=True,)
-    inventorynum2 = models.CharField(
-        'Инвентарный номер#2',
-        max_length=50,
-        blank=True,)
-    serialnum = models.CharField(
-        'Серийный номер',
-        max_length=50,
-        blank=True,)
-    technictype = models.CharField(
-        'Тип техники',
-        max_length=50,
-        blank=False,
-        choices=TECHNICTYPES,)
-    employee = models.ForeignKey(
-        'employeesapp.Employee',
-        null=True,
-        blank=True,
-        verbose_name='Ответственный сотрудник'
-    )
+    technic_id = models.AutoField(primary_key=True)
+    inventorynum1 = models.CharField('Инвентарный номер#1', max_length=50, blank=True)
+    inventorynum2 = models.CharField('Инвентарный номер#2', max_length=50, blank=True)
+    serialnum = models.CharField('Серийный номер', max_length=50, blank=True)
+    technictype = models.CharField('Тип техники', max_length=50, blank=False, choices=TECHNICTYPES)
+    employee = models.ForeignKey('employeesapp.Employee', null=True, blank=True, verbose_name='Ответственный сотрудник')
     created_time = models.DateTimeField('Дата добавления', auto_now_add=True)
     modified_time = models.DateTimeField('Дата изменения', auto_now=True)
 
@@ -50,10 +29,7 @@ class Technic (models.Model):
 
 
 class Department(models.Model):
-    departmentmname = models.CharField(
-        'Департамент',
-        max_length=100,
-        null=True)
+    departmentmname = models.CharField('Департамент', max_length=100, null=True)
 
     class Meta:
         ordering = ['departmentmname']
@@ -66,14 +42,8 @@ class Department(models.Model):
 
 class SubDevision(models.Model):
     department = models.ForeignKey(
-        Department,
-        verbose_name='Департамент',
-        on_delete=models.CASCADE,
-        default=None)
-    subdevisionname = models.CharField(
-        'Отдел',
-        max_length=100,
-        null=True)
+        Department, verbose_name='Департамент', on_delete=models.CASCADE, default=None)
+    subdevisionname = models.CharField('Отдел', max_length=100, null=True)
 
     class Meta:
         ordering = ['subdevisionname']

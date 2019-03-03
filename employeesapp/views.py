@@ -57,7 +57,9 @@ class BirthdaysListView(ContextPageMixin, ListView):
 
     def get_queryset(self):
         object_list = super(BirthdaysListView, self).get_queryset()
-        object_list = Employee.objects.annotate(month=Extract('birthdate', 'month'),day=Extract('birthdate', 'day')).order_by('month','day')
+        object_list = Employee.objects.annotate(
+            month=Extract('birthdate', 'month'),
+            day=Extract('birthdate', 'day')).order_by('month', 'day')
         return object_list
 
 

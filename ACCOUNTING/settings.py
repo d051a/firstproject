@@ -49,7 +49,10 @@ INSTALLED_APPS = [
     'newsapp',
     'django_summernote',
     'certificatesapp',
-    'tokensapp'
+    'tokensapp',
+    'certticketapp',
+    'bootstrap4',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [

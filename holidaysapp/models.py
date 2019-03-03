@@ -1,17 +1,16 @@
 from django.db import models
 
-# Create your models here.
 
 class Holiday (models.Model):
     title = models.CharField(
-    max_length=150,
-    verbose_name='Название праздника'
+        max_length=150,
+        verbose_name='Название праздника'
     )
     date = models.DateField(
-    verbose_name='Дата праздника'
+        verbose_name='Дата праздника'
     )
     full_description = models.TextField(
-    verbose_name='Полное описание'
+        verbose_name='Полное описание'
     )
 
     class Meta:

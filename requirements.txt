@@ -4,4 +4,6 @@ xlrd==1.1.0
 Pillow==5.3.0
 django-summernote==0.8.11.1
 pyopenssl
+django-bootstrap4
+docx-mailmerge
 

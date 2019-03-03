@@ -1,0 +1,53 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+{{ pagename }}
+{%endblock%}
+
+{%block header_end%}
+      <a role="button" class="btn btn-secondary" href="{% url 'certticketapp:add_cert_ticket' %}"><b>+</b></a>
+{%endblock%}
+
+{%block body%}
+<div class="container">
+  <div class = "col-md-12">
+      <table id="example" class="table table-hover" style="width:100;">
+              <thead>
+                  <tr>
+                      <th>-</th>
+                      <th class="text-center">Фамилия</th>
+                      <th class="text-center">Имя</th>
+                      <th class="text-center">Отчество</th>
+                      <th class="text-center">Дата подачи заявки</th>
+                      <th class="text-center">Должность</th>
+                      <th class="text-center">Документы</th>
+                  </tr>
+              </thead>
+              <tbody>
+                    {% for cert in cert_ticket_list %}
+
+                    <tr>
+                      <td>{{ cert.pk }}</td>
+                      <td><a href="edit/{{ cert.pk }}">{{ cert.surname }} </a></td>
+                      <td class="text-center">{{ cert.name }}</td>
+                      <td class="text-center">{{ cert.middle_name }}</td>
+                      <td class="text-center">{{ cert.created_time }}</td>
+                      <td class="text-center">{{ cert.position }}</td>
+                      <td><a href="{% url 'certticketapp:file_generate' cert.pk %}">Скачать</a></td>
+                    </tr>
+
+                    {% endfor %}
+
+              </tbody>
+          </table>
+  </div>
+  </div>
+
+{%endblock body%}
+
+{%block scripts%}
+{%endblock scripts%}

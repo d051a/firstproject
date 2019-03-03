@@ -7,6 +7,7 @@ class WorkstationForm(TechnicModelForm):
     def clean(self):
         self.instance.technictype = "WORKSTATION"
         return super().clean()
+
     class Meta:
         model = Workstation
         fields = ('name', 'netbios_name', 'ip_address', 'mac_address', 'model_name',
@@ -27,4 +28,4 @@ class WorkstationForm(TechnicModelForm):
 
 
 class ExcelForm(forms.Form):
-    file = forms.FileField(label= "Выберите excel файл для загрузки")
+    file = forms.FileField(label="Выберите excel файл для загрузки")

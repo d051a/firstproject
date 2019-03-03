@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 # from mainapp.models import Department, SubDevision
 # from ACCOUNTING.settings import MEDIA_ROOT
 
+
 class Employee(models.Model):
     user = models.OneToOneField(
         User,
@@ -48,10 +49,10 @@ class Employee(models.Model):
 
     class Meta:
         permissions = (
-        ('can_view_employeeslist', 'Может просматривать список сотрудников'),
-        ('can_add_employees', 'Может добавлять сотрудников'),
-        ('can_edit_employees', 'Может изменять карточки сотрудников'),
-        ('can_delete_employees', 'Может удалять карточки сотрудников'),
+            ('can_view_employeeslist', 'Может просматривать список сотрудников'),
+            ('can_add_employees', 'Может добавлять сотрудников'),
+            ('can_edit_employees', 'Может изменять карточки сотрудников'),
+            ('can_delete_employees', 'Может удалять карточки сотрудников'),
         )
         ordering = ['fio']
         verbose_name = 'Сотрудник'
@@ -65,6 +66,7 @@ class Post(models.Model):
     postname = models.CharField(
         'Должность',
         max_length=75,)
+
     class Meta:
         ordering = ['postname']
         verbose_name = 'Должность'

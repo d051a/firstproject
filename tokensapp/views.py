@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from tokensapp.models import Token
-from tokensapp.forms import TokenModelForm, TokenForm
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
+from tokensapp.forms import TokenForm
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from ACCOUNTING.generic.mixins import ContextPageMixin
-# Create your views here.
+
 
 class TokensList(ContextPageMixin, ListView):
     pagename = 'Токены'
@@ -20,6 +19,7 @@ class AddToken(ContextPageMixin, CreateView):
     template_name = 'tokensapp/add_token.html'
     success_url = reverse_lazy('tokensapp:list_tokens')
 
+
 class EditToken(ContextPageMixin, UpdateView):
     pagename = 'Изменение данных'
     model = Token
@@ -31,4 +31,3 @@ class EditToken(ContextPageMixin, UpdateView):
 class DeleteToken(ContextPageMixin, DeleteView):
     model = Token
     success_url = reverse_lazy('tokensapp:list_tokens')
-

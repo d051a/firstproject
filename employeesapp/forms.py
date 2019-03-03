@@ -43,13 +43,13 @@ class EmployeeForm(forms.ModelForm):
         if 'subdevision' in self.data:
             try:
                 department_id = int(self.data.get('department'))
-                self.fields['subdevision'].queryset = SubDevision.objects.filter(department_id=department_id).order_by('department')
+                self.fields['subdevision'].queryset = SubDevision.objects.filter(
+                    department_id=department_id).order_by('department')
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
             self.fields['subdevision'].queryset = self.instance.department.subdevision_set.order_by('subdevisionname')
             print(self.fields['subdevision'].queryset)
-
 
 
 class PostForm(forms.ModelForm):
@@ -93,4 +93,5 @@ class EmployeeDisabledForm(forms.ModelForm):
             'department': forms.Select(attrs={
                 'class': 'form-control form-control', 'type': 'text'}),
             'subdevision': forms.Select(attrs={'class': 'form-control'}),
-            'post': forms.Select(attrs={'class': 'form-control'}),}
+            'post': forms.Select(attrs={'class': 'form-control'}),
+        }

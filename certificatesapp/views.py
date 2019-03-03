@@ -1,63 +1,38 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
-from django.views.generic.base import View
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.views.generic.edit import FormView
-from django.contrib.auth import login, logout
 from django.shortcuts import render
-from django.template import RequestContext, loader
-from django import forms
 from .models import Certificate, Persone
-from .forms import CertificateModelForm, CertificateAddModelForm, PersoneModelForm, FileFieldForm
+from .forms import CertificateModelForm, PersoneModelForm, FileFieldForm
 from django.contrib.auth.decorators import login_required
-
-import json
-import sys
 from OpenSSL import crypto
-from django.core.files.storage import default_storage
 
 
-
-def certificate_add (request):
+def certificate_add(request):
     pass
+
 
 class MainView(TemplateView):
     template_name = 'certificatesapp/certificates.html'
     def get(self, request):
         if request.user.is_authenticated:
             certs_list = Certificate.objects.order_by("-validate_end_date")
-            context = {'certs_list': certs_list,
-                        }
+            context = {'certs_list': certs_list}
             return render(request, self.template_name, context)
         else:
             return render(request, self.template_name, {})
+
 
 class PersonesMainView(TemplateView):
     template_name = 'certificatesapp/persones.html'
     def get(self, request):
         if request.user.is_authenticated:
             persones_list = Persone.objects.order_by("fullname")
-            context = {'persones_list': persones_list,
-                        }
+            context = {'persones_list': persones_list}
             return render(request, self.template_name, context)
         else:
             return render(request, self.template_name, {})
 
-
-"""@login_required
-def certificate_edit(request, certificate_id):
-    if request.method == 'GET' and request.GET == {'del': ['true']}:
-        return certificate_delete(request, certificate_id)
-    else:
-        certificate = Certificate.objects.get(pk = certificate_id)
-        data = {'fullname': certificate.fullname,
-                'validate_start_date': certificate.validate_start_date,
-                'validate_end_date': certificate.validate_end_date,
-                'cert_file': certificate.cert_file,
-                'email':certificate.email}
-        form = CertificateModelForm(data)
-    return render (request, 'certificatesapp/certificate_edit.html', {'form': form,
-                                                                'fullname': certificate.fullname,})    """
 
 class CertificateEdit(TemplateView):
     template_name = 'certificatesapp/certificate_edit.html'
@@ -65,15 +40,16 @@ class CertificateEdit(TemplateView):
         if request.GET == {'del': ['true']}:
             return certificate_delete(request, certificate_id)
         else:
-            certificate = Certificate.objects.get(pk = certificate_id)
+            certificate = Certificate.objects.get(pk=certificate_id)
             data = {'fullname': certificate.fullname,
                     'validate_start_date': certificate.validate_start_date,
                     'validate_end_date': certificate.validate_end_date,
                     'cert_file': certificate.cert_file,
-                    'email':certificate.email}
+                    'email': certificate.email}
             form = CertificateModelForm(data)
-        return render (request, 'certificatesapp/certificate_edit.html', {'form': form,
-                                                                    'fullname': certificate.fullname,})
+        return render(request, 'certificatesapp/certificate_edit.html', {'form': form,
+                                                                        'fullname': certificate.fullname
+                                                                         })
 
 
 """@login_required
@@ -110,6 +86,7 @@ class PersoneEdit(TemplateView):
                                                                 'fullname': persone.fullname,
                                                                 'certificate_list': certificate_list})
 
+
 @login_required
 def certificate_delete(request, certificate_id):
     if request.method == 'GET':
@@ -125,28 +102,6 @@ def persone_delete(request, persone_id):
         persone.delete()
     return HttpResponseRedirect('/persones/')
 
-
-"""class CertificateEdit(FormView):
-    template_name = 'certificatesapp/certificate_add.html'
-    form_class = CertificateModelForm
-    success_url = '/'
-    def form_valid(self, form):
-        form.save()
-        return super(CertificateEdit, self).form_valid(form)"""
-
-"""def certificate_add(request):
-    if request.method == 'POST':
-        form = CertificateAddModelForm(request.POST, request.FILES)
-        if form.is_valid():
-            file_obj = request.FILES['cert_file']
-            x509 = crypto.load_certificate(crypto.FILETYPE_ASN1, file_obj.read())
-            json.dump({name.decode(): value.decode('utf-8')
-            for name, value in x509.get_subject().get_components()},
-            sys.stdout, indent=2, ensure_ascii=False)
-        return HttpResponseRedirect ('/certificates/add_cert')
-    else:
-        form = CertificateAddModelForm()
-    return render (request, 'certificatesapp/certificate_edit.html', {'form': form})"""
 
 class FileFieldView(FormView): #load certificates
     form_class = FileFieldForm
@@ -182,8 +137,49 @@ class FileFieldView(FormView): #load certificates
                                         validate_end_date = cert_valid_end,
                                         email = email,
                                         cert_file = file,
-                                        persone = Persone.objects.get(fullname=FIO))
+                                        persone = Persone.objects.get(fullname=FIO)
+                                       )
                 add_cert.save()
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+
+"""@login_required
+def certificate_edit(request, certificate_id):
+    if request.method == 'GET' and request.GET == {'del': ['true']}:
+        return certificate_delete(request, certificate_id)
+    else:
+        certificate = Certificate.objects.get(pk = certificate_id)
+        data = {'fullname': certificate.fullname,
+                'validate_start_date': certificate.validate_start_date,
+                'validate_end_date': certificate.validate_end_date,
+                'cert_file': certificate.cert_file,
+                'email':certificate.email}
+        form = CertificateModelForm(data)
+    return render (request, 'certificatesapp/certificate_edit.html', {'form': form,
+                                                                'fullname': certificate.fullname,})    """
+
+
+
+"""class CertificateEdit(FormView):
+    template_name = 'certificatesapp/certificate_add.html'
+    form_class = CertificateModelForm
+    success_url = '/'
+    def form_valid(self, form):
+        form.save()
+        return super(CertificateEdit, self).form_valid(form)"""
+
+"""def certificate_add(request):
+    if request.method == 'POST':
+        form = CertificateAddModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            file_obj = request.FILES['cert_file']
+            x509 = crypto.load_certificate(crypto.FILETYPE_ASN1, file_obj.read())
+            json.dump({name.decode(): value.decode('utf-8')
+            for name, value in x509.get_subject().get_components()},
+            sys.stdout, indent=2, ensure_ascii=False)
+        return HttpResponseRedirect ('/certificates/add_cert')
+    else:
+        form = CertificateAddModelForm()
+    return render (request, 'certificatesapp/certificate_edit.html', {'form': form})"""
