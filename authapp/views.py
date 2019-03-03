@@ -11,7 +11,6 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from .forms import UserCreateForm
 from employeesapp.forms import EmployeeForm
-from employeesapp.models import Employee
 from ACCOUNTING.generic.mixins import ContextPageMixin
 from employeesapp.models import Employee
 
@@ -26,6 +25,7 @@ class LoginFormView(FormView):
         login(self.request, self.user)
         return super(LoginFormView, self).form_valid(form)
 
+
 class LogoutView(View):
     def get(self, request):
         logout(request)
@@ -34,14 +34,13 @@ class LogoutView(View):
 
 class RegisterFormView(FormView):
     template_name = 'authapp/registration_v2.html'
+
     def get(self, request, *args, **kwargs):
         user_form = UserCreateForm(request.POST)
         user_form.prefix = 'user_form'
         employee_form = EmployeeForm(request.POST)
         employee_form.prefix = 'employee_form'
-        return self.render_to_response(self.get_context_data({
-            'employee_form': employee_form,
-            'user_form': user_form}))
+        return self.render_to_response(self.get_context_data({'employee_form': employee_form, 'user_form': user_form}))
 
 
 def register_user(request):
@@ -67,12 +66,14 @@ def register_user(request):
         'employee_form': employee_form
     })
 
+
 class UserSettingsView(ContextPageMixin, UpdateView):
     template_name = 'authapp/usersettings.html'
     model = Employee
     form_class = EmployeeForm
     success_url = reverse_lazy('employeesapp:list_employees')
     pagename = 'Настройки'
+
     def get_object(self, **kwargs):
         username = self.kwargs.get("username")
         return get_object_or_404(Employee, user__exact=self.request.user.id)

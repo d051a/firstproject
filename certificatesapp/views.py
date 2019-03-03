@@ -36,6 +36,7 @@ class PersonesMainView(TemplateView):
 
 class CertificateEdit(TemplateView):
     template_name = 'certificatesapp/certificate_edit.html'
+
     def get(self, request, certificate_id):
         if request.GET == {'del': ['true']}:
             return certificate_delete(request, certificate_id)
@@ -48,7 +49,7 @@ class CertificateEdit(TemplateView):
                     'email': certificate.email}
             form = CertificateModelForm(data)
         return render(request, 'certificatesapp/certificate_edit.html', {'form': form,
-                                                                        'fullname': certificate.fullname
+                                                                         'fullname': certificate.fullname
                                                                          })
 
 
@@ -69,28 +70,30 @@ def persone_edit(request, persone_id):
                                                             'fullname': persone.fullname,
                                                             'certificate_list': certificate_list})"""
 
+
 class PersoneEdit(TemplateView):
     template_name = 'certificatesapp/persone_edit.html'
+
     def get(self, request, persone_id):
         if request.GET == {'del': ['true']}:
             return persone_delete(request, persone_id)
         else:
-            persone = Persone.objects.get(pk = persone_id)
-            certificate_list = Certificate.objects.all().filter(fullname = persone.fullname)
+            persone = Persone.objects.get(pk=persone_id)
+            certificate_list = Certificate.objects.all().filter(fullname=persone.fullname)
             data = {'fullname': persone.fullname,
                     'snils': persone.snils,
                     'inn': persone.inn,
                     }
             form = PersoneModelForm(data)
-        return render (request, 'certificatesapp/persone_edit.html', {'form': form,
-                                                                'fullname': persone.fullname,
-                                                                'certificate_list': certificate_list})
+        return render(request, 'certificatesapp/persone_edit.html', {'form': form,
+                                                                     'fullname': persone.fullname,
+                                                                     'certificate_list': certificate_list})
 
 
 @login_required
 def certificate_delete(request, certificate_id):
     if request.method == 'GET':
-        certificate = Certificate.objects.get(pk = certificate_id)
+        certificate = Certificate.objects.get(pk=certificate_id)
         certificate.delete()
     return HttpResponseRedirect('/')
 
@@ -98,46 +101,48 @@ def certificate_delete(request, certificate_id):
 @login_required
 def persone_delete(request, persone_id):
     if request.method == 'GET':
-        persone = Persone.objects.get(pk = persone_id)
+        persone = Persone.objects.get(pk=persone_id)
         persone.delete()
     return HttpResponseRedirect('/persones/')
 
 
-class FileFieldView(FormView): #load certificates
+class FileFieldView(FormView):
     form_class = FileFieldForm
     template_name = 'certificatesapp/certificate_add.html'
     success_url = '/'
+
     def post(self, request, *args, **kwargs):
-        form_class = self.get_form_class() #get class forms
-        form = self.get_form(form_class) #get html-form
-        files = request.FILES.getlist('file_field') #get list of added user files
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        files = request.FILES.getlist('file_field')
         if form.is_valid():
             for file in files:
                 x509 = crypto.load_certificate(crypto.FILETYPE_ASN1, file.read())
                 list = x509.get_subject().get_components()
                 cert_dict = {}
-                for elem in list: cert_dict[elem[0].decode("utf-8")] = elem[1].decode("utf-8")
-                cert_valid_end = x509.get_notAfter().decode("utf-8") # get date of certificate validity
-                cert_valid_start = x509.get_notBefore().decode("utf-8") # get certificate expiration date
+                for elem in list:
+                    cert_dict[elem[0].decode("utf-8")] = elem[1].decode("utf-8")
+                cert_valid_end = x509.get_notAfter().decode("utf-8")
+                cert_valid_start = x509.get_notBefore().decode("utf-8")
                 year_s, month_s, day_s = cert_valid_start[0:4], cert_valid_start[4:6], cert_valid_start[6:8]
                 year_e, month_e, day_e = cert_valid_end[0:4], cert_valid_end[4:6], cert_valid_end[6:8]
-                cert_valid_start = '{}-{}-{}'.format(year_s, month_s, day_s) #format date of certificate validity
-                cert_valid_end = '{}-{}-{}'.format(year_e, month_e, day_e)#format certificate expiration date
-                FIO = cert_dict['CN']
+                cert_valid_start = '{}-{}-{}'.format(year_s, month_s, day_s)
+                cert_valid_end = '{}-{}-{}'.format(year_e, month_e, day_e)
+                fio = cert_dict['CN']
                 email = cert_dict['emailAddress']
-                SNILS = cert_dict['SNILS']
-                INN = cert_dict['INN']
-                try: #try add persone
-                    persone = Persone(fullname = FIO, inn = INN, snils = SNILS)
+                snils_code = cert_dict['SNILS']
+                inn_code = cert_dict['INN']
+                try:
+                    persone = Persone(fullname=fio, inn=inn_code, snils=snils_code)
                     persone.save()
-                except: #if persone exists
+                except:
                     pass
-                add_cert = Certificate(fullname=FIO,
-                                        validate_start_date=cert_valid_start,
-                                        validate_end_date = cert_valid_end,
-                                        email = email,
-                                        cert_file = file,
-                                        persone = Persone.objects.get(fullname=FIO)
+                add_cert = Certificate(fullname=fio,
+                                       validate_start_date=cert_valid_start,
+                                       validate_end_date=cert_valid_end,
+                                       email=email,
+                                       cert_file=file,
+                                       persone=Persone.objects.get(fullname=fio)
                                        )
                 add_cert.save()
             return self.form_valid(form)
@@ -159,8 +164,6 @@ def certificate_edit(request, certificate_id):
         form = CertificateModelForm(data)
     return render (request, 'certificatesapp/certificate_edit.html', {'form': form,
                                                                 'fullname': certificate.fullname,})    """
-
-
 
 """class CertificateEdit(FormView):
     template_name = 'certificatesapp/certificate_add.html'

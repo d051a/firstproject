@@ -34,7 +34,7 @@ class UserPerformerTicketListView(
 
     def get_queryset(self):
         user = Employee.objects.get(user__exact=self.request.user.id)
-        object_list = super(UserPerformerTicketListView, self).get_queryset()
+        # object_list = super(UserPerformerTicketListView, self).get_queryset()
         object_list = Ticket.objects.filter(performer__exact=user)
         return object_list
 
@@ -52,7 +52,7 @@ class UserTicketListView(
 
     def get_queryset(self):
         user = Employee.objects.get(user__exact=self.request.user.id)
-        object_list = super(UserTicketListView, self).get_queryset()
+        # object_list = super(UserTicketListView, self).get_queryset()
         object_list = Ticket.objects.filter(employee_start__exact=user)
         return object_list
 
