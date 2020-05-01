@@ -11,6 +11,11 @@ class Certificate(models.Model):
     persone = models.ForeignKey('Persone', verbose_name='Сертификаты:', default=None)
 
     class Meta:
+        permissions = (
+            ('can_view_certificates', 'Может просматривать список сертификатов'),
+            ('can_add_certificates', 'Может добавлять сертификатов'),
+            ('can_delete_certificates', 'Может удалять сертификатов'),
+        )
         ordering = ['validate_end_date']
         verbose_name = 'Сертификат'
         verbose_name_plural = 'Сертификаты'
