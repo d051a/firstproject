@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^tokens/', include('tokensapp.urls', namespace='tokensapp')),
     url(r'^certtickets/', include('certticketapp.urls', namespace='certticketapp')),
     url(r'^summernote/', include('django_summernote.urls')),
+    url(r'^envelops/', include('printenvelopsapp.urls')),
 
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

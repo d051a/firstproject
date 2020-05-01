@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'certificatesapp',
     'tokensapp',
     'certticketapp',
+    'printenvelopsapp',
     'bootstrap4',
     'django_cleanup',
 ]

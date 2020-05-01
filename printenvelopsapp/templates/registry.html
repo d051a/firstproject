@@ -1,0 +1,57 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{%block head%}
+<link rel="stylesheet" type="text/css" href={% static "recepients/css/jquery.dataTables.min.css"%}>
+{%endblock%}
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{%block body%}
+<div class = "col-md-12">
+    <table id="example" class="display" style="width:100;">
+
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Дата</th>
+                    <th>Тип</th>
+                    <th>Тип РПО</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for registry in registry_list %}
+                <tr>
+                    <td>{{ registry.pk }}</td>
+                    <td><a href="{% url 'printenvelopsapp:registry_detail' registry.pk %}">Реестр #{{ registry.pk }} </a></td>
+                    <td>{{ registry.date }}</td>
+                    <td>{{ registry.type }}</td>
+                    <td>{{ registry.rpo_type }}</td>
+                    <td>
+                        <form action="{% url 'printenvelopsapp:registry_delete' registry.pk %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">удалить</button>
+                            <button type="submit" form="print_form{{ registry.pk }}">Печать</button>
+                        </form>
+                        <form action="{% url 'printenvelopsapp:registry_print' %}" method="get" id="print_form{{ registry.pk }}">
+                            <input type="text" name="registry" value="{{ registry.pk }}"  hidden="true">
+                            <p></p>
+                        </form>
+                    </td>
+
+                  </tr>
+
+
+                  {% endfor %}
+            </tbody>
+        </table>
+</div>
+{%endblock%}
+

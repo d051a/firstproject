@@ -1,0 +1,102 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{%block head%}
+<link rel="stylesheet" type="text/css" href={% static "recepients/css/jquery.dataTables.min.css"%}>
+{%endblock%}
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{%block body%}
+    <div class="col-sm">
+      <form class = "col-md-6" method="post" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p></p>
+        <button type="submit" class="btn btn-default" name="button">Изменить</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить<span class="glyphicon glyphicon-comment"></span></button>
+        <button type="submit" class="btn btn-default" form="print_form">Печать</button>
+      </form>
+    </div>
+
+    <div class="col-sm">
+
+        <form class = "col-md-6" action="registry_print/" method="get" id="print_form">
+            {{ registry_template_form.as_p }}
+            {{ errors.as_p }}
+            <p></p>
+        </form>
+
+          <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Удаление реестра</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Вы действительно хотите удалить данный реестр?</p>
+                </div>
+                <div class="modal-footer">
+                  <form class = "col-md-12" action="{% url 'printenvelopsapp:registry_delete' registry.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                    <button type="submit" class="btn btn-danger">Да</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+<div class = "col-md-12">
+        <h2 style="margin-left: 20px;"> Отправленные конверты </h2>
+    <table id="example" class="display" style="width:100;">
+
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th>Получатель</th>
+                    <th>Дата и время</th>
+                    <th>Исполнитель</th>
+                    <th>Тип РПО</th>
+                    <th>Формат</th>
+                    <th>Исх. номер</th>
+                    <th>Секр.</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                  {% for envelop in sent_envelops_list %}
+
+                <tr>
+
+                    <td>{{ envelop.pk }}</td>
+                    <td>{{ envelop.recipient }}</td>
+                    <td>{{ envelop.date }}</td>
+                    <td>{{ envelop.username }}</td>
+                    <td>{{ envelop.rpo_type }}</td>
+                    <td>{{ envelop.envelop_format}}</td>
+                    <td>{{ envelop.outer_num }}</td>
+                    <td>{{ envelop.secret_type.short_name }}</td>
+                    <td>
+                        <form action="{% url 'printenvelopsapp:drop_registry_envelop' envelop.pk registry.pk %}" method="post">
+                            <button type="submit">удалить</button>
+                        </form></td>
+                </tr>
+                  {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+{%endblock%}

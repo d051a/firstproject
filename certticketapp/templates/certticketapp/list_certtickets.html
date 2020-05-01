@@ -37,7 +37,8 @@
                       <td class="text-center">{{ cert.middle_name }}</td>
                       <td class="text-center">{{ cert.created_time }}</td>
                       <td class="text-center">{{ cert.position }}</td>
-                      <td><a href="{% url 'certticketapp:file_generate' cert.pk %}">Скачать</a></td>
+                      <td><a href="{% url 'certticketapp:file_generate' cert.pk 1 %}">Доверенность</a></td>
+                      <td><a href="{% url 'certticketapp:file_generate' cert.pk 2 %}">Согласие</a></td>
                     </tr>
 
                     {% endfor %}

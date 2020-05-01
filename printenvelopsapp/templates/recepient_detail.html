@@ -1,0 +1,22 @@
+{% extends 'base_template.html' %}
+
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{% block body %}
+
+<div div class="col-sm">
+    <form class = "col-md-6" method="post">
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-default">ИЗМЕНИТЬ</button>
+    </form>
+</div>
+
+
+
+{% endblock%}

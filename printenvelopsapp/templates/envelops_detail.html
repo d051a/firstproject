@@ -1,0 +1,22 @@
+{% extends 'base_template.html' %}
+
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{% block body %}
+
+    <div class="col-sm">
+      <form class = "col-md-6" method="post" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p></p>
+        <button type="submit" class="btn btn-default" name="button">Создать</button>
+      </form>
+    </div>
+
+{% endblock%}

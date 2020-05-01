@@ -1,0 +1,90 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{%block body%}
+
+<form class = "col-md-5" method="post">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-default">СОЗДАТЬ</button>
+</form>
+    <form action="" method="get">
+<div class = "col-md-12">
+    <table id="example" class="display" style="width:100;">
+
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th>Получатель</th>
+                    <th>Дата и время</th>
+                    <th>Исполнитель</th>
+                    <th>Формат</th>
+                    <th>Исх. номер</th>
+                    <th>РПО</th>
+                    <th>Секр.</th>
+                    <th>Тип реестра</th>
+                    <th>Реестр</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                  {% for envelop in sent_envelops_list %}
+
+                <tr>
+
+                    <td>{{ envelop.pk }}</td>
+                    <td>{{ envelop.recipient }}</td>
+                    <td>{{ envelop.date }}</td>
+                    <td>{{ envelop.username }}</td>
+                    <td>{{ envelop.envelop_format}}</td>
+                    <td>{{ envelop.outer_num }}</td>
+                    <td>{{ envelop.rpo_type }}</td>
+                    <td>{{ envelop.secret_type.short_name }}</td>
+                    <td>{{ envelop.registry_type }}</td>
+                    <td><a href="{% url 'printenvelopsapp:registry_detail' envelop.registry.pk as the_url %}{{ the_url }}">{{ envelop.registry.pk }}</a></td>
+                    <td><input type="checkbox" id="checkbox{{ envelop.pk }}" value="{{ envelop.pk }}" name="checkbox"></td>
+                </tr>
+                  {% endfor %}
+            </tbody>
+        </table>
+</div>
+    <button  type="submit"></button></form>
+
+{%endblock%}
+
+{%block scripts%}
+<script src={% static "recepients/jquery-3.2.1.min.js" %}></script>
+<script type="text/javascript" language="javascript" src={% static "recepients/js/jquery.dataTables.min.js"%} ></script>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable({"order": [],
+    language: {
+      processing:     "Traitement en cours...",
+      search:         "Фильтр",
+      lengthMenu:    "Показать _MENU_ элементов",
+      info:           "Показано _START_ из _END_ из _TOTAL_ элементов",
+      infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+      infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+      infoPostFix:    "",
+      loadingRecords: "Chargement en cours...",
+      zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+      emptyTable:     "Aucune donnée disponible dans le tableau",
+      paginate: {
+            first:      "Первый",
+            previous:   "Предыдущий",
+            next:       "Следующий",
+            last:       "Последний"
+        },
+    }
+});
+} );
+</script>
+{%endblock%}
+

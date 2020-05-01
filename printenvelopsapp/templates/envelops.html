@@ -1,0 +1,40 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{%block head%}
+<link rel="stylesheet" type="text/css" href={% static "recepients/css/jquery.dataTables.min.css"%}>
+{%endblock%}
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{%block body%}
+<div class = "col-md-6">
+    <table id="example" class="display" style="width:100;">
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th>Название конверта</th>
+                    <th>Формат конверта</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for envelop in envelops_list %}
+                <tr>
+                    <td>{{ envelop.pk }}</td>
+                    <td><a href="{% url 'printenvelopsapp:envelops_detail' envelop.pk %}">{{ envelop.env_title }} </a></td>
+                    <td>{{ envelop.envelop_format}}</td>
+                    <td>
+                    </td>
+                  </tr>
+
+
+                  {% endfor %}
+            </tbody>
+        </table>
+</div>
+{%endblock%}
+

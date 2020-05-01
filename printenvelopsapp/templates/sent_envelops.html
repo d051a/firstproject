@@ -1,0 +1,56 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{%block head%}
+<link rel="stylesheet" type="text/css" href={% static "recepients/css/jquery.dataTables.min.css"%}>
+{%endblock%}
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{%block body%}
+<div class = "col-md-12">
+    <table id="example" class="display" style="width:100;">
+
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th>Получатель</th>
+                    <th>Дата и время</th>
+                    <th>Исполнитель</th>
+                    <th>Формат</th>
+                    <th>Исх. номер</th>
+                    <th>РПО</th>
+                    <th>Секр.</th>
+                    <th>Тип реестра</th>
+                    <th>Реестр</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                  {% for envelop in sent_envelops_list %}
+
+                <tr>
+
+                    <td>{{ envelop.pk }}</td>
+                    <td>{{ envelop.recipient }}</td>
+                    <td>{{ envelop.date }}</td>
+                    <td>{{ envelop.username }}</td>
+                    <td>{{ envelop.envelop_format}}</td>
+                    <td>{{ envelop.outer_num }}</td>
+                    <td>{{ envelop.rpo_type }}</td>
+                    <td>{{ envelop.secret_type.short_name }}</td>
+                    <td>{{ envelop.registry_type }}</td>
+                    <td><a href="{% url 'printenvelopsapp:registry_detail' envelop.registry.pk as the_url %}{{ the_url }}">{{ envelop.registry.pk }}</a></td>
+                </tr>
+                  {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+{%endblock%}
+

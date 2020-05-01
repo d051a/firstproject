@@ -63,8 +63,7 @@ class Ticket(models.Model):
         permissions = (
             ('can_view_allticketslist', 'Может просматривать все заявки'),
             ('can_view_myticketslist', 'Может просматривать свои заявки'),
-            ('can_view_imperformer_ticketslist',
-                'Может просматривать назначенные заявки'),
+            ('can_view_imperformer_ticketslist', 'Может просматривать назначенные заявки'),
             ('can_add_tickets', 'Может добавлять заявки'),
             ('can_edit_all_tickets', 'Может изменять все заявки'),
             ('can_edit_my_tickets', 'Может изменять свои заявки'),

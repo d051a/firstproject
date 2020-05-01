@@ -33,6 +33,14 @@ class CertTicketModel(models.Model):
     code_word = models.CharField('Произвольное кодовое слово', max_length=20)
 
     class Meta:
+        permissions = (
+            ('can_view_certticketslist', 'Может просматривать все заявки на сертификаты'),
+            ('can_view_mycertticketslist', 'Может просматривать свои заявки'),
+            ('can_add_certtickets', 'Может добавлять заявки'),
+            ('can_edit_all_certtickets', 'Может изменять все заявки'),
+            ('can_edit_my_certtickets', 'Может изменять свои заявки'),
+            ('can_delete_my_certtickets', 'Может удалять свои заявки'),
+        )
         ordering = ['created_time']
         verbose_name = 'Заявка на выдачу сертификата'
         verbose_name_plural = 'Заявки на выдачу сертификатов'
@@ -41,12 +49,26 @@ class CertTicketModel(models.Model):
         return '{} {} {} {}'.format(self.created_time, self.name, self.name, self.middle_name)
 
 class Template(models.Model):
+    TEMPLATE_TYPE_CHOICES = (
+        ('1', 'Доверенность'),
+        ('2', 'Согласие'),
+    )
+    type = models.CharField('Тип шаблона',
+                            max_length=2,
+                            choices=TEMPLATE_TYPE_CHOICES,
+                            default='2')
     name = models.CharField('Название шаблона', max_length=100)
+    date_time = models.DateTimeField('Дата добавления', auto_now_add=True)
     file = models.FileField('Файл шаблона')
 
     class Meta:
+        permissions = (
+            ('can_add_certtickets_temlates', 'Может добавлять шаблоны'),
+            ('can_delete_certtickets_temlates', 'Может удалять шаблоны'),
+        )
         verbose_name = 'Шаблон документа'
         verbose_name_plural = 'Шаблоны документов'
+
 
     def __str__(self):
         return self.name

@@ -6,4 +6,5 @@ django-summernote==0.8.11.1
 pyopenssl
 django-bootstrap4
 docx-mailmerge
+docxtpl
 
