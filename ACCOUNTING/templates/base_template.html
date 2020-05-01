@@ -65,7 +65,7 @@
           {% endif %}
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             {% if perms.ticketsapp.can_view_allticketslist %}<a class="dropdown-item" href="{% url 'ticketsapp:list_tickets' %}">Все заявки</a>{% endif %}
-                        {% if perms.ticketsapp.can_add_tickets %}<a class="dropdown-item" href="{% url 'certticketapp:list_cert_tickets' %}">Все заявки на ЭП</a>{% endif %}
+                        {% if perms.ticketsapp.can_add_tickets %}<a class="dropdown-item" href="{% url 'certticketapp:list_cert_tickets' %}">Заявки на ЭП</a>{% endif %}
             {% if perms.ticketsapp.can_view_myticketslist %}<a class="dropdown-item" href="{% url 'ticketsapp:user_list_tickets' %}">Мои заявки</a>{% endif %}
             {% if perms.ticketsapp.can_view_imperformer_ticketslist %}<a class="dropdown-item" href="{% url 'ticketsapp:userperformer_list_tickets' %}">Назначенные мне <span class="badge badge-dark">{% open_tickets_count user.id %}</span> <span class="badge badge-warning">{% inwork_tickets_count user.id%}</span></a>{% endif %}
             {% if perms.ticketsapp.can_add_tickets %}<a class="dropdown-item" href="{% url 'certticketapp:add_cert_ticket' %}">Подать заявку на ЭП</a>{% endif %}
