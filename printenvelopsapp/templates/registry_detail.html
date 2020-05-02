@@ -91,6 +91,7 @@
                     <td>{{ envelop.secret_type.short_name }}</td>
                     <td>
                         <form action="{% url 'printenvelopsapp:drop_registry_envelop' envelop.pk registry.pk %}" method="post">
+                            {% csrf_token %}
                             <button type="submit">удалить</button>
                         </form></td>
                 </tr>

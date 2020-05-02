@@ -9,11 +9,6 @@
 {%endblock%}
 
 {%block header_end%}
-
-{% if perms.ticketsapp.can_add_tickets %}
-      <a role="button" class="btn btn-secondary" href="{% url 'ticketsapp:add_ticket' %}"><b>+</b></a>
-{% endif %}
-
 {%endblock%}
 
 {%block body%}

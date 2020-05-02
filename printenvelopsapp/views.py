@@ -200,7 +200,7 @@ def registry_detail(request, registry_pk=None):
 			'registry_template_form': registry_template_form,
 			'registry': registry,
 			'sent_envelops_list': sent_envelops_list,
-			'pagename': 'Реестр №'+ registry_pk
+			'pagename': 'Реестр №' + registry_pk
 		})
 
 
@@ -271,10 +271,11 @@ def registry_add(request):
 			return redirect('printenvelopsapp:registry_list')
 
 	else:
-
+		pagename = 'Новый реестр'
 		form = RegistryForm()
 		sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
 		return render(request, 'registry_add.html', {'form': form,
+													 'pagename': pagename,
 													 'sent_envelops_list': sent_envelops_list})
 
 
@@ -296,7 +297,7 @@ def registry_add2(request):
 
 		form = RegistryForm()
 		sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
-		return render(request, 'registry_add2.html', {'form': form,
+		return render(request, 'registry_add.html', {'form': form,
 													 'sent_envelops_list': sent_envelops_list})
 
 # class RegistryDetail(UpdateView):
