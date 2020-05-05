@@ -2,6 +2,13 @@ from django import forms
 from django.forms import ModelForm
 from certticketapp.models import CertTicketModel
 
+
+CERTTICKET_GENDER_CHOICES = (
+    ('m', 'Мужской'),
+    ('f', 'Женский'),
+)
+
+
 class CertTicketModelForm(ModelForm):
     class Meta:
         model = CertTicketModel
@@ -22,6 +29,7 @@ class CertTicketModelForm(ModelForm):
                   'registration_address',
                   'position',
                   'code_word',
+                  'gender',
                   ]
 
         widgets = {
@@ -42,4 +50,5 @@ class CertTicketModelForm(ModelForm):
             'registration_address': forms.TextInput(attrs={'class': 'form-control'}),
             'position': forms.TextInput(attrs={'class': 'form-control'}),
             'code_word': forms.TextInput(attrs={'class': 'form-control'}),
+            'gender': forms.RadioSelect(choices=CERTTICKET_GENDER_CHOICES),
         }

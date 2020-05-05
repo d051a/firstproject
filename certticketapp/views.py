@@ -7,7 +7,9 @@ from certticketapp.forms import CertTicketModelForm
 from mailmerge import MailMerge
 from django.conf import settings
 import datetime
-
+from petrovich.main import Petrovich
+from petrovich.enums import Case, Gender
+from .tools import change_word_maturity
 
 
 class CertTicketList(ContextPageMixin, ListView):
@@ -41,11 +43,23 @@ class DeleteCertTicket(ContextPageMixin, DeleteView):
 def file_generate(request, ticket_pk, template_type):
 	template = Template.objects.all().filter(type=template_type).order_by('-date_time')[0]
 	user_info = CertTicketModel.objects.get(pk=ticket_pk)
-	print('+++++', datetime.datetime.today().strftime("%Y-%m-%d"))
+	gender = user_info.gender
+	user_firstname = user_info.name
+	user_lastname = user_info.surname
+	user_middlename = user_info.middle_name
+	p = Petrovich()
 	template = '{}/{}'.format(settings.MEDIA_ROOT, template.file)
 	document = MailMerge(template)
 	document.merge(
-		FIO='{} {} {}'.format(user_info.surname, user_info.name, user_info.middle_name),
+		FIO='{} {} {}'.format(user_lastname, user_firstname, user_middlename),
+		FIRSTNAME_GENITIVE=p.firstname(user_firstname, Case.GENITIVE, Gender.FEMALE if gender == 'f' else Gender.MALE),
+		LASTNAME_GENITIVE=p.lastname(user_lastname, Case.GENITIVE, Gender.FEMALE if gender == 'f' else Gender.MALE),
+		MIDDLENAME_GENITIVE=p.middlename(user_middlename, Case.GENITIVE, Gender.FEMALE if gender == 'f' else Gender.MALE),
+		FIRSTNAME_ACCUSATIVE=p.firstname(user_firstname, Case.ACCUSATIVE, Gender.FEMALE if gender == 'f' else Gender.MALE),
+		LASTNAME_ACCUSATIVE=p.lastname(user_lastname, Case.ACCUSATIVE, Gender.FEMALE if gender == 'f' else Gender.MALE),
+		MIDDLENAME_ACCUSATIVE=p.middlename(user_middlename, Case.ACCUSATIVE, Gender.FEMALE if gender == 'f' else Gender.MALE),
+		FIRSTNAME_SHORT=user_firstname[0],
+		MIDDLENAME_SHORT=user_middlename[0],
 		ADDRESS=user_info.registration_address,
 		PASSPORT_ISSUED=user_info.passport_issued_by,
 		PASSPORT_SERIAL=user_info.passport_series,
@@ -53,7 +67,8 @@ def file_generate(request, ticket_pk, template_type):
 		PASSPORT_DATE=str(get_date(user_info.passport_date)),
 		PASSPORT_DCODE=user_info.passport_unit_code,
 		POST=user_info.position,
-		FULL_DATE=get_date(datetime.datetime.today().strftime("%Y-%m-%d"), format=1)
+		POST_GENITIVE=change_word_maturity(user_info.position, 'gent'),
+		FULL_DATE=get_date(datetime.datetime.today().strftime("%Y-%m-%d"), format=1),
 	)
 
 	response = HttpResponse(content_type='text/docx')

@@ -7,6 +7,7 @@ class CertTicketModel(models.Model):
     surname = models.CharField('Фамилия', max_length=50)
     name = models.CharField('Имя', max_length=50)
     middle_name = models.CharField('Отчество', max_length=50)
+    gender = models.CharField('Пол', max_length=10)
     birthday = models.DateField('Дата рождения')
     place_of_birth = models.CharField('Место рождения', max_length=50)
     INN = models.CharField('ИНН',
@@ -29,7 +30,7 @@ class CertTicketModel(models.Model):
             max_length=7)
     passport_issued_by = models.CharField('Кем выдан', max_length=150)
     registration_address = models.CharField('Адрес регистрации', max_length=250)
-    position = models.CharField('Должность', max_length=100)
+    position = models.CharField('Должность', max_length=250)
     code_word = models.CharField('Произвольное кодовое слово', max_length=20)
 
     class Meta:
