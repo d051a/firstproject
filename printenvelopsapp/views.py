@@ -1,14 +1,16 @@
+import datetime
+import zipfile
+import re
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Recepient, Envelop, SecretType, SentEnvelop, Registry, RegistryTemplate
+from .models import Recepient, Envelop, SecretType, SentEnvelop, Registry
 from ACCOUNTING import settings
 from .forms import RecipientForm, EnvelopeFormatModelForm, PrintEnvelopForm, RegistryForm, RegistryTemplateForm
 from mailmerge import MailMerge
 from docxtpl import DocxTemplate
 from .main import DateToWords
-import datetime, zipfile
-import re
-
+from employeesapp.models import Employee
+from printenvelopsapp.num2t4ru import num2text
 
 
 def env_generate(request, envelop_data):
@@ -96,13 +98,18 @@ def recepient_detail(request, rec_id):
 			'city': recipient_detail.city
 		})
 
-		return render(request, 'recepient_detail.html', {'form': form,
-														 'pagename': 'Адресат'})
+		return render(request, 'recepient_detail.html', {
+			'form': form,
+			'pagename': 'Адресат'
+		})
+
 
 def envelops(request):
 	envelops_list = Envelop.objects.all()
-	return render(request, 'envelops.html', {'envelops_list': envelops_list,
-											 'pagename': 'Конверты'})
+	return render(request, 'envelops.html', {
+		'envelops_list': envelops_list,
+		'pagename': 'Конверты'
+	})
 
 
 def envelop_template_add(request):
@@ -118,8 +125,10 @@ def envelop_template_add(request):
 			return redirect('printenvelopsapp:envelops_list')
 	else:
 		form = EnvelopeFormatModelForm()
-	return render(request, 'envelop_add.html', {'form': form,
-												'pagename': 'Новый конверт'})
+	return render(request, 'envelop_add.html', {
+		'form': form,
+		'pagename': 'Новый конверт'
+	})
 
 
 def envelop_template_detail(request, envelop_pk):
@@ -136,9 +145,10 @@ def envelop_template_detail(request, envelop_pk):
 			return redirect('printenvelopsapp:envelops_list')
 	else:
 		form = EnvelopeFormatModelForm(instance=envelop)
-	return render(request, 'envelops_detail.html', {'form': form,
-												  	'pagename': 'Конверт'})
-
+	return render(request, 'envelops_detail.html', {
+		'form': form,
+		'pagename': 'Конверт'
+	})
 
 
 def add_to_sent_envelops_list(recepient_data=None, envelop_data=None, secret_data=None):
@@ -150,8 +160,10 @@ def add_to_sent_envelops_list(recepient_data=None, envelop_data=None, secret_dat
 
 def sent_envelops(request):
 	sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
-	return render(request, 'sent_envelops.html', {'sent_envelops_list': sent_envelops_list,
-												  'pagename': 'Отправленные'})
+	return render(request, 'sent_envelops.html', {
+		'sent_envelops_list': sent_envelops_list,
+		'pagename': 'Отправленные'
+	})
 
 
 def print_envelop(request):
@@ -170,14 +182,18 @@ def print_envelop(request):
 			return env_generate(request, cld)
 	else:
 		form = PrintEnvelopForm()
-	return render(request, 'print_envelop.html', {'form': form,
-												  'pagename': 'Печать конверта'})
+	return render(request, 'print_envelop.html', {
+		'form': form,
+		'pagename': 'Печать конверта'
+	})
 
 
 def registry_list(request):
-	registry_list = Registry.objects.all()
-	return render(request, 'registry.html', {'registry_list': registry_list,
-											 'pagename': 'Реестры'})
+	registry_objects = Registry.objects.all()
+	return render(request, 'registry.html', {
+		'registry_list': registry_objects,
+		'pagename': 'Реестры'
+	})
 
 
 def registry_detail(request, registry_pk=None):
@@ -235,13 +251,24 @@ def registry_print(request):
 	date = datetime.datetime.today().strftime("%d.%m.%Y")
 	text_date = DateToWords(date)
 	text_date = '« {} » {} {}'.format(text_date.get_day(), text_date.get_month_text(), text_date.get_year())
+	user = Employee.objects.get(user=request.user)
+	envelops_list_len_text = num2text(envelops_list_len, ((u'отправление', u'отправления', u'отправлений'), 'f'))
+	envelops_list_len_pieces = num2text(envelops_list_len, ((u'штука', u'штуки', u'штук'), 'f'))
 	context = {
 		'tbl_contents': envelops_list,
 		'registry_id': registry_pk,
 		'rpo_type': registry.rpo_type,
 		'envelops_list_len': envelops_list_len,
+		'envelops_list_len_text': '({}) {}'.format(
+			envelops_list_len_text.split()[0],
+			envelops_list_len_text.split()[1]),
+		'envelops_list_len_pieces': '({}) {}'.format(
+			envelops_list_len_pieces.split()[0],
+			envelops_list_len_pieces.split()[1]),
 		'date': date,
-		'text_date': text_date
+		'text_date': text_date,
+		'post': user.post,
+		'fio_short': '{} {}.{}.'.format(user.fio.split()[0], user.fio.split()[1][0], user.fio.split()[1][0])
 	}
 	temporaty_document.render(context)
 	response = HttpResponse(content_type='text/docx')
@@ -274,9 +301,11 @@ def registry_add(request):
 		pagename = 'Новый реестр'
 		form = RegistryForm()
 		sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
-		return render(request, 'registry_add.html', {'form': form,
-													 'pagename': pagename,
-													 'sent_envelops_list': sent_envelops_list})
+		return render(request, 'registry_add.html', {
+			'form': form,
+			'pagename': pagename,
+			'sent_envelops_list': sent_envelops_list
+		})
 
 
 def registry_add2(request):
@@ -297,8 +326,10 @@ def registry_add2(request):
 
 		form = RegistryForm()
 		sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
-		return render(request, 'registry_add.html', {'form': form,
-													 'sent_envelops_list': sent_envelops_list})
+		return render(request, 'registry_add.html', {
+			'form': form,
+			'sent_envelops_list': sent_envelops_list
+		})
 
 # class RegistryDetail(UpdateView):
 # 	template_name = 'registry_detail.html'
