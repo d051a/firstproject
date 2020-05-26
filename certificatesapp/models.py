@@ -20,6 +20,8 @@ class Certificate(models.Model):
         verbose_name = 'Сертификат'
         verbose_name_plural = 'Сертификаты'
 
+
+
     def __str__(self):
         return self.fullname + str(self.validate_end_date)
 

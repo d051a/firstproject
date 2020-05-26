@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_summernote',
     'certificatesapp',
     'tokensapp',
+    # 'tokensapp.apps.TokensappConfig',
     'certticketapp',
     'printenvelopsapp',
     'bootstrap4',
