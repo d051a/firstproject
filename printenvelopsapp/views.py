@@ -25,21 +25,21 @@ def env_generate(request, envelop_data):
 		secret = ''
 
 	template = '{}/{}'.format(settings.MEDIA_ROOT, envelop.envelop_template)
-	document = MailMerge(template)
-	document.merge(
-		TITLE=recipient.title,
-		ADDRESS=recipient.address,
-		REGION=recipient.region,
-		CITY=recipient.city,
-		POSTCODE=recipient.postcode,
-		SECRET=secret,
-		OUTER_NUM=outer_num,
-
-	)
+	output_document = DocxTemplate(template)
+	context = {
+		'title': recipient.title,
+		'address': recipient.address,
+		'region': recipient.region,
+		'city': recipient.city,
+		'postcode': recipient.postcode,
+		'secret': secret,
+		'outer_num': outer_num,
+	}
+	output_document.render(context)
 
 	response = HttpResponse(content_type='text/docx')
 	response['Content-Disposition'] = 'attachment; filename=download.docx'
-	document.write(response)
+	output_document.save(response)
 	return response
 
 
@@ -306,42 +306,3 @@ def registry_add(request):
 			'pagename': pagename,
 			'sent_envelops_list': sent_envelops_list
 		})
-
-
-def registry_add2(request):
-	print('-------', request.GET)
-	if request.method == 'POST':
-		form = RegistryForm(request.POST)
-		if form.is_valid():
-			cld = form.cleaned_data
-			registry = Registry()
-			registry.type = cld['type']
-			registry.rpo_type = cld['rpo_type']
-			registry.save()
-			envelops = SentEnvelop.objects.filter(registry=None).filter(rpo_type=cld['rpo_type']).filter(registry_type=cld['type'])
-			envelops.update(registry=registry)
-			return redirect('printenvelopsapp:registry_list')
-
-	else:
-
-		form = RegistryForm()
-		sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
-		return render(request, 'registry_add.html', {
-			'form': form,
-			'sent_envelops_list': sent_envelops_list
-		})
-
-# class RegistryDetail(UpdateView):
-# 	template_name = 'registry_detail.html'
-# 	model = Registry
-# 	form = RegistryForm
-# 	context_object_name = 'Реестры'
-# 	pagename = 'Реестры'
-# 	fields = 'rpo_type', 'type'
-#
-# 	def get_context_data(self, **kwargs):
-# 		context = super().get_context_data(**kwargs)
-# 		registry = Registry.objects.get(pk=self.kwargs['pk'])
-# 		sent_envelops_list = SentEnvelop.objects.filter(registry=registry)
-# 		context['sent_envelops_list'] = sent_envelops_list
-# 		return context
