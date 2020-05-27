@@ -118,7 +118,9 @@ class FileFieldView(FormView):
         if form.is_valid():
             for file in files:
                 x509 = crypto.load_certificate(crypto.FILETYPE_ASN1, file.read())
+                print(x509)
                 list = x509.get_subject().get_components()
+                print(list)
                 cert_dict = {}
                 for elem in list:
                     cert_dict[elem[0].decode("utf-8")] = elem[1].decode("utf-8")

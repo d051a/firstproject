@@ -10,8 +10,8 @@ class RecipientForm(ModelForm):
         fields = [
             'title',
             'address',
-            'region',
             'city',
+            'region',
             'postcode'
         ]
         widgets = {

@@ -35,7 +35,7 @@ class Recepient(models.Model):
 	pub_date = models.DateField('Дата публикации', auto_now_add=True)
 	address = models.CharField('Адрес', max_length=100)
 	region = models.CharField('Регион(область)', max_length=100)
-	city = models.CharField('Регион(область)', max_length=100)
+	city = models.CharField('Город', max_length=100)
 	postcode = models.CharField('Индекс', max_length=6, validators=[MinLengthValidator(6)], null=True)
 	sender = models.BooleanField('Признак отправителя', default=False)
 
