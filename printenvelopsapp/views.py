@@ -67,7 +67,7 @@ def recepient_add(request):
 			recipient.region = cld['region']
 			recipient.city = cld['city']
 			recipient.save()
-			return HttpResponseRedirect('/')
+			return redirect('printenvelopsapp:recepients')
 	else:
 		form = RecipientForm()
 
