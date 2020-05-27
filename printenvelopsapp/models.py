@@ -31,12 +31,12 @@ class Address(models.Model):
 
 
 class Recepient(models.Model):
-	title = models.CharField('Наименование адресата', max_length=100)
+	title = models.CharField('Наименование адресата', max_length=10)
 	pub_date = models.DateField('Дата публикации', auto_now_add=True)
 	address = models.CharField('Адрес', max_length=100)
-	region = models.CharField('Регион(область)', max_length=100)
-	city = models.CharField('Город', max_length=100)
-	postcode = models.CharField('Индекс', max_length=6, validators=[MinLengthValidator(6)], null=True)
+	region = models.CharField('Регион(область)', max_length=100, blank=True)
+	city = models.CharField('Город', max_length=100, blank=True)
+	postcode = models.CharField('Индекс', max_length=6, validators=[MinLengthValidator(6)], blank=True)
 	sender = models.BooleanField('Признак отправителя', default=False)
 
 	class Meta:
