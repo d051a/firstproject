@@ -11,6 +11,10 @@
     {{ pagename }}
 {%endblock%}
 
+{%block header_end%}
+<a style="margin-right: 20px;" role="button" class="btn btn-secondary" href="{% url 'printenvelopsapp:envelop_template_add' %}"><b>+</b></a>
+{%endblock%}
+
 {%block body%}
 <div class = "col-md-6">
     <table id="example" class="display" style="width:100;">

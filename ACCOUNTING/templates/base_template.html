@@ -109,26 +109,10 @@
                   Печать конвертов
               </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item dropdown-toggle" href="#">Адресная книга</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:recepients' %}">Все адреса</a></li>
-                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:recepient_add' %}">Добавить адресата</a></li>
-              </ul>
-            </li>
-              <li><a class="dropdown-item dropdown-toggle" href="#">Конверты</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:envelops' %}">Все конверты</a></li>
-                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:envelop_template_add' %}">Добавить конверт</a></li>
-                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:envelop_print' %}">Печать конвертов</a></li>
-              </ul>
-            </li>
-              <li><a class="dropdown-item dropdown-toggle" href="#">Реестры</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:registry_list' %}">Печать реестров</a></li>
-                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:registry_add' %}">Создать новый</a></li>
-              </ul>
-            </li>
+                        <li><a class="dropdown-item" href="{% url 'printenvelopsapp:recepients' %}">Адреса</a></li>
+              <li><a class="dropdown-item" href="{% url 'printenvelopsapp:registry_list' %}">Реестры</a></li>
               <li><a class="dropdown-item dropdown-toggle" href="#">Отчеты</a>
+              <li><a class="dropdown-item" href="{% url 'printenvelopsapp:envelop_print' %}">Напечатать конверт</a></li>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'printenvelopsapp:sent_envelops' %}">Отправленные</a></li>
               </ul>
