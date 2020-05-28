@@ -1,6 +1,5 @@
 from django import forms
-from django.db import models
-from .models import Envelop, SentEnvelop, Registry, RegistryTemplate, Recepient
+from .models import Envelop, SentEnvelop, Registry, Recepient
 from django.forms import ModelForm
 
 
@@ -34,7 +33,8 @@ class PrintEnvelopForm(ModelForm):
             'outer_num',
         ]
         widgets = {
-            'recipient': forms.Select(attrs={'class': 'js-example-placeholder-single js-states form-control', 'height': '75%'}),
+            'recipient': forms.Select(attrs={'class': 'js-example-placeholder-single js-states form-control',
+                                             'height': '75%'}),
             'rpo_type': forms.Select(attrs={'class': 'form-control'}),
             'envelop_format': forms.Select(attrs={'class': 'form-control'}),
             'registry_type': forms.Select(attrs={'class': 'form-control'}),
@@ -55,7 +55,6 @@ class EnvelopeFormatModelForm(ModelForm):
         }
 
 
-
 class RegistryForm(ModelForm):
     class Meta:
         model = Registry
@@ -65,8 +64,7 @@ class RegistryForm(ModelForm):
             'rpo_type': forms.Select(attrs={'class': 'form-control'}),
         }
 
+
 class RegistryTemplateForm(forms.Form):
     registry = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'special', 'hidden': 'true'}), label='', required=False)
-
-
