@@ -73,6 +73,7 @@ class EnvelopFormat(models.Model):
 class Envelop(models.Model):
 	env_title = models.CharField('Название конверта', max_length=30)
 	envelop_format = models.ForeignKey(EnvelopFormat)
+	secret_type = models.ForeignKey('SecretType', verbose_name='Тип секретности', null=True, blank=True)
 	envelop_template = models.FileField('Шаблон конверта')
 
 	class Meta:
@@ -113,10 +114,9 @@ class SentEnvelop(models.Model):
 	date = models.DateTimeField('Дата и время создания', auto_now=True)
 	username = models.CharField('Исполнитель', max_length=1, blank=True)
 	rpo_type = models.ForeignKey('RPOType', null=True, verbose_name='Вид РПО')
-	secret_type = models.ForeignKey('printenvelopsapp.SecretType', null=True, verbose_name='Тип секретности')
 	envelop_format = models.ForeignKey('printenvelopsapp.Envelop', null=True, verbose_name='Формат конверта')
 	outer_num = models.CharField('Исходящий номер', max_length=100, blank=True)
-	address_format = models.CharField('Представление адреса', max_length=2, choices=sent_address_format, default='old')
+	address_format = models.CharField('Представление адреса', max_length=50, choices=sent_address_format, default='old')
 	index_print = models.BooleanField('Печать индекса', default=True)
 	registry_type = models.ForeignKey('printenvelopsapp.RegistryType', verbose_name='Тип реестра')
 	registry = models.ForeignKey('printenvelopsapp.Registry', on_delete=models.SET_NULL, null=True, blank=True)

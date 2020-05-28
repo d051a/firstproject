@@ -28,10 +28,9 @@ class PrintEnvelopForm(ModelForm):
         model = SentEnvelop
         fields = [
             'recipient',
-            'rpo_type',
-            'secret_type',
-            'envelop_format',
             'registry_type',
+            'rpo_type',
+            'envelop_format',
             'outer_num',
             'address_format',
             'index_print'
@@ -39,7 +38,6 @@ class PrintEnvelopForm(ModelForm):
         widgets = {
             'recipient': forms.Select(attrs={'class': 'js-example-placeholder-single js-states form-control', 'height': '75%'}),
             'rpo_type': forms.Select(attrs={'class': 'form-control'}),
-            'secret_type': forms.Select(attrs={'class': 'form-control'}),
             'envelop_format': forms.Select(attrs={'class': 'form-control'}),
             'registry_type': forms.Select(attrs={'class': 'form-control'}),
             'outer_num': forms.TextInput(attrs={'class': 'form-control'}),
@@ -51,7 +49,7 @@ class PrintEnvelopForm(ModelForm):
 class EnvelopeFormatModelForm(ModelForm):
     class Meta:
         model = Envelop
-        fields = ['env_title', 'envelop_format', 'envelop_template']
+        fields = ['env_title', 'envelop_format', 'secret_type', 'envelop_template']
         widgets = {
             'env_title': forms.TextInput(attrs={'class': 'form-control'}),
             'envelop_format': forms.Select(attrs={'class': 'form-control'}),
