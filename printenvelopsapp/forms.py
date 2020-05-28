@@ -32,8 +32,6 @@ class PrintEnvelopForm(ModelForm):
             'rpo_type',
             'envelop_format',
             'outer_num',
-            'address_format',
-            'index_print'
         ]
         widgets = {
             'recipient': forms.Select(attrs={'class': 'js-example-placeholder-single js-states form-control', 'height': '75%'}),

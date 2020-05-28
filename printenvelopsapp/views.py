@@ -16,23 +16,19 @@ from printenvelopsapp.num2t4ru import num2text
 def env_generate(request, envelop_data):
 	recipient = envelop_data['recipient']
 	envelop = envelop_data['envelop_format']
-	secret = envelop_data['secret_type']
 	outer_num = envelop_data['outer_num']
-
-	if secret.visible:
-		secret = secret.name
-	else:
-		secret = ''
-
 	template = '{}/{}'.format(settings.MEDIA_ROOT, envelop.envelop_template)
 	output_document = DocxTemplate(template)
+	address = (recipient.region, recipient.city, recipient.address)
+	address_old_format = ', '.join(filter(None, address))
+	address_new_format = ', '.join(filter(None, address[::-1]))
 	context = {
 		'title': recipient.title,
-		'address': recipient.address,
+		'address': address_old_format,
+		'address_new_format': address_new_format,
 		'region': recipient.region,
 		'city': recipient.city,
 		'postcode': recipient.postcode,
-		'secret': secret,
 		'outer_num': outer_num,
 	}
 	output_document.render(context)
@@ -174,7 +170,6 @@ def print_envelop(request):
 			envelop = SentEnvelop()
 			envelop.recipient = cld['recipient']
 			envelop.rpo_type = cld['rpo_type']
-			envelop.secret_type = cld['secret_type']
 			envelop.envelop_format = cld['envelop_format']
 			envelop.outer_num = cld['outer_num']
 			envelop.registry_type = cld['registry_type']
