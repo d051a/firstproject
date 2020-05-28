@@ -1,16 +1,16 @@
-import datetime
-import zipfile
-import re
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import Recepient, Envelop, SecretType, SentEnvelop, Registry
 from ACCOUNTING import settings
 from .forms import RecipientForm, EnvelopeFormatModelForm, PrintEnvelopForm, RegistryForm, RegistryTemplateForm
-from mailmerge import MailMerge
 from docxtpl import DocxTemplate
 from .main import DateToWords
 from employeesapp.models import Employee
 from printenvelopsapp.num2t4ru import num2text
+import datetime
+import zipfile
+import re
+import jinja2
 
 
 def env_generate(request, envelop_data):
@@ -236,6 +236,11 @@ def sent_envelop_add_to_registry(request, envelop_pk, registry_pk):
 
 
 def registry_print(request):
+	def get_clear_address(address):
+		clear_address = address.split('.')
+		return str(clear_address[0])
+	jinja_env = jinja2.Environment()
+	jinja_env.filters['get_clear_address'] = get_clear_address
 	registry_pk = request.GET['registry']
 	registry = Registry.objects.get(pk=registry_pk)
 	template = '{}/{}'.format(settings.MEDIA_ROOT, registry.type.template)
@@ -265,7 +270,7 @@ def registry_print(request):
 		'post': user.post,
 		'fio_short': '{} {}.{}.'.format(user.fio.split()[0], user.fio.split()[1][0], user.fio.split()[1][0])
 	}
-	temporaty_document.render(context)
+	temporaty_document.render(context, jinja_env)
 	response = HttpResponse(content_type='text/docx')
 	response['Content-Disposition'] = 'attachment; filename=download.docx'
 	temporery_template_path = '{}/{}'.format(settings.MEDIA_ROOT, 'test.docx')
@@ -274,7 +279,7 @@ def registry_print(request):
 	docx_template_settings = str(zf.read('docProps/app.xml'))
 	total_number_pages = re.findall(r'<Pages>(\d+)</Pages>', docx_template_settings)[0]
 	context['pages_numbers'] = total_number_pages
-	output_document.render(context)
+	output_document.render(context, jinja_env)
 	output_document.save(response)
 	return response
 
