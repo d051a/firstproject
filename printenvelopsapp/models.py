@@ -104,6 +104,11 @@ class SecretType(models.Model):
 
 
 class SentEnvelop(models.Model):
+	sent_address_format = (
+		('old', 'Старый формат'),
+		('new', 'Новый формат'),
+		('city', 'Только город')
+	)
 	recipient = models.ForeignKey('Recepient', verbose_name='Получатель')
 	date = models.DateTimeField('Дата и время создания', auto_now=True)
 	username = models.CharField('Исполнитель', max_length=1, blank=True)
@@ -111,6 +116,8 @@ class SentEnvelop(models.Model):
 	secret_type = models.ForeignKey('printenvelopsapp.SecretType', null=True, verbose_name='Тип секретности')
 	envelop_format = models.ForeignKey('printenvelopsapp.Envelop', null=True, verbose_name='Формат конверта')
 	outer_num = models.CharField('Исходящий номер', max_length=100, blank=True)
+	address_format = models.CharField('Представление адреса', max_length=2, choices=sent_address_format, default='old')
+	index_print = models.BooleanField('Печать индекса', default=True)
 	registry_type = models.ForeignKey('printenvelopsapp.RegistryType', verbose_name='Тип реестра')
 	registry = models.ForeignKey('printenvelopsapp.Registry', on_delete=models.SET_NULL, null=True, blank=True)
 

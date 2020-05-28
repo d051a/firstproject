@@ -33,7 +33,8 @@ class PrintEnvelopForm(ModelForm):
             'envelop_format',
             'registry_type',
             'outer_num',
-
+            'address_format',
+            'index_print'
         ]
         widgets = {
             'recipient': forms.Select(attrs={'class': 'js-example-placeholder-single js-states form-control', 'height': '75%'}),
@@ -42,6 +43,7 @@ class PrintEnvelopForm(ModelForm):
             'envelop_format': forms.Select(attrs={'class': 'form-control'}),
             'registry_type': forms.Select(attrs={'class': 'form-control'}),
             'outer_num': forms.TextInput(attrs={'class': 'form-control'}),
+            'address_format': forms.Select(attrs={'class': 'form-control'}),
 
         }
 
