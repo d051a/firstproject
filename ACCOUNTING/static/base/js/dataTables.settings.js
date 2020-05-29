@@ -4,6 +4,7 @@ $(document).ready(function() {
       "scrollY":        "550px",
       "scrollCollapse": true,
       "paging":         true,
+      "ordering": false,
       language: {
       processing:     "Traitement en cours...",
       search:         "Фильтр",

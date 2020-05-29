@@ -12,6 +12,7 @@
 
 <div div class="col-sm">
     <form class = "col-md-6" method="post">
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-default">ИЗМЕНИТЬ</button>
     </form>

@@ -83,7 +83,7 @@ def recepient_detail(request, rec_id):
             recipient.region = cld['region']
             recipient.city = cld['city']
             recipient.save()
-            return HttpResponseRedirect('/')
+            return redirect('printenvelopsapp:recepients')
     else:
         recipient_detail = Recepient.objects.get(pk=rec_id)
         form = RecipientForm({
@@ -237,7 +237,7 @@ def sent_envelop_add_to_registry(request, envelop_pk, registry_pk):
 
 def registry_print(request):
     def get_clear_address(address):
-        clear_address = address.split('.')
+        clear_address = address.split(',')
         return str(clear_address[0])
 
     def add_num_before_text(text):
