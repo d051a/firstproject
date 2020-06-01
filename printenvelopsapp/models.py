@@ -50,7 +50,7 @@ class Recepient(models.Model):
 		verbose_name_plural = 'Получатели'
 
 	def __str__(self):
-		return self.title
+		return f'{self.title} - {self.address}'
 
 
 class EnvelopFormat(models.Model):

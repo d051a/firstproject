@@ -11,7 +11,7 @@
 
 {%block body%}
     <div class="col-sm">
-      <form class = "col-md-6" method="post" >
+      <form class = "col-md-8" method="post" >
         {% csrf_token %}
         {{ form.as_p }}
         <p></p>
@@ -21,3 +21,14 @@
 {%endblock%}
 
 
+{%block scripts%}
+    <script>// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-placeholder-single').select2(
+        {
+    theme: 'bootstrap4',
+}
+    );
+});
+    </script>
+{%endblock scripts%}
