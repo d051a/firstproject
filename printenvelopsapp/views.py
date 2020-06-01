@@ -241,7 +241,7 @@ def registry_print(request):
         return str(clear_address[0])
 
     def add_num_before_text(text):
-        text_with_num = f'№ {text}'
+        text_with_num = '№ {}'.format(text)
         return text_with_num
 
     jinja_env = jinja2.Environment()
