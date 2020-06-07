@@ -43,7 +43,7 @@
                     <td>{{ envelop.envelop_format}}</td>
                     <td>{{ envelop.outer_num }}</td>
                     <td>{{ envelop.rpo_type }}</td>
-                    <td>{{ envelop.secret_type.short_name }}</td>
+                    <td>{{ envelop.envelop_format.secret_type.short_name }}</td>
                     <td>{{ envelop.registry_type }}</td>
                     <td><a href="{% url 'printenvelopsapp:registry_detail' envelop.registry.pk as the_url %}{{ the_url }}">{{ envelop.registry.pk }}</a></td>
                 </tr>

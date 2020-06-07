@@ -47,6 +47,21 @@ class PrintEnvelopForm(ModelForm):
         }
 
 
+class RegistrySentEnvelopForm(ModelForm):
+    class Meta:
+        model = SentEnvelop
+        fields = [
+            'recipient',
+            'outer_num',
+        ]
+        widgets = {
+            'recipient': forms.Select(attrs={'class': 'js-example-placeholder-single js-states form-control',
+                                             'height': '75%'}),
+            'outer_num': forms.TextInput(attrs={'class': 'form-control'}),
+
+        }
+
+
 class EnvelopeFormatModelForm(ModelForm):
     class Meta:
         model = Envelop

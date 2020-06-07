@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import Recepient, Envelop, SecretType, SentEnvelop, Registry
 from ACCOUNTING import settings
-from .forms import RecipientForm, EnvelopeFormatModelForm, PrintEnvelopForm, RegistryForm, RegistryTemplateForm
+from .forms import RecipientForm, EnvelopeFormatModelForm, PrintEnvelopForm, RegistryForm, RegistryTemplateForm, RegistrySentEnvelopForm
 from docxtpl import DocxTemplate
 from .main import DateToWords
 from employeesapp.models import Employee
@@ -193,17 +193,23 @@ def registry_list(request):
 
 def registry_detail(request, registry_pk=None):
     if request.method == 'POST':
-        form = RegistryForm(request.POST)
+        form = RegistrySentEnvelopForm(request.POST)
         if form.is_valid():
-            cld = form.cleaned_data
             registry = Registry.objects.get(pk=registry_pk)
-            registry.type = cld['type']
-            registry.rpo_type = cld['rpo_type']
-            registry.save()
-            return redirect('printenvelopsapp:registry_list')
+            sent_envelop = SentEnvelop()
+            cld = form.cleaned_data
+            print(cld)
+            sent_envelop.recipient = cld['recipient']
+            sent_envelop.outer_num = cld['outer_num']
+            sent_envelop.registry_type = registry.type
+            sent_envelop.rpo_type = registry.rpo_type
+            sent_envelop.registry = registry
+            sent_envelop.save()
+            print(sent_envelop)
+            return redirect('printenvelopsapp:registry_detail', registry_pk=registry_pk)
     else:
         registry = Registry.objects.get(pk=registry_pk)
-        form = RegistryForm(instance=registry)
+        form = RegistrySentEnvelopForm(instance=registry)
         registry_template_form = RegistryTemplateForm({'registry': registry_pk})
         sent_envelops_list = SentEnvelop.objects.filter(registry=registry)
         return render(request, 'registry_detail.html', {
