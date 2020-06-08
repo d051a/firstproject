@@ -3,7 +3,6 @@ from django.forms import ModelForm
 from .models import Ticket, SubProblem, MainProblem
 
 
-
 class TicketForm(ModelForm):
     class Meta():
         model = Ticket

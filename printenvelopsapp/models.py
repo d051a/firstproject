@@ -32,12 +32,12 @@ class Address(models.Model):
 
 class Recepient(models.Model):
     title = models.CharField('Наименование адресата', max_length=150)
-    pub_date = models.DateField('Дата публикации', auto_now_add=True)
+    pub_date = models.DateField('Дата публикации', auto_now_add=True, blank=True)
     address = models.CharField('Адрес', max_length=100, blank=True)
     region = models.CharField('Регион(область)', max_length=100, blank=True)
     city = models.CharField('Город', max_length=100, blank=True)
     postcode = models.CharField('Индекс', max_length=6, validators=[MinLengthValidator(6)], blank=True)
-    sender = models.BooleanField('Признак отправителя', default=False)
+    sender = models.BooleanField('Признак отправителя', default=False, blank=True)
 
     class Meta:
         permissions = (
