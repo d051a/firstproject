@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'sentenvelops/$', views.sent_envelops, name='sent_envelops'),
     url(r'recepient/(\d+)/$', views.recepient_detail, name='recepient_detail'),
     url(r'recepient_add/$', views.recepient_add, name='recepient_add'),
+    url(r'recepient_delete/(\d+)/$', views.recepient_delete, name='recepient_delete'),
     url(r'envelops/$', views.envelops, name='envelops'),
     url(r'envelops_detail/(\d+)/$', views.envelop_template_detail, name='envelops_detail'),
     url(r'gen_env/', views.env_generate, name='env_gen'),

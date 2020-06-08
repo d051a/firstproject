@@ -71,6 +71,12 @@ def recepient_add(request):
                                                   'pagename': 'Новый адресат'})
 
 
+def recepient_delete(request, recepient_pk):
+    recepient = Recepient.objects.get(pk=recepient_pk)
+    recepient.delete()
+    return redirect('printenvelopsapp:recepients')
+
+
 def recepient_detail(request, rec_id):
     if request.method == 'POST':
         form = RecipientForm(request.POST)
@@ -96,8 +102,10 @@ def recepient_detail(request, rec_id):
 
         return render(request, 'recepient_detail.html', {
             'form': form,
-            'pagename': 'Адресат'
+            'recepient': recipient_detail,
+            'pagename': 'Адресат',
         })
+
 
 
 def envelops(request):
