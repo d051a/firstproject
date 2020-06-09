@@ -35,18 +35,17 @@
                 <tr>
                     <td>{{ registry.pk }}</td>
                     <td><a href="{% url 'printenvelopsapp:registry_detail' registry.pk %}">Реестр #{{ registry.pk }} </a></td>
-                    <td>{{ registry.date }}</td>
+                    <td>{{ registry.date|date:"d.m.y" }}</td>
                     <td>{{ registry.type }}</td>
                     <td>{{ registry.rpo_type }}</td>
                     <td>
                         <form action="{% url 'printenvelopsapp:registry_delete' registry.pk %}" method="post">
                             {% csrf_token %}
-                            <button type="submit">удалить</button>
-                            <button type="submit" form="print_form{{ registry.pk }}">Печать</button>
+                            <input form="print_form{{ registry.pk }}" type="image" src="{% static "base_svg/print.svg" %}" alt="icon name" width="20">
+                            <input type="image" src="{% static "base_svg/trash.svg" %}" alt="icon name" width="20">
                         </form>
                         <form action="{% url 'printenvelopsapp:registry_print' %}" method="get" id="print_form{{ registry.pk }}">
                             <input type="text" name="registry" value="{{ registry.pk }}"  hidden="true">
-                            <p></p>
                         </form>
                     </td>
 

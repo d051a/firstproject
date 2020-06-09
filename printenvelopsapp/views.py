@@ -176,6 +176,8 @@ def print_envelop(request):
         if form.is_valid():
             cld = form.cleaned_data
             envelop = SentEnvelop()
+            user = Employee.objects.get(user=request.user)
+            envelop.username = user
             envelop.recipient = cld['recipient']
             envelop.rpo_type = cld['rpo_type']
             envelop.envelop_format = cld['envelop_format']
@@ -205,15 +207,15 @@ def registry_detail(request, registry_pk=None):
         if form.is_valid():
             registry = Registry.objects.get(pk=registry_pk)
             sent_envelop = SentEnvelop()
+            user = Employee.objects.get(user=request.user)
+            sent_envelop.username = user
             cld = form.cleaned_data
-            print(cld)
             sent_envelop.recipient = cld['recipient']
             sent_envelop.outer_num = cld['outer_num']
             sent_envelop.registry_type = registry.type
             sent_envelop.rpo_type = registry.rpo_type
             sent_envelop.registry = registry
             sent_envelop.save()
-            print(sent_envelop)
             return redirect('printenvelopsapp:registry_detail', registry_pk=registry_pk)
     else:
         registry = Registry.objects.get(pk=registry_pk)

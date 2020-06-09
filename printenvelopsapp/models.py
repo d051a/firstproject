@@ -45,7 +45,7 @@ class Recepient(models.Model):
             ('can_add_envelop_recepients', 'Может добавлять адресатов'),
             ('can_delete_envelop_recepients', 'Может удалять адресатов'),
         )
-        ordering = ['title']
+        ordering = ['-title']
         verbose_name = 'Получатель'
         verbose_name_plural = 'Получатели'
 
@@ -110,9 +110,9 @@ class SentEnvelop(models.Model):
         ('new', 'Новый формат'),
         ('city', 'Только город')
     )
-    recipient = models.ForeignKey('Recepient', verbose_name='Получатель')
+    recipient = models.ForeignKey('Recepient', verbose_name='Получатель', on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField('Дата и время создания', auto_now=True)
-    username = models.CharField('Исполнитель', max_length=1, blank=True)
+    username = models.ForeignKey('employeesapp.Employee', max_length=100)
     rpo_type = models.ForeignKey('RPOType', null=True, verbose_name='Вид РПО')
     envelop_format = models.ForeignKey('printenvelopsapp.Envelop', null=True, verbose_name='Формат конверта')
     outer_num = models.CharField('Исходящий номер', max_length=100, blank=True)

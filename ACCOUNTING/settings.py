@@ -146,6 +146,7 @@ STATICFILES_DIRS = (
     ("base_css", os.path.join(BASE_DIR, 'ACCOUNTING/static/base/css')),
     ("base_js", os.path.join(BASE_DIR, 'ACCOUNTING/static/base/js')),
     ("base_fonts", os.path.join(BASE_DIR, 'ACCOUNTING/static/base/fonts')),
+    ("base_svg", os.path.join(BASE_DIR, 'ACCOUNTING/static/base/svg')),
 ) #ссылки на статические файлы проекта. Пример бращения в шаблонах к статическим файлам "base_css/style.css"
 
 #LOGIN_URL = "/auth/login/"  #прямая ссылка на страницу входа

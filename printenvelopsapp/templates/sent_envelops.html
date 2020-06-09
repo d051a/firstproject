@@ -20,7 +20,7 @@
                 <tr>
                     <th>-</th>
                     <th>Получатель</th>
-                    <th>Дата и время</th>
+                    <th>Дата время</th>
                     <th>Исполнитель</th>
                     <th>Формат</th>
                     <th>Исх. номер</th>
@@ -35,10 +35,9 @@
                   {% for envelop in sent_envelops_list %}
 
                 <tr>
-
                     <td>{{ envelop.pk }}</td>
                     <td>{{ envelop.recipient }}</td>
-                    <td>{{ envelop.date }}</td>
+                    <td>{{ envelop.date|date:"d.m.y H:i"|lower }}</td>
                     <td>{{ envelop.username }}</td>
                     <td>{{ envelop.envelop_format}}</td>
                     <td>{{ envelop.outer_num }}</td>

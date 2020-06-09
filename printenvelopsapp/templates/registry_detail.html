@@ -18,9 +18,9 @@
         <p><b><label for="id_recipient">Тип РПО:</label></b> {{ registry.rpo_type }}</p>
         <p><b><label for="id_recipient">Тип реестра:</label></b> {{ registry.type }}</p>
         <p></p>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить реестр<span class="glyphicon glyphicon-comment"></span></button>
-        <button type="submit" class="btn btn-default" form="print_form">Печать реестра</button>
-        <button type="button" class="btn default" data-toggle="modal" data-target="#addSentEnvelop">Добавить отправление</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить реестр <img src="{% static "base_svg/circle-x.svg" %}" alt="icon name" width="12"><span class="glyphicon glyphicon-comment"></span></button>
+        <button type="submit" class="btn btn-default" form="print_form">Печать реестра <img src="{% static "base_svg/print.svg" %}" alt="icon name" width="12"></button>
+        <button type="button" class="btn default" data-toggle="modal" data-target="#addSentEnvelop">Добавить отправление <img src="{% static "base_svg/share.svg" %}" alt="icon name" width="12"></button>
       </form>
     </div>
 
@@ -54,7 +54,7 @@
             </div>
           </div>
 
-        <div class="modal fade" id="addSentEnvelop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addSentEnvelop" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -64,7 +64,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <form class = "col-md-6" method="post" id="add_sent_envelop">
+                    <form class = "col-md-12" method="post" id="add_sent_envelop">
                         {% csrf_token %}
                         {{ form.as_p }}
                     </form>
@@ -114,7 +114,7 @@
                     <td>
                         <form action="{% url 'printenvelopsapp:drop_registry_envelop' envelop.pk registry.pk %}" method="post">
                             {% csrf_token %}
-                            <button type="submit">удалить</button>
+                            <input type="image" src="{% static "base_svg/trash.svg" %}" alt="icon name" width="20">
                         </form></td>
                 </tr>
                   {% endfor %}
@@ -123,3 +123,15 @@
 </div>
 
 {%endblock%}
+
+{%block scripts%}
+    <script>
+$(document).ready(function() {
+    $('.js-example-placeholder-single').select2(
+        {
+    theme: 'bootstrap4',
+}
+    );
+});
+    </script>
+{%endblock scripts%}

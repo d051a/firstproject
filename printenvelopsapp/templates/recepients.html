@@ -22,25 +22,25 @@
 
             <thead>
                 <tr>
-                    <th>-</th>
+{#                    <th>-</th>#}
                     <th>ФИО (название организации)</th>
                     <th>Адрес</th>
                     <th>Регион</th>
                     <th>Город</th>
                     <th>Индекс</th>
-                    <th>Дата создания</th>
+{#                    <th>Дата создания</th>#}
                 </tr>
             </thead>
             <tbody>
                   {% for recepient in recepients_list %}
                 <tr>
-                    <td>{{ recepient.pk }}</td>
+{#                    <td>{{ recepient.pk }}</td>#}
                     <td><a href="recepient/{{ recepient.pk }}/">{{ recepient.title }} </a></td>
                     <td>{{ recepient.address }}</td>
                     <td>{{ recepient.region }}</td>
                     <td>{{ recepient.city }}</td>
                     <td>{{ recepient.postcode }}</td>
-                    <td>{{ recepient.pub_date }}</td>
+{#                    <td>{{ recepient.pub_date|date:"d.m.y" }}</td>#}
                   </tr>
 
 
