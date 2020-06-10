@@ -18,12 +18,13 @@
 
 {%block body%}
 <div class = "col-md-12">
-    <table id="example" class="display" style="width:100;">
+    <table id="example" class="display">
 
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Название</th>
+                    <th>Сотрудник</th>
                     <th>Дата</th>
                     <th>Тип</th>
                     <th>Тип РПО</th>
@@ -35,6 +36,7 @@
                 <tr>
                     <td>{{ registry.pk }}</td>
                     <td><a href="{% url 'printenvelopsapp:registry_detail' registry.pk %}">Реестр #{{ registry.pk }} </a></td>
+                    <td></td>
                     <td>{{ registry.date|date:"d.m.y" }}</td>
                     <td>{{ registry.type }}</td>
                     <td>{{ registry.rpo_type }}</td>

@@ -13,7 +13,30 @@ import re
 import jinja2
 
 
-def env_generate(request, envelop_data):
+def print_envelop(request):
+    if request.method == 'POST':
+        form = PrintEnvelopForm(request.POST)
+        if form.is_valid():
+            cld = form.cleaned_data
+            envelop = SentEnvelop()
+            user = Employee.objects.get(user=request.user)
+            envelop.username = user
+            envelop.recipient = cld['recipient']
+            envelop.rpo_type = cld['rpo_type']
+            envelop.envelop_format = cld['envelop_format']
+            envelop.outer_num = cld['outer_num']
+            envelop.registry_type = cld['registry_type']
+            envelop.save()
+            return envelope_generate(request, cld)
+    else:
+        form = PrintEnvelopForm()
+    return render(request, 'print_envelop.html', {
+        'form': form,
+        'pagename': 'Печать конверта'
+    })
+
+
+def envelope_generate(request, envelop_data):
     recipient = envelop_data['recipient']
     envelop = envelop_data['envelop_format']
     outer_num = envelop_data['outer_num']
@@ -71,12 +94,6 @@ def recepient_add(request):
                                                   'pagename': 'Новый адресат'})
 
 
-def recepient_delete(request, recepient_pk):
-    recepient = Recepient.objects.get(pk=recepient_pk)
-    recepient.delete()
-    return redirect('printenvelopsapp:recepients')
-
-
 def recepient_detail(request, rec_id):
     if request.method == 'POST':
         form = RecipientForm(request.POST)
@@ -106,6 +123,11 @@ def recepient_detail(request, rec_id):
             'pagename': 'Адресат',
         })
 
+
+def recepient_delete(request, recepient_pk):
+    recepient = Recepient.objects.get(pk=recepient_pk)
+    recepient.delete()
+    return redirect('printenvelopsapp:recepients')
 
 
 def envelops(request):
@@ -155,41 +177,11 @@ def envelop_template_detail(request, envelop_pk):
     })
 
 
-def add_to_sent_envelops_list(recepient_data=None, envelop_data=None, secret_data=None):
-    recepient = Recepient.objects.get(pk=recepient_data)
-    envelop = Envelop.objects.get(pk=envelop_data)
-    secret = SecretType.objects.get(pk=secret_data)
-    return None
-
-
 def sent_envelops(request):
     sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
     return render(request, 'sent_envelops.html', {
         'sent_envelops_list': sent_envelops_list,
         'pagename': 'Отправленные'
-    })
-
-
-def print_envelop(request):
-    if request.method == 'POST':
-        form = PrintEnvelopForm(request.POST)
-        if form.is_valid():
-            cld = form.cleaned_data
-            envelop = SentEnvelop()
-            user = Employee.objects.get(user=request.user)
-            envelop.username = user
-            envelop.recipient = cld['recipient']
-            envelop.rpo_type = cld['rpo_type']
-            envelop.envelop_format = cld['envelop_format']
-            envelop.outer_num = cld['outer_num']
-            envelop.registry_type = cld['registry_type']
-            envelop.save()
-            return env_generate(request, cld)
-    else:
-        form = PrintEnvelopForm()
-    return render(request, 'print_envelop.html', {
-        'form': form,
-        'pagename': 'Печать конверта'
     })
 
 
@@ -208,10 +200,11 @@ def registry_detail(request, registry_pk=None):
             registry = Registry.objects.get(pk=registry_pk)
             sent_envelop = SentEnvelop()
             user = Employee.objects.get(user=request.user)
-            sent_envelop.username = user
             cld = form.cleaned_data
+            sent_envelop.username = user
             sent_envelop.recipient = cld['recipient']
             sent_envelop.outer_num = cld['outer_num']
+            sent_envelop.envelop_format = cld['envelop_format']
             sent_envelop.registry_type = registry.type
             sent_envelop.rpo_type = registry.rpo_type
             sent_envelop.registry = registry
@@ -231,17 +224,17 @@ def registry_detail(request, registry_pk=None):
         })
 
 
+def registry_delete(request, registry_pk):
+    registry = Registry.objects.get(pk=registry_pk)
+    registry.delete()
+    return redirect('printenvelopsapp:registry_list')
+
+
 def sent_envelop_del_from_registry(request, envelop_pk, registry_pk):
     envelop = SentEnvelop.objects.get(pk=envelop_pk)
     envelop.registry = None
     envelop.save()
     return redirect('printenvelopsapp:registry_detail', registry_pk=registry_pk)
-
-
-def registry_delete(request, registry_pk):
-    registry = Registry.objects.get(pk=registry_pk)
-    registry.delete()
-    return redirect('printenvelopsapp:registry_list')
 
 
 def sent_envelop_add_to_registry(request, envelop_pk, registry_pk):
@@ -310,8 +303,10 @@ def registry_add(request):
     if request.method == 'POST':
         form = RegistryForm(request.POST)
         if form.is_valid():
+            user = Employee.objects.get(user=request.user)
             cld = form.cleaned_data
             registry = Registry()
+            registry.username = user
             registry.type = cld['type']
             registry.rpo_type = cld['rpo_type']
             registry.save()

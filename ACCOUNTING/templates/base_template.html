@@ -111,13 +111,14 @@
                   Печать конвертов
               </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{% url 'printenvelopsapp:recepients' %}">Адресаты</a></li>
+              <li><a class="dropdown-item" href="{% url 'printenvelopsapp:recepients' %}">Адресаты</a></li>
               <li><a class="dropdown-item" href="{% url 'printenvelopsapp:registry_list' %}">Реестры</a></li>
-              <li><a class="dropdown-item dropdown-toggle" href="#">Отчеты</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:sent_envelops' %}">Отправленные</a></li>
-              </ul>
-            </li>
+{#              <li><a class="dropdown-item dropdown-toggle" href="#">Отчеты</a>#}
+{#              <ul class="dropdown-menu">#}
+{#                <li><a class="dropdown-item" href="{% url 'printenvelopsapp:sent_envelops' %}">Отправленные</a></li>#}
+{#              </ul>#}
+{#              </li>#}
+              <li><a class="dropdown-item" href="{% url 'printenvelopsapp:sent_envelops' %}">Отправленные</a></li>
               <li><a class="dropdown-item" href="{% url 'printenvelopsapp:envelop_print' %}">Напечатать конверт</a></li>
           </ul>
         </li>

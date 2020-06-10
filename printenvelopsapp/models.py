@@ -112,7 +112,7 @@ class SentEnvelop(models.Model):
     )
     recipient = models.ForeignKey('Recepient', verbose_name='Получатель', on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField('Дата и время создания', auto_now=True)
-    username = models.ForeignKey('employeesapp.Employee', max_length=100)
+    username = models.ForeignKey('employeesapp.Employee', max_length=100, verbose_name='Сотрудник')
     rpo_type = models.ForeignKey('RPOType', null=True, verbose_name='Вид РПО')
     envelop_format = models.ForeignKey('printenvelopsapp.Envelop', null=True, verbose_name='Формат конверта')
     outer_num = models.CharField('Исходящий номер', max_length=100, blank=True)
@@ -164,6 +164,7 @@ class Registry(models.Model):
         ('7', 'посылки'),
     )
     date = models.DateField('Дата', auto_now_add=True)
+    username = models.ForeignKey('employeesapp.Employee', max_length=100, verbose_name='Сотрудник')
     type = models.ForeignKey('printenvelopsapp.RegistryType', verbose_name='Тип реестра')
     rpo_type = models.ForeignKey('RPOType', verbose_name='Тип РПО', null=True, blank=True)
 

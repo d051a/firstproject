@@ -52,13 +52,15 @@ class RegistrySentEnvelopForm(ModelForm):
         model = SentEnvelop
         fields = [
             'recipient',
+            'envelop_format',
             'outer_num',
         ]
         widgets = {
             'recipient': forms.Select(attrs={'class': 'js-example-placeholder-single js-states form-control',
                                              'height': '75%'}),
             'outer_num': forms.TextInput(attrs={'class': 'form-control'}),
-
+            'envelop_format': forms.Select(attrs={'class': 'js-example-placeholder-single js-states form-control',
+                                                  'height': '75%'}),
         }
 
 
