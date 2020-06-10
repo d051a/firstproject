@@ -36,7 +36,7 @@
 
                 <tr>
                     <td>{{ envelop.pk }}</td>
-                    <td>{{ envelop.recipient }}</td>
+                    <td><a href="{% url 'printenvelopsapp:sent_detail' envelop.pk %}">Реестр #{{ envelop.recipient }} </a></td>
                     <td>{{ envelop.date|date:"d.m.y H:i"|lower }}</td>
                     <td>{{ envelop.username }}</td>
                     <td>{{ envelop.envelop_format}}</td>

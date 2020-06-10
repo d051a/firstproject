@@ -116,7 +116,6 @@ def recepient_detail(request, rec_id):
             'region': recipient_detail.region,
             'city': recipient_detail.city
         })
-
         return render(request, 'recepient_detail.html', {
             'form': form,
             'recepient': recipient_detail,
@@ -177,14 +176,6 @@ def envelop_template_detail(request, envelop_pk):
     })
 
 
-def sent_envelops(request):
-    sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
-    return render(request, 'sent_envelops.html', {
-        'sent_envelops_list': sent_envelops_list,
-        'pagename': 'Отправленные'
-    })
-
-
 def registry_list(request):
     registry_objects = Registry.objects.all()
     return render(request, 'registry.html', {
@@ -224,24 +215,37 @@ def registry_detail(request, registry_pk=None):
         })
 
 
+def registry_add(request):
+    if request.method == 'POST':
+        form = RegistryForm(request.POST)
+        if form.is_valid():
+            user = Employee.objects.get(user=request.user)
+            cld = form.cleaned_data
+            registry = Registry()
+            registry.username = user
+            registry.type = cld['type']
+            registry.rpo_type = cld['rpo_type']
+            registry.save()
+            envelops = SentEnvelop.objects.filter(registry=None).filter(rpo_type=cld['rpo_type']).filter(
+                registry_type=cld['type'])
+            envelops.update(registry=registry)
+            return redirect('printenvelopsapp:registry_list')
+
+    else:
+        pagename = 'Новый реестр'
+        form = RegistryForm()
+        sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
+        return render(request, 'registry_add.html', {
+            'form': form,
+            'pagename': pagename,
+            'sent_envelops_list': sent_envelops_list
+        })
+
+
 def registry_delete(request, registry_pk):
     registry = Registry.objects.get(pk=registry_pk)
     registry.delete()
     return redirect('printenvelopsapp:registry_list')
-
-
-def sent_envelop_del_from_registry(request, envelop_pk, registry_pk):
-    envelop = SentEnvelop.objects.get(pk=envelop_pk)
-    envelop.registry = None
-    envelop.save()
-    return redirect('printenvelopsapp:registry_detail', registry_pk=registry_pk)
-
-
-def sent_envelop_add_to_registry(request, envelop_pk, registry_pk):
-    envelop = SentEnvelop.objects.get(pk=envelop_pk)
-    envelop.registry = None
-    envelop.save()
-    return redirect('printenvelopsapp:registry_detail', registry_pk=registry_pk)
 
 
 def registry_print(request):
@@ -299,28 +303,52 @@ def registry_print(request):
     return response
 
 
-def registry_add(request):
-    if request.method == 'POST':
-        form = RegistryForm(request.POST)
-        if form.is_valid():
-            user = Employee.objects.get(user=request.user)
-            cld = form.cleaned_data
-            registry = Registry()
-            registry.username = user
-            registry.type = cld['type']
-            registry.rpo_type = cld['rpo_type']
-            registry.save()
-            envelops = SentEnvelop.objects.filter(registry=None).filter(rpo_type=cld['rpo_type']).filter(
-                registry_type=cld['type'])
-            envelops.update(registry=registry)
-            return redirect('printenvelopsapp:registry_list')
+def sent_envelop_del_from_registry(request, envelop_pk, registry_pk):
+    envelop = SentEnvelop.objects.get(pk=envelop_pk)
+    envelop.registry = None
+    envelop.save()
+    return redirect('printenvelopsapp:registry_detail', registry_pk=registry_pk)
 
+
+def sent_envelop_add_to_registry(request, envelop_pk, registry_pk):
+    envelop = SentEnvelop.objects.get(pk=envelop_pk)
+    envelop.registry = None
+    envelop.save()
+    return redirect('printenvelopsapp:registry_detail', registry_pk=registry_pk)
+
+
+def sent_envelops(request):
+    sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
+    return render(request, 'sent_envelops.html', {
+        'sent_envelops_list': sent_envelops_list,
+        'pagename': 'Отправленные'
+    })
+
+
+def sent_delete(request, envelop_pk):
+    envelop = SentEnvelop.objects.get(pk=envelop_pk)
+    envelop.delete()
+    return redirect('printenvelopsapp:sent_envelops')
+
+
+def sent_detail(request, envelop_id):
+    if request.method == 'POST':
+        form = PrintEnvelopForm(request.POST)
+        if form.is_valid():
+            cld = form.cleaned_data
+            sent_envelop = SentEnvelop.objects.get(pk=envelop_id)
+            sent_envelop.recipient = cld['recipient']
+            sent_envelop.registry_type = cld['registry_type']
+            sent_envelop.rpo_type = cld['rpo_type']
+            sent_envelop.envelop_format = cld['envelop_format']
+            sent_envelop.outer_num = cld['outer_num']
+            sent_envelop.save()
+            return redirect('printenvelopsapp:sent_envelops')
     else:
-        pagename = 'Новый реестр'
-        form = RegistryForm()
-        sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
-        return render(request, 'registry_add.html', {
+        envelop_detail = SentEnvelop.objects.get(pk=envelop_id)
+        form = PrintEnvelopForm(instance=envelop_detail)
+        return render(request, 'sent_detail.html', {
             'form': form,
-            'pagename': pagename,
-            'sent_envelops_list': sent_envelops_list
+            'sent_envelop': envelop_detail,
+            'pagename': 'Отправление',
         })

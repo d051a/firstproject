@@ -7,6 +7,8 @@ urlpatterns = [
     # ex: /polls/
     url(r'^$', views.recepients, name='recepients'),
     url(r'sentenvelops/$', views.sent_envelops, name='sent_envelops'),
+    url(r'sent_detail/(\d+)/$', views.sent_detail, name='sent_detail'),
+    url(r'sent_delete/(\d+)$', views.sent_delete, name='sent_delete'),
     url(r'recepient/(\d+)/$', views.recepient_detail, name='recepient_detail'),
     url(r'recepient_add/$', views.recepient_add, name='recepient_add'),
     url(r'recepient_delete/(\d+)/$', views.recepient_delete, name='recepient_delete'),

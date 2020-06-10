@@ -41,13 +41,9 @@
                     <td>{{ registry.type }}</td>
                     <td>{{ registry.rpo_type }}</td>
                     <td>
-                        <form action="{% url 'printenvelopsapp:registry_delete' registry.pk %}" method="post">
-                            {% csrf_token %}
-                            <input form="print_form{{ registry.pk }}" type="image" src="{% static "base_svg/print.svg" %}" alt="icon name" width="20">
-                            <input type="image" src="{% static "base_svg/trash.svg" %}" alt="icon name" width="20">
-                        </form>
                         <form action="{% url 'printenvelopsapp:registry_print' %}" method="get" id="print_form{{ registry.pk }}">
                             <input type="text" name="registry" value="{{ registry.pk }}"  hidden="true">
+                            <input form="print_form{{ registry.pk }}" type="image" src="{% static "base_svg/print.svg" %}" alt="icon name" width="20">
                         </form>
                     </td>
 

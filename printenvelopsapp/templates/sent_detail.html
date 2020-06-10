@@ -1,0 +1,59 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{% block body %}
+
+    <div div class="col-sm">
+        <form class = "col-md-6" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-default">Изменить <img src="{% static "base_svg/pencil.svg" %}" alt="icon name" width="12"></button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить отправление <img src="{% static "base_svg/circle-x.svg" %}" alt="icon name" width="12"><span class="glyphicon glyphicon-comment"></span></button>
+        </form>
+    </div>
+
+      <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Удаление отправления</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Вы действительно хотите удалить данное отправление?</p>
+            </div>
+            <div class="modal-footer">
+              <form class = "col-md-12" action="{% url 'printenvelopsapp:sent_delete' sent_envelop.pk %}" method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                <button type="submit" class="btn btn-danger">Да</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+{% endblock%}
+
+{%block scripts%}
+    <script>// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-placeholder-single').select2(
+        {
+    theme: 'bootstrap4',
+}
+    );
+});
+    </script>
+{%endblock scripts%}
