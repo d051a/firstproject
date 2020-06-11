@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from . import views
 
 
+app_name = 'auth'
+
 urlpatterns = [
 
     url(r'^registration/$', views.register_user, name='registration'),

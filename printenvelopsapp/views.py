@@ -211,6 +211,7 @@ def registry_detail(request, registry_pk=None):
             'registry_template_form': registry_template_form,
             'registry': registry,
             'sent_envelops_list': sent_envelops_list,
+            'sent_envelop': sent_envelops_list[0],
             'pagename': 'Реестр №' + registry_pk
         })
 

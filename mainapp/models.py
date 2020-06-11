@@ -15,7 +15,7 @@ class Technic (models.Model):
     inventorynum2 = models.CharField('Инвентарный номер#2', max_length=50, blank=True)
     serialnum = models.CharField('Серийный номер', max_length=50, blank=True)
     technictype = models.CharField('Тип техники', max_length=50, blank=False, choices=TECHNICTYPES)
-    employee = models.ForeignKey('employeesapp.Employee', null=True, blank=True, verbose_name='Ответственный сотрудник')
+    employee = models.ForeignKey('employeesapp.Employee', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Ответственный сотрудник')
     created_time = models.DateTimeField('Дата добавления', auto_now_add=True)
     modified_time = models.DateTimeField('Дата изменения', auto_now=True)
 

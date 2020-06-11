@@ -32,14 +32,17 @@ class Employee(models.Model):
         blank=True)
     department = models.ForeignKey(
         'mainapp.Department',
+        on_delete=models.CASCADE,
         verbose_name='Управление',
         default=None)
     subdevision = models.ForeignKey(
         'mainapp.SubDevision',
+        on_delete=models.CASCADE,
         verbose_name='Отдел',
         default=None)
     post = models.ForeignKey(
         'Post',
+        on_delete=models.CASCADE,
         null=True,
         verbose_name='Должность')
     img = models.ImageField(

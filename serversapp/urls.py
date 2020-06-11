@@ -4,7 +4,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-# app_name = 'mainapp'
+app_name = 'servers'
 
 urlpatterns = [
     url(r'^$', views.ListServers.as_view(), name='list_servers'),

@@ -8,7 +8,7 @@ class Certificate(models.Model):
     validate_end_date = models.DateField('Срок окончания действия сертификата:', null=True, blank=True)
     cert_file = models.FileField('Файл сертификата:', upload_to='certfiles', default=None, null=True, blank=True)
     email = models.EmailField('Email:', max_length=50, default=None)
-    persone = models.ForeignKey('Persone', verbose_name='Сертификаты:', default=None)
+    persone = models.ForeignKey('Persone', on_delete=models.CASCADE, verbose_name='Сертификаты:', default=None)
 
     class Meta:
         permissions = (

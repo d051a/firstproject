@@ -44,18 +44,22 @@ class Ticket(models.Model):
         null=True,)
     mainproblem = models.ForeignKey(
         'MainProblem',
+        on_delete=models.CASCADE,
         verbose_name='Типовая проблема',
         default=None)
     subproblem = models.ForeignKey(
         'SubProblem',
+        on_delete=models.CASCADE,
         verbose_name='Проблема',
         default=None)
     employee_start = models.ForeignKey(
         'employeesapp.Employee', related_name='employee_start',
+        on_delete=models.CASCADE,
         verbose_name='Отправитель',
         blank=True, null=True)
     performer = models.ForeignKey(
         'employeesapp.Employee', verbose_name='Исполнитель',
+        on_delete=models.CASCADE,
         blank=True,
         null=True)
 

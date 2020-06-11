@@ -4,7 +4,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-#app_name = 'mainapp'
+app_name = 'main'
 
 urlpatterns = [
     url(r'^ajax/load-subproblems/$', views.load_subproblems, name='ajax_load_subproblems'),

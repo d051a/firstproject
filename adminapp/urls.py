@@ -4,7 +4,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-# app_name = 'mainapp'
+app_name = 'administration'
 
 urlpatterns = [
     url(r'^settings/$', views.settings, name='settings'),

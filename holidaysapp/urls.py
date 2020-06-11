@@ -4,7 +4,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-# app_name = 'mainapp'
+app_name = 'holidays'
 
 urlpatterns = [
     url(r'^$', views.HolidaysListView.as_view(), name='list_holidays'),

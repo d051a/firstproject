@@ -1,4 +1,4 @@
-Django==1.11.15
+Django==2.2.12
 pytz==2018.7
 xlrd==1.1.0
 Pillow==5.3.0
@@ -9,3 +9,16 @@ docx-mailmerge
 docxtpl
 pymorphy2
 petrovich
+
+
+# django-inlineedit
+django-inlineedit==1.2
+markdown==2.6.11
+feedparser==5.2.1
+django-reversion==3.0.4
+django-ckeditor==5.9.0
+django-extensions
+pyreadline
+pylint
+ipython
+######

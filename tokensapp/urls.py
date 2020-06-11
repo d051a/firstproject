@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from . import views
 
+app_name = 'tokens'
 
 urlpatterns = [
     url(r'^$', views.TokensList.as_view(), name='list_tokens'),

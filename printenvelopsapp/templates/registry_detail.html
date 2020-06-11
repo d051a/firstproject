@@ -1,5 +1,6 @@
 {% extends 'base_template.html' %}
 {% load static %}
+{% load inlineedit %}
 
 {%block head%}
 <link rel="stylesheet" type="text/css" href={% static "recepients/css/jquery.dataTables.min.css"%}>
@@ -88,13 +89,13 @@
 
             <thead>
                 <tr>
-                    <th>-</th>
                     <th>Получатель</th>
-                    <th>Дата и время</th>
+{#                    <th>Дата и время</th>#}
                     <th>Исполнитель</th>
                     <th>Формат</th>
                     <th>Исх. номер</th>
                     <th>Секр.</th>
+                    <th>Стоимость</th>
                     <th></th>
                 </tr>
             </thead>
@@ -104,13 +105,14 @@
 
                 <tr>
 
-                    <td>{{ envelop.pk }}</td>
+
                     <td>{{ envelop.recipient }}</td>
-                    <td>{{ envelop.date|date:"d.m.y H:i"|lower }}</td>
+{#                    <td>{{ envelop.date|date:"d.m.y H:i"|lower }}</td>#}
                     <td>{{ envelop.username }}</td>
                     <td>{{ envelop.envelop_format}}</td>
                     <td>{{ envelop.outer_num }}</td>
                     <td>{{ envelop.envelop_format.secret_type.short_name }}</td>
+                    <td>{% inlineedit "envelop.cost"  %}</td>
                     <td>
                         <form action="{% url 'printenvelopsapp:drop_registry_envelop' envelop.pk registry.pk %}" method="post">
                             {% csrf_token %}
@@ -125,6 +127,7 @@
 {%endblock%}
 
 {%block scripts%}
+{% inlineedit_script %}
     <script>
 $(document).ready(function() {
     $('.js-example-placeholder-single').select2(

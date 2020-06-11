@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static
 
-#app_name = 'printenvelopsapp'
+app_name = 'certificates'
 
 urlpatterns = [
     url(r'^$', login_required(views.MainView.as_view()), name='certificates'), #login_required для доступа только аутентифицированных пользователей.

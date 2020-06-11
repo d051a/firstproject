@@ -72,8 +72,8 @@ class EnvelopFormat(models.Model):
 
 class Envelop(models.Model):
     env_title = models.CharField('Название конверта', max_length=30)
-    envelop_format = models.ForeignKey(EnvelopFormat)
-    secret_type = models.ForeignKey('SecretType', verbose_name='Тип секретности', null=True, blank=True)
+    envelop_format = models.ForeignKey(EnvelopFormat, on_delete=models.CASCADE,)
+    secret_type = models.ForeignKey('SecretType', on_delete=models.CASCADE, verbose_name='Тип секретности', null=True, blank=True)
     envelop_template = models.FileField('Шаблон конверта')
 
     class Meta:
@@ -112,14 +112,15 @@ class SentEnvelop(models.Model):
     )
     recipient = models.ForeignKey('Recepient', verbose_name='Получатель', on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField('Дата и время создания', auto_now=True)
-    username = models.ForeignKey('employeesapp.Employee', max_length=100, verbose_name='Сотрудник')
-    rpo_type = models.ForeignKey('RPOType', null=True, verbose_name='Вид РПО')
-    envelop_format = models.ForeignKey('printenvelopsapp.Envelop', null=True, verbose_name='Формат конверта')
+    username = models.ForeignKey('employeesapp.Employee', on_delete=models.CASCADE, max_length=100, verbose_name='Сотрудник')
+    rpo_type = models.ForeignKey('RPOType', on_delete=models.CASCADE, null=True, verbose_name='Вид РПО')
+    envelop_format = models.ForeignKey('printenvelopsapp.Envelop', on_delete=models.CASCADE, null=True, verbose_name='Формат конверта')
     outer_num = models.CharField('Исходящий номер', max_length=100, blank=True)
     address_format = models.CharField('Представление адреса', max_length=50, choices=sent_address_format, default='old')
     index_print = models.BooleanField('Печать индекса', default=True)
-    registry_type = models.ForeignKey('printenvelopsapp.RegistryType', verbose_name='Тип реестра')
+    registry_type = models.ForeignKey('printenvelopsapp.RegistryType', on_delete=models.CASCADE, verbose_name='Тип реестра')
     registry = models.ForeignKey('printenvelopsapp.Registry', on_delete=models.SET_NULL, null=True, blank=True)
+    cost = models.FloatField('Стоимость', null=True)
 
     class Meta:
         permissions = (
@@ -164,9 +165,9 @@ class Registry(models.Model):
         ('7', 'посылки'),
     )
     date = models.DateField('Дата', auto_now_add=True)
-    username = models.ForeignKey('employeesapp.Employee', max_length=100, verbose_name='Сотрудник')
-    type = models.ForeignKey('printenvelopsapp.RegistryType', verbose_name='Тип реестра')
-    rpo_type = models.ForeignKey('RPOType', verbose_name='Тип РПО', null=True, blank=True)
+    username = models.ForeignKey('employeesapp.Employee', on_delete=models.CASCADE, max_length=100, verbose_name='Сотрудник')
+    type = models.ForeignKey('printenvelopsapp.RegistryType', on_delete=models.CASCADE, verbose_name='Тип реестра')
+    rpo_type = models.ForeignKey('RPOType', on_delete=models.CASCADE, verbose_name='Тип РПО', null=True, blank=True)
 
     class Meta:
         ordering = ['-pk']
