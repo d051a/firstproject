@@ -121,6 +121,8 @@ class SentEnvelop(models.Model):
     registry_type = models.ForeignKey('printenvelopsapp.RegistryType', on_delete=models.CASCADE, verbose_name='Тип реестра')
     registry = models.ForeignKey('printenvelopsapp.Registry', on_delete=models.SET_NULL, null=True, blank=True)
     cost = models.FloatField('Стоимость', null=True)
+    weight = models.FloatField('Вес', null=True)
+
 
     class Meta:
         permissions = (
@@ -155,19 +157,11 @@ class RPOType(models.Model):
 
 
 class Registry(models.Model):
-    REGISTRY_TYPE_CHOICES = (
-        ('1', 'МО РФ'),
-        ('2', 'МО РФ'),
-        ('3', 'ГФС иное'),
-        ('4', 'ГФС москва'),
-        ('5', 'почта ФПС'),
-        ('6', 'почта России'),
-        ('7', 'посылки'),
-    )
     date = models.DateField('Дата', auto_now_add=True)
     username = models.ForeignKey('employeesapp.Employee', on_delete=models.CASCADE, max_length=100, verbose_name='Сотрудник')
     type = models.ForeignKey('printenvelopsapp.RegistryType', on_delete=models.CASCADE, verbose_name='Тип реестра')
     rpo_type = models.ForeignKey('RPOType', on_delete=models.CASCADE, verbose_name='Тип РПО', null=True, blank=True)
+    current_cost = models.FloatField('Текущая цена отправления', default=0)
 
     class Meta:
         ordering = ['-pk']

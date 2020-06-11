@@ -18,6 +18,7 @@
       <form class = "col-md-10" >
         <p><b><label for="id_recipient">Тип РПО:</label></b> {{ registry.rpo_type }}</p>
         <p><b><label for="id_recipient">Тип реестра:</label></b> {{ registry.type }}</p>
+        <p><b><label for="id_recipient">Текущая стоимость отправления:</label></b> {{ registry.current_cost }}</p>
         <p></p>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить реестр <img src="{% static "base_svg/circle-x.svg" %}" alt="icon name" width="12"><span class="glyphicon glyphicon-comment"></span></button>
         <button type="submit" class="btn btn-default" form="print_form">Печать реестра <img src="{% static "base_svg/print.svg" %}" alt="icon name" width="12"></button>
@@ -84,7 +85,7 @@
 
 
 <div class = "col-md-12">
-        <h2 style="margin-left: 20px;"> Отправленные конверты </h2>
+        <h2 style="margin-left: 20px;"> Отправления </h2>
     <table id="example" class="display" style="width:100;">
 
             <thead>
@@ -95,6 +96,7 @@
                     <th>Формат</th>
                     <th>Исх. номер</th>
                     <th>Секр.</th>
+                    <th>Вес</th>
                     <th>Стоимость</th>
                     <th></th>
                 </tr>
@@ -112,6 +114,7 @@
                     <td>{{ envelop.envelop_format}}</td>
                     <td>{{ envelop.outer_num }}</td>
                     <td>{{ envelop.envelop_format.secret_type.short_name }}</td>
+                    <td>{% inlineedit "envelop.weight"  %}</td>
                     <td>{% inlineedit "envelop.cost"  %}</td>
                     <td>
                         <form action="{% url 'printenvelopsapp:drop_registry_envelop' envelop.pk registry.pk %}" method="post">

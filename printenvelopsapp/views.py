@@ -7,6 +7,7 @@ from docxtpl import DocxTemplate
 from .main import DateToWords
 from employeesapp.models import Employee
 from printenvelopsapp.num2t4ru import num2text
+from .tools import tools
 import datetime
 import zipfile
 import re
@@ -211,7 +212,6 @@ def registry_detail(request, registry_pk=None):
             'registry_template_form': registry_template_form,
             'registry': registry,
             'sent_envelops_list': sent_envelops_list,
-            'sent_envelop': sent_envelops_list[0],
             'pagename': 'Реестр №' + registry_pk
         })
 
@@ -226,6 +226,7 @@ def registry_add(request):
             registry.username = user
             registry.type = cld['type']
             registry.rpo_type = cld['rpo_type']
+            registry.current_cost = cld['current_cost']
             registry.save()
             envelops = SentEnvelop.objects.filter(registry=None).filter(rpo_type=cld['rpo_type']).filter(
                 registry_type=cld['type'])
@@ -250,32 +251,28 @@ def registry_delete(request, registry_pk):
 
 
 def registry_print(request):
-    def get_clear_address(address):
-        clear_address = address.split(',')
-        return str(clear_address[0])
-
-    def add_num_before_text(text):
-        text_with_num = '№ {}'.format(text)
-        return text_with_num
-
     jinja_env = jinja2.Environment()
-    jinja_env.filters['get_clear_address'] = get_clear_address
-    jinja_env.filters['add_num_before_text'] = add_num_before_text
+    jinja_env.filters['get_clear_address'] = tools.get_clear_address
+    jinja_env.filters['add_num_before_text'] = tools.add_num_before_text
     registry_pk = request.GET['registry']
     registry = Registry.objects.get(pk=registry_pk)
     template = '{}/{}'.format(settings.MEDIA_ROOT, registry.type.template)
     temporaty_document = DocxTemplate(template)
     output_document = DocxTemplate(template)
-    envelops_list = SentEnvelop.objects.filter(registry=registry_pk)
-    envelops_list_len = len(envelops_list)
+    sent_list = SentEnvelop.objects.filter(registry=registry_pk)
+    envelops_list_len = len(sent_list)
     date = datetime.datetime.today().strftime("%d.%m.%Y")
     text_date = DateToWords(date)
     text_date = '« {} » {} {}'.format(text_date.get_day(), text_date.get_month_text(), text_date.get_year())
     user = Employee.objects.get(user=request.user)
     envelops_list_len_text = num2text(envelops_list_len, ((u'отправление', u'отправления', u'отправлений'), 'f'))
     envelops_list_len_pieces = num2text(envelops_list_len, ((u'штука', u'штуки', u'штук'), 'f'))
+    current_weight_cost = registry.current_cost
+    for sent in sent_list:
+        tools.set_sent_cost(current_weight_cost, sent)
+    envelops_cost_sum = tools.sum_envelops_cost(sent_list)
     context = {
-        'tbl_contents': envelops_list,
+        'tbl_contents': sent_list,
         'registry_id': registry_pk,
         'rpo_type': registry.rpo_type,
         'envelops_list_len': envelops_list_len,
@@ -285,6 +282,7 @@ def registry_print(request):
         'envelops_list_len_pieces': '({}) {}'.format(
             envelops_list_len_pieces.split()[0],
             envelops_list_len_pieces.split()[1]),
+        'envelops_cost_sum': envelops_cost_sum,
         'date': date,
         'text_date': text_date,
         'post': user.post,
