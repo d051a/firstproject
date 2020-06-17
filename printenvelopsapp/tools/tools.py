@@ -21,7 +21,19 @@ def set_sent_cost(weight_cost, sent):
 
 
 def sum_envelops_cost(elems):
-    cost = [envelop.cost for envelop in elems]
+    cost = []
+    for envelop in elems:
+        envelop_cost = envelop.cost
+        if envelop_cost == None:
+            envelop_cost = 0
+        cost.append(envelop_cost)
     return sum(cost)
 
 
+def change_neuter_gender_text(string):
+    neuter_gender_text = string
+    print(neuter_gender_text)
+    if 'один' in neuter_gender_text:
+        outer_string = neuter_gender_text.replace('один', 'одно')
+        return outer_string
+    return neuter_gender_text

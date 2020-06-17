@@ -226,7 +226,7 @@ def registry_add(request):
             registry.username = user
             registry.type = cld['type']
             registry.rpo_type = cld['rpo_type']
-            registry.current_cost = cld['current_cost']
+            # registry.current_cost = cld['current_cost']
             registry.save()
             envelops = SentEnvelop.objects.filter(registry=None).filter(rpo_type=cld['rpo_type']).filter(
                 registry_type=cld['type'])
@@ -265,11 +265,12 @@ def registry_print(request):
     text_date = DateToWords(date)
     text_date = '« {} » {} {}'.format(text_date.get_day(), text_date.get_month_text(), text_date.get_year())
     user = Employee.objects.get(user=request.user)
-    envelops_list_len_text = num2text(envelops_list_len, ((u'отправление', u'отправления', u'отправлений'), 'f'))
+    envelops_list_len_text = tools.change_neuter_gender_text(
+        num2text(envelops_list_len, ((u'отправление', u'отправления', u'отправлений'), 'm')))
     envelops_list_len_pieces = num2text(envelops_list_len, ((u'штука', u'штуки', u'штук'), 'f'))
     current_weight_cost = registry.current_cost
-    for sent in sent_list:
-        tools.set_sent_cost(current_weight_cost, sent)
+    # for sent in sent_list:
+    #     tools.set_sent_cost(current_weight_cost, sent)
     envelops_cost_sum = tools.sum_envelops_cost(sent_list)
     context = {
         'tbl_contents': sent_list,

@@ -18,7 +18,7 @@
       <form class = "col-md-10" >
         <p><b><label for="id_recipient">Тип РПО:</label></b> {{ registry.rpo_type }}</p>
         <p><b><label for="id_recipient">Тип реестра:</label></b> {{ registry.type }}</p>
-        <p><b><label for="id_recipient">Текущая стоимость отправления:</label></b> {{ registry.current_cost }}</p>
+{#        <p><b><label for="id_recipient">Текущая стоимость отправления:</label></b> {{ registry.current_cost }}</p>#}
         <p></p>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal">Удалить реестр <img src="{% static "base_svg/circle-x.svg" %}" alt="icon name" width="12"><span class="glyphicon glyphicon-comment"></span></button>
         <button type="submit" class="btn btn-default" form="print_form">Печать реестра <img src="{% static "base_svg/print.svg" %}" alt="icon name" width="12"></button>

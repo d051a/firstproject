@@ -132,8 +132,8 @@
       {% if user.is_authenticated %}
       <li class="dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {% if employee.img %}
-         <td><img class="rounded-circle" src="{{ employee.img.url }}" width="30" height="30"></td>
+          {% if user.employee.img %}
+         <td><img class="rounded-circle" src="{{ user.employee.img.url }}" width="30" height="30" ></td>
          {%else%}
          <td><img class="rounded-circle" src="{% static "base_imgs/avatar.png" %}" width="30" height="30"></td>
          {% endif %}

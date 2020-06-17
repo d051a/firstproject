@@ -78,11 +78,10 @@ class EnvelopeFormatModelForm(ModelForm):
 class RegistryForm(ModelForm):
     class Meta:
         model = Registry
-        fields = ['rpo_type', 'type', 'current_cost']
+        fields = ['rpo_type', 'type']
         widgets = {
             'type': forms.Select(attrs={'class': 'form-control'}),
             'rpo_type': forms.Select(attrs={'class': 'form-control'}),
-            'current_cost': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 
