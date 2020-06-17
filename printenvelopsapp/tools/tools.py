@@ -32,7 +32,6 @@ def sum_envelops_cost(elems):
 
 def change_neuter_gender_text(string):
     neuter_gender_text = string
-    print(neuter_gender_text)
     if 'один' in neuter_gender_text:
         outer_string = neuter_gender_text.replace('один', 'одно')
         return outer_string
