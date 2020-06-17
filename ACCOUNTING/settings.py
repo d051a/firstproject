@@ -141,7 +141,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'ACCOUNTING/media') # Путь для хранения загружаемых данных проекта
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/') # Путь для хранения загружаемых данных проекта
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 STATICFILES_DIRS = (
@@ -149,6 +149,7 @@ STATICFILES_DIRS = (
     ("base_js", os.path.join(BASE_DIR, 'ACCOUNTING/static/base/js')),
     ("base_fonts", os.path.join(BASE_DIR, 'ACCOUNTING/static/base/fonts')),
     ("base_svg", os.path.join(BASE_DIR, 'ACCOUNTING/static/base/svg')),
+    ("base_imgs", os.path.join(BASE_DIR, 'ACCOUNTING/static/base/imgs')),
 ) #ссылки на статические файлы проекта. Пример бращения в шаблонах к статическим файлам "base_css/style.css"
 
 #LOGIN_URL = "/auth/login/"  #прямая ссылка на страницу входа

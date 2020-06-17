@@ -26,7 +26,7 @@
 
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'newsapp:main' %}">
-        <img alt="logo" src="http://www.mindfulhca.com/wp-content/uploads/2017/04/Family-Room-Portal-Icon.png"width="35" height="35" >
+        <img alt="logo" src="{% static "base_imgs/logo.png" %}" width="35" height="35" >
       </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -135,7 +135,7 @@
           {% if employee.img %}
          <td><img class="rounded-circle" src="{{ employee.img.url }}" width="30" height="30"></td>
          {%else%}
-         <td><img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/149/149071.png" width="30" height="30"></td>
+         <td><img class="rounded-circle" src="{% static "base_imgs/avatar.png" %}" width="30" height="30"></td>
          {% endif %}
             {{ user.username }}<span class="caret"></span>
         </a>
