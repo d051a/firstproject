@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView
@@ -8,6 +8,9 @@ from mainapp.models import Technic
 from authapp.forms import UserCreateForm
 from ACCOUNTING.generic.mixins import ContextPageMixin
 from django.db.models.functions import Extract
+from django.contrib.auth.models import Group
+from django.http import HttpResponseRedirect
+
 
 
 class EmployeeListView(ContextPageMixin, ListView):
@@ -94,6 +97,7 @@ class PostAddView(ContextPageMixin, CreateView):
     pagename = 'Новая должность'
 
 
+
 def register_user(request):
     if request.method == 'POST':
         user_form = UserCreateForm(request.POST)
@@ -103,8 +107,10 @@ def register_user(request):
             employee = employee_form.save(commit=False)
             employee.user_id = user.id
             employee.save()
+            group = Group.objects.get(name='tickets_users')
+            user.groups.add(group)
             messages.success(request, 'Ваш профиль был успешно обновлен!')
-            return reverse_lazy('employeesapp:add_employee')
+            return redirect('printenvelopsapp:recepients')
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки.')
     else:

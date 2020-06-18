@@ -5,59 +5,58 @@
 {%endblock%}
 
 {%block header%}
-Добавление нового сотрудника
+Добавление новой записи
 {%endblock%}
 
 
 {%block body%}
     <div class="col-sm">
-      <form class = "col-md-6" role="form" action="" method="post" class="login-form" id="addForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}">
-        {% csrf_token %}
-        <div class="form-group">
-        <input type="text" name="{{ form.username.html_name }}" placeholder="Логин *U0--" class="form-username form-control" id="{{ form.username.html_name }}">
-        <p></p>
-        {% if form.username.errors %}
-        <p>{{ form.username.errors }}</p>
-        {% endif %}
-        <input type="text" name="{{ form.email.html_name }}" placeholder="Email..." class="form-username form-control" id="{{ form.email.html_name }}">
-        <p></p>
-        {% if form.email.errors %}
-        <p>{{ form.email.errors }}</p>
-        {% endif %}
-        <input type="password" name="{{ form.password1.html_name }}" placeholder="Пароль..." class="form-password form-control" id="{{ form.password1.html_name }}">
-        <p></p>
-        {% if form.password1.errors %}
-        <p>{{ form.password1.errors }}</p>
-        {% endif %}
-        <input type="password" name="{{ form.password2.html_name }}" placeholder="Повторите пароль..." class="form-password form-control" id="{{ form.password2.html_name }}">
-        <p></p>
-        {% if form.password2.errors %}
-        <p>{{ form.password2.errors }}</p>
-        {% endif %}
-        {% for field in employee_form%}
-        <p>{{field}}</p>
-        {% endfor%}
-      <button type="submit" class="btn">Зарегистрировать</button>
-      </form>
+                              <form role="form" action="" method="post" class="login-form" id="registerForm" data-departments-url="{% url 'mainapp:ajax_load_subdevisions' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                <input type="text" name="{{ form.username.html_name }}" placeholder="Логин *U0--" class="form-username form-control" id="{{ form.username.html_name }}">
+                                <p></p>
+                                {% if form.username.errors %}
+                                <p>{{ form.username.errors }}</p>
+                                {% endif %}
+                                <input type="password" name="{{ form.password1.html_name }}" placeholder="Пароль..." class="form-password form-control" id="{{ form.password1.html_name }}">
+                                <p></p>
+                                {% if form.password1.errors %}
+                                <p>{{ form.password1.errors }}</p>
+                                {% endif %}
+                                <input type="password" name="{{ form.password2.html_name }}" placeholder="Повторите пароль..." class="form-password form-control" id="{{ form.password2.html_name }}">
+                                <p></p>
+                                {% if form.password2.errors %}
+                                <p>{{ form.password2.errors }}</p>
+                                {% endif %}
+                                {% for field in employee_form%}
+                                <p>{{field}}</p>
+                                {% endfor%}
+                              <button type="submit" class="btn">Зарегистрироваться</button>
+                              </form>
     </div>
 
-    <script src={% static "base_js/jquery-3.3.1.js" %}></script>
-    <script>
-      $("#id_department").change(function () {
-        var url = $("#addForm").attr("data-departments-url");
-        var departmentId = $(this).val();
+        <script src={% static "authapp/js/jquery-1.11.1.min.js" %}></script>
+        <script src={% static "authapp/bootstrap/js/bootstrap.min.js" %}></script>
+        <script src={% static "authapp/js/jquery.backstretch.min.js" %}></script>
 
-        $.ajax({
-          url: url,
-          data: {
-            'department': departmentId
-          },
-          success: function (data) {
-            $("#id_subdevision").html(data);
-          }
-        });
+        <script src={% static "base_js/jquery-3.3.1.js" %}></script>
+        <script>
+          $("#id_department").change(function () {
+            var url = $("#registerForm").attr("data-departments-url");
+            var departmentId = $(this).val();
 
-      });
-    </script>
+            $.ajax({
+              url: url,
+              data: {
+                'department': departmentId
+              },
+              success: function (data) {
+                $("#id_subdevision").html(data);
+              }
+            });
+
+          });
+        </script>
 
 {%endblock body%}
