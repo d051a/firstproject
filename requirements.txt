@@ -9,6 +9,7 @@ docx-mailmerge
 docxtpl
 pymorphy2
 petrovich
+django_cleanup
 
 
 # django-inlineedit
