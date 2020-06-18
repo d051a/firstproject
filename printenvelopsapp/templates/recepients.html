@@ -28,7 +28,7 @@
                     <th>Регион</th>
                     <th>Город</th>
                     <th>Индекс</th>
-{#                    <th>Дата создания</th>#}
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +41,11 @@
                     <td>{{ recepient.city }}</td>
                     <td>{{ recepient.postcode }}</td>
 {#                    <td>{{ recepient.pub_date|date:"d.m.y" }}</td>#}
+                                        <td>
+                        <form target="_blank" action="{% url 'printenvelopsapp:envelop_print' recepient.pk %}" method="get" id="print_form{{ registry.pk }}">
+                            <button type="submit" class="btn btn-sm">печать</button>
+                        </form>
+                    </td>
                   </tr>
 
 

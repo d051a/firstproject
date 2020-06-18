@@ -7,7 +7,7 @@ $(document).ready(function() {
       "ordering": false,
       language: {
       processing:     "Traitement en cours...",
-      search:         "Фильтр",
+      search:         "Поиск",
       lengthMenu:    "Показать _MENU_ элементов",
       info:           "Показано _START_ из _END_ из _TOTAL_ элементов",
       infoEmpty:      "Показано 0 из 0 из 0 элементов",

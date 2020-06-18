@@ -14,7 +14,8 @@ import re
 import jinja2
 
 
-def print_envelop(request):
+def print_envelop(request, recipient_pk):
+    recipient = Recepient.objects.get(pk=recipient_pk)
     if request.method == 'POST':
         form = PrintEnvelopForm(request.POST)
         if form.is_valid():
@@ -30,7 +31,7 @@ def print_envelop(request):
             envelop.save()
             return envelope_generate(request, cld)
     else:
-        form = PrintEnvelopForm()
+        form = PrintEnvelopForm(initial={'recipient': recipient})
     return render(request, 'print_envelop.html', {
         'form': form,
         'pagename': 'Печать конверта'
