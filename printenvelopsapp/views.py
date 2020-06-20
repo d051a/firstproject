@@ -1,5 +1,6 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Recepient, Envelop, SecretType, SentEnvelop, Registry
 from ACCOUNTING import settings
 from .forms import RecipientForm, EnvelopeFormatModelForm, PrintEnvelopForm, RegistryForm, RegistryTemplateForm, RegistrySentEnvelopForm
@@ -12,6 +13,7 @@ import datetime
 import zipfile
 import re
 import jinja2
+
 
 
 def print_envelop(request, recipient_pk):
@@ -68,7 +70,7 @@ def recepients(request):
     recepients_list = Recepient.objects.order_by("-pk")
     envelop_list = Envelop.objects.all()
     secret_types_list = SecretType.objects.all()
-    return render(request, 'recepients.html', {
+    return render(request, 'recepients_json.html', {
         'recepients_list': recepients_list,
         'envelop_list': envelop_list,
         'secret_types_list': secret_types_list,
@@ -353,3 +355,18 @@ def sent_detail(request, envelop_id):
             'sent_envelop': envelop_detail,
             'pagename': 'Отправление',
         })
+
+
+class RecepientModelListJson(BaseDatatableView):
+    model = Recepient
+    columns = ['title', 'address', 'region', 'city', 'postcode', 'sender']
+
+    def render_column(self, row, column):
+        if column == 'title':
+            return f'<a href="recepient/{row.id}">{row.title}</a>'
+        if column == 'sender':
+            return f"""<a href="printenvelop/{row.id}"><img src="/static/base_svg/print.svg" width=20"></a>"""
+        else:
+            return super(RecepientModelListJson, self).render_column(row, column)
+
+
