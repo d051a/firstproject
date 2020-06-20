@@ -15,7 +15,6 @@
 {%block body%}
 <div class = "col-md-12">
     <table id="example" class="display" style="width:100;">
-
             <thead>
                 <tr>
                     <th>-</th>
@@ -36,7 +35,7 @@
 
                 <tr>
                     <td>{{ envelop.pk }}</td>
-                    <td><a href="{% url 'printenvelopsapp:sent_detail' envelop.pk %}">Реестр #{{ envelop.recipient }} </a></td>
+                    <td><a href="{% url 'printenvelopsapp:sent_detail' envelop.pk %}">{{ envelop.recipient }} </a></td>
                     <td>{{ envelop.date|date:"d.m.y H:i"|lower }}</td>
                     <td>{{ envelop.username }}</td>
                     <td>{{ envelop.envelop_format}}</td>

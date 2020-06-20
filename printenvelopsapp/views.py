@@ -322,7 +322,7 @@ def sent_envelop_add_to_registry(request, envelop_pk, registry_pk):
 
 def sent_envelops(request):
     sent_envelops_list = SentEnvelop.objects.all().order_by('-pk')
-    return render(request, 'sent_envelops.html', {
+    return render(request, 'sent_envelops_json.html', {
         'sent_envelops_list': sent_envelops_list,
         'pagename': 'Отправленные'
     })
@@ -370,3 +370,17 @@ class RecepientModelListJson(BaseDatatableView):
             return super(RecepientModelListJson, self).render_column(row, column)
 
 
+class SentModelListJson(BaseDatatableView):
+    model = SentEnvelop
+    columns = ['recepient', 'date', 'username', 'envelop_format',
+               'outer_num', 'rpo_type', 'registry_type', 'registry']
+
+    def render_column(self, row, column):
+        if column == 'recepient':
+            return f'<a href="sent_detail/{row.id}">{row.recipient}</a>'
+        # if column == 'envelop_format':
+        #     return f'{row.envelop_format.secret_type}'
+        if column == 'registry':
+            return f'<a href="/envelops/registry/{row.registry}">{row.registry}</a>'
+        else:
+            return super(SentModelListJson, self).render_column(row, column)
