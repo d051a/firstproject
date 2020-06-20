@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'registry_delete/(\d+)/$', views.registry_delete, name='registry_delete'),
     url(r'registry/del_envelop/(\d+)/(\d+)', views.sent_envelop_del_from_registry, name='drop_registry_envelop'),
     url(r'registry_print/', views.registry_print, name='registry_print'),
-    url(r'^datatable/data/$', views.RecepientModelListJson.as_view(), name='order_list_json'),
+    url(r'recepient_json/$', views.RecepientModelListJson.as_view(), name='recepient_list_json'),
     # url(r'registry_add2/', views.registry_add2, name='registry_print'),
     # url(r'registry2/(?P<pk>\d+)/$', views.RegistryDetail.as_view(), name='registry_detail'),
 ]
