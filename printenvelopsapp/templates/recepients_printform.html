@@ -1,0 +1,89 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{%block head%}
+<link rel="stylesheet" type="text/css" href={% static "recepients/css/jquery.dataTables.min.css"%}>
+{%endblock%}
+
+{%block navimenu%}
+{%endblock%}
+
+{%block header%}
+    {{ pagename }}
+{%endblock%}
+
+{%block header_end%}
+<a style="margin-right: 20px;" role="button" class="btn btn-secondary" href="{% url 'printenvelopsapp:recepient_add' %}"><b>+</b></a>
+{%endblock%}
+
+{%block body%}
+<div class = "col-md-12">
+      <form class = "col-md-8" method="post" action="printenvelop/" id="print_form">
+        {% csrf_token %}
+    {% for field in form.hidden_fields %}
+        {{ field }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+        {{ field.label }} {{ field }}
+    {% endfor %}
+      <p></p>
+      </form>
+    <table id="recepients" class="datatable row-border" style="width:100;">
+            <thead>
+                <tr>
+{#                    <th>-</th>#}
+                    <th>ФИО (название организации)</th>
+                    <th>Адрес</th>
+                    <th>Регион</th>
+                    <th>Город</th>
+                    <th>Индекс</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+</div>
+{%endblock%}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+    var oTable = $('.datatable').dataTable({
+        "scrollCollapse": true,
+        "paging":         true,
+        "ordering":       false,
+        "pagingType":     "numbers",
+        "processing":     true,
+        "serverSide":     true,
+        "ajax": "{% url 'printenvelopsapp:recepient_list_json' %}",
+
+        language: {
+          processing:     "Traitement en cours...",
+          search:         "Поиск",
+          lengthMenu:     "Показать _MENU_ элементов",
+          info:           "Показано _START_ из _END_ из _TOTAL_ элементов",
+          infoEmpty:      "Показано 0 из 0 из 0 элементов",
+          infoFiltered:   "(Отфильтровано из _MAX_ позиций)",
+          infoPostFix:    "",
+          loadingRecords: "Chargement en cours...",
+          zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+          emptyTable:     "Нет данных",
+          paginate: {
+                first:      "Первый",
+                previous:   "Предыдущий",
+                next:       "Следующий",
+                last:       "Последний"
+            },},
+                searching: true,
+    });
+    // ...
+});
+
+function myFunction(id) {
+  document.getElementById("id_recipient").value = id;
+
+}
+    </script>
+{% endblock scripts %}

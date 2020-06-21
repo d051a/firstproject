@@ -1,22 +1,47 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.utils import formats
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Recepient, Envelop, SecretType, SentEnvelop, Registry
 from ACCOUNTING import settings
-from .forms import RecipientForm, EnvelopeFormatModelForm, PrintEnvelopForm, RegistryForm, RegistryTemplateForm, RegistrySentEnvelopForm
-from docxtpl import DocxTemplate
+from .forms import RecipientForm, EnvelopeFormatModelForm, PrintEnvelopForm, \
+    RegistryForm, RegistryTemplateForm, RegistrySentEnvelopForm
 from .main import DateToWords
 from employeesapp.models import Employee
 from printenvelopsapp.num2t4ru import num2text
 from .tools import tools
+from docxtpl import DocxTemplate
 import datetime
 import zipfile
 import re
 import jinja2
-from django.utils import formats
 
 
-def print_envelop(request, recipient_pk):
+
+def print_envelop(request):
+    if request.method == 'POST':
+        form = PrintEnvelopForm(request.POST)
+        if form.is_valid():
+            cld = form.cleaned_data
+            envelop = SentEnvelop()
+            user = Employee.objects.get(user=request.user)
+            envelop.username = user
+            envelop.recipient = cld['recipient']
+            envelop.rpo_type = cld['rpo_type']
+            envelop.envelop_format = cld['envelop_format']
+            envelop.outer_num = cld['outer_num']
+            envelop.registry_type = cld['registry_type']
+            envelop.save()
+            return envelope_generate(request, cld)
+    else:
+        form = PrintEnvelopForm()
+    return render(request, 'print_envelop.html', {
+        'form': form,
+        'pagename': 'Печать конверта'
+    })
+
+
+def print_envelop_backup(request, recipient_pk):
     recipient = Recepient.objects.get(pk=recipient_pk)
     if request.method == 'POST':
         form = PrintEnvelopForm(request.POST)
@@ -38,7 +63,6 @@ def print_envelop(request, recipient_pk):
         'form': form,
         'pagename': 'Печать конверта'
     })
-
 
 def envelope_generate(request, envelop_data):
     recipient = envelop_data['recipient']
@@ -68,9 +92,34 @@ def envelope_generate(request, envelop_data):
 
 def recepients(request):
     recepients_list = Recepient.objects.order_by("-pk")
+    if request.method == 'POST':
+        form = PrintEnvelopForm(request.POST)
+        if form.is_valid():
+            cld = form.cleaned_data
+            envelop = SentEnvelop()
+            user = Employee.objects.get(user=request.user)
+            envelop.username = user
+            envelop.recipient = cld['recipient']
+            envelop.rpo_type = cld['rpo_type']
+            envelop.envelop_format = cld['envelop_format']
+            envelop.outer_num = cld['outer_num']
+            envelop.registry_type = cld['registry_type']
+            envelop.save()
+            return envelope_generate(request, cld)
+    else:
+        form = PrintEnvelopForm()
+        return render(request, 'recepients_printform.html', {
+            'form': form,
+            'recepients_list': recepients_list,
+            'pagename': 'Адресаты'
+        })
+
+
+def recepients_backup(request):
+    recepients_list = Recepient.objects.order_by("-pk")
     envelop_list = Envelop.objects.all()
     secret_types_list = SecretType.objects.all()
-    return render(request, 'recepients_json.html', {
+    return render(request, 'recepients_printform.html', {
         'recepients_list': recepients_list,
         'envelop_list': envelop_list,
         'secret_types_list': secret_types_list,
@@ -363,7 +412,7 @@ class RecepientModelListJson(BaseDatatableView):
         if column == 'title':
             return f'<a href="recepient/{row.id}">{row.title}</a>'
         if column == 'sender':
-            return f"""<a href="printenvelop/{row.id}"><img src="/static/base_svg/print.svg" width=20"></a>"""
+            return f"""<input type="image" form="print_form" onclick="myFunction('{row.id}')" src="/static/base_svg/print.svg" width=20" alt="Submit" />"""
         else:
             return super(RecepientModelListJson, self).render_column(row, column)
 
@@ -379,7 +428,10 @@ class SentModelListJson(BaseDatatableView):
         if column == 'date':
             return formats.date_format(row.date, "SHORT_DATETIME_FORMAT")
         if column == 'registry':
-            return f'<a href="/envelops/registry/{row.registry}">{row.registry}</a>'
+            if row.registry:
+                return f'<a href="/envelops/registry/{row.registry}">{row.registry}</a>'
+            else:
+                return ''
         else:
             return super(SentModelListJson, self).render_column(row, column)
 
