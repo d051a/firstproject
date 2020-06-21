@@ -13,6 +13,7 @@ import datetime
 import zipfile
 import re
 import jinja2
+from django.utils import formats
 
 
 def print_envelop(request, recipient_pk):
@@ -375,8 +376,8 @@ class SentModelListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'recepient':
             return f'<a href="sent_detail/{row.id}">{row.recipient}</a>'
-        # if column == 'envelop_format':
-        #     return f'{row.envelop_format.secret_type}'
+        if column == 'date':
+            return formats.date_format(row.date, "SHORT_DATETIME_FORMAT")
         if column == 'registry':
             return f'<a href="/envelops/registry/{row.registry}">{row.registry}</a>'
         else:
