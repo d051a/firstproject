@@ -15,7 +15,6 @@ import re
 import jinja2
 
 
-
 def print_envelop(request, recipient_pk):
     recipient = Recepient.objects.get(pk=recipient_pk)
     if request.method == 'POST':
@@ -182,7 +181,7 @@ def envelop_template_detail(request, envelop_pk):
 
 def registry_list(request):
     registry_objects = Registry.objects.all()
-    return render(request, 'registry.html', {
+    return render(request, 'registry_json.html', {
         'registry_list': registry_objects,
         'pagename': 'Реестры'
     })
@@ -235,7 +234,6 @@ def registry_add(request):
                 registry_type=cld['type'])
             envelops.update(registry=registry)
             return redirect('printenvelopsapp:registry_list')
-
     else:
         pagename = 'Новый реестр'
         form = RegistryForm()
@@ -253,11 +251,10 @@ def registry_delete(request, registry_pk):
     return redirect('printenvelopsapp:registry_list')
 
 
-def registry_print(request):
+def registry_print(request, registry_pk):
     jinja_env = jinja2.Environment()
     jinja_env.filters['get_clear_address'] = tools.get_clear_address
     jinja_env.filters['add_num_before_text'] = tools.add_num_before_text
-    registry_pk = request.GET['registry']
     registry = Registry.objects.get(pk=registry_pk)
     template = '{}/{}'.format(settings.MEDIA_ROOT, registry.type.template)
     temporaty_document = DocxTemplate(template)
@@ -384,3 +381,16 @@ class SentModelListJson(BaseDatatableView):
             return f'<a href="/envelops/registry/{row.registry}">{row.registry}</a>'
         else:
             return super(SentModelListJson, self).render_column(row, column)
+
+
+class RegistryModelListJson(BaseDatatableView):
+    model = Registry
+    columns = ['id', 'username', 'date', 'type', 'rpo_type', 'print']
+
+    def render_column(self, row, column):
+        if column == 'id':
+            return f'<a href="registry/{row.id}">Реестр #{row.id}</a>'
+        if column == 'print':
+            return f"""<a href="registry/{row.id}/print"><img src="/static/base_svg/print.svg" width=20"></a>"""
+        else:
+            return super(RegistryModelListJson, self).render_column(row, column)
