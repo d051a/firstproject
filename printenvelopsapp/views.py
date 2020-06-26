@@ -341,7 +341,7 @@ def registry_print(request, registry_pk):
     }
     temporaty_document.render(context, jinja_env)
     response = HttpResponse(content_type='text/docx')
-    response['Content-Disposition'] = 'attachment; filename=download.docx'
+    response['Content-Disposition'] = 'attachment; filename={}_registry.docx'.format(date)
     temporery_template_path = '{}/{}'.format(settings.MEDIA_ROOT, 'test.docx')
     temporaty_document.save(temporery_template_path)
     zf = zipfile.ZipFile(temporery_template_path)

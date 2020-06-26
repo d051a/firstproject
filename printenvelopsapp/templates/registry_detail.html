@@ -27,7 +27,7 @@
     </div>
 
     <div class="col-sm">
-        <form class = "col-md-6" action="registry_print/" method="get" id="print_form">
+        <form class = "col-md-6" action="registry/{{ registry.id }}/print" method="get" id="print_form">
             {{ registry_template_form.as_p }}
             {{ errors.as_p }}
             <p></p>
