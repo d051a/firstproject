@@ -279,6 +279,7 @@ def registry_add(request):
             registry.username = user
             registry.type = cld['type']
             registry.rpo_type = cld['rpo_type']
+            registry.num = cld['num']
             # registry.current_cost = cld['current_cost']
             registry.save()
             envelops = SentEnvelop.objects.filter(registry=None).filter(rpo_type=cld['rpo_type']).filter(
@@ -325,7 +326,7 @@ def registry_print(request, registry_pk):
     envelops_cost_sum = tools.sum_envelops_cost(sent_list)
     context = {
         'tbl_contents': sent_list,
-        'registry_id': registry_pk,
+        'registry_num': registry.num,
         'rpo_type': registry.rpo_type,
         'envelops_list_len': envelops_list_len,
         'envelops_list_len_text': '({}) {}'.format(
@@ -451,7 +452,7 @@ class RegistryModelListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'id':
-            return f'<a href="registry/{row.id}">Реестр #{row.id}</a>'
+            return f'<a href="registry/{row.id}">Реестр #{row.num if row.num else " б/н"}</a>'
         if column == 'print':
             return f"""<a href="registry/{row.id}/print"><img src="/static/base_svg/print.svg" width=20"></a>"""
         else:
