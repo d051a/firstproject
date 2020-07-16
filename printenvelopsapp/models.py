@@ -158,6 +158,7 @@ class RPOType(models.Model):
 
 class Registry(models.Model):
     date = models.DateField('Дата', auto_now_add=True)
+    num = models.CharField('Номер реестра', max_length=100, null=True, blank=True)
     username = models.ForeignKey('employeesapp.Employee', on_delete=models.CASCADE, max_length=100, verbose_name='Сотрудник')
     type = models.ForeignKey('printenvelopsapp.RegistryType', on_delete=models.CASCADE, verbose_name='Тип реестра')
     rpo_type = models.ForeignKey('RPOType', on_delete=models.CASCADE, verbose_name='Тип РПО', null=True, blank=True)

@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils import formats
 from django_datatables_view.base_datatable_view import BaseDatatableView
+from django.db.models import Q
 from .models import Recepient, Envelop, SecretType, SentEnvelop, Registry
 from ACCOUNTING import settings
 from .forms import RecipientForm, EnvelopeFormatModelForm, PrintEnvelopForm, \
@@ -415,6 +416,14 @@ class RecepientModelListJson(BaseDatatableView):
             return f"""<input type="image" form="print_form" onclick="myFunction('{row.id}')" src="/static/base_svg/print.svg" width=20" alt="Submit" />"""
         else:
             return super(RecepientModelListJson, self).render_column(row, column)
+
+    def filter_queryset(self, qs):
+        search = self.request.GET.get('search[value]', None)
+        if search:
+            qs = qs.filter(Q(title__icontains=search)|Q(address__icontains=search)|Q(city__icontains=search))
+
+
+        return qs
 
 
 class SentModelListJson(BaseDatatableView):
