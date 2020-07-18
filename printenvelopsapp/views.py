@@ -65,6 +65,7 @@ def print_envelop_backup(request, recipient_pk):
         'pagename': 'Печать конверта'
     })
 
+
 def envelope_generate(request, envelop_data):
     recipient = envelop_data['recipient']
     envelop = envelop_data['envelop_format']
@@ -84,9 +85,9 @@ def envelope_generate(request, envelop_data):
         'outer_num': outer_num,
     }
     output_document.render(context)
-
+    datetime_now = datetime.datetime.now()
     response = HttpResponse(content_type='text/docx')
-    response['Content-Disposition'] = 'attachment; filename=download.docx'
+    response['Content-Disposition'] = 'attachment; filename={}_konvert.docx'.format(datetime_now.strftime("%Y.%m.%d_%H-%M"))
     output_document.save(response)
     return response
 
@@ -341,9 +342,10 @@ def registry_print(request, registry_pk):
         'post': user.post,
         'fio_short': '{} {}.{}.'.format(user.fio.split()[0], user.fio.split()[1][0], user.fio.split()[1][0])
     }
+    datetime_now = datetime.datetime.now()
     temporaty_document.render(context, jinja_env)
     response = HttpResponse(content_type='text/docx')
-    response['Content-Disposition'] = 'attachment; filename={}_registry.docx'.format(date)
+    response['Content-Disposition'] = 'attachment; filename={}_registry.docx'.format(datetime_now.strftime("%Y.%m.%d_%H-%M"))
     temporery_template_path = '{}/{}'.format(settings.MEDIA_ROOT, 'test.docx')
     temporaty_document.save(temporery_template_path)
     zf = zipfile.ZipFile(temporery_template_path)
