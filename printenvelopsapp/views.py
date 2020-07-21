@@ -260,13 +260,13 @@ def registry_detail(request, registry_pk=None):
         registry = Registry.objects.get(pk=registry_pk)
         form = RegistrySentEnvelopForm(instance=registry)
         registry_template_form = RegistryTemplateForm({'registry': registry_pk})
-        sent_envelops_list = SentEnvelop.objects.filter(registry=registry)
+        sent_envelops_list = SentEnvelop.objects.filter(registry=registry).order_by('pk')
         return render(request, 'registry_detail.html', {
             'form': form,
             'registry_template_form': registry_template_form,
             'registry': registry,
             'sent_envelops_list': sent_envelops_list,
-            'pagename': 'Реестр №' + registry_pk
+            'pagename': f"Реестр № {registry.num if registry.num is not None else 'б/н'}"
         })
 
 
@@ -308,6 +308,7 @@ def registry_print(request, registry_pk):
     jinja_env = jinja2.Environment()
     jinja_env.filters['get_clear_address'] = tools.get_clear_address
     jinja_env.filters['add_num_before_text'] = tools.add_num_before_text
+    jinja_env.filters['without_commas'] = tools.without_commas
     registry = Registry.objects.get(pk=registry_pk)
     template = '{}/{}'.format(settings.MEDIA_ROOT, registry.type.template)
     temporaty_document = DocxTemplate(template)
@@ -321,6 +322,9 @@ def registry_print(request, registry_pk):
     envelops_list_len_text = tools.change_neuter_gender_text(
         num2text(envelops_list_len, ((u'отправление', u'отправления', u'отправлений'), 'm')))
     envelops_list_len_pieces = num2text(envelops_list_len, ((u'штука', u'штуки', u'штук'), 'f'))
+    envelops_list_len_short = f"{envelops_list_len} " \
+        f"({envelops_list_len_pieces.split(' ')[0]}) " \
+        f"{envelops_list_len_pieces.split(' ')[1][:2]}."
     current_weight_cost = registry.current_cost
     # for sent in sent_list:
     #     tools.set_sent_cost(current_weight_cost, sent)
@@ -337,6 +341,7 @@ def registry_print(request, registry_pk):
             envelops_list_len_pieces.split()[0],
             envelops_list_len_pieces.split()[1]),
         'envelops_cost_sum': envelops_cost_sum,
+        'envelops_list_len_short': envelops_list_len_short,
         'date': date,
         'text_date': text_date,
         'post': user.post,

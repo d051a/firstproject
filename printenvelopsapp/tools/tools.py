@@ -36,3 +36,10 @@ def change_neuter_gender_text(string):
         outer_string = neuter_gender_text.replace('один', 'одно')
         return outer_string
     return neuter_gender_text
+
+
+def without_commas(string):
+    outer_nums = string
+    outer_nums = outer_nums.replace(',', '')
+    outer_nums = outer_nums.replace(';', '')
+    return outer_nums

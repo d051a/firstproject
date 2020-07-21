@@ -201,7 +201,7 @@ class RegistryType(models.Model):
             ('can_add_envelop_registry_type', 'Может добавлять типы реестров'),
             ('can_delete_envelop_registry_type', 'Может удалять типы реестров'),
         )
-        ordering = ['-pk']
+        ordering = ['title']
         verbose_name = 'Тип реестра'
         verbose_name_plural = 'Типы реестра'
 
