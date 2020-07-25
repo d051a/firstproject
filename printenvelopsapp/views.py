@@ -18,7 +18,6 @@ import re
 import jinja2
 
 
-
 def print_envelop(request):
     if request.method == 'POST':
         form = PrintEnvelopForm(request.POST)
@@ -309,11 +308,13 @@ def registry_print(request, registry_pk):
     jinja_env.filters['get_clear_address'] = tools.get_clear_address
     jinja_env.filters['add_num_before_text'] = tools.add_num_before_text
     jinja_env.filters['without_commas'] = tools.without_commas
+    jinja_env.filters['separator_comma'] = tools.separator_comma
+    jinja_env.filters['separator_dash'] = tools.separator_dash
     registry = Registry.objects.get(pk=registry_pk)
     template = '{}/{}'.format(settings.MEDIA_ROOT, registry.type.template)
     temporaty_document = DocxTemplate(template)
     output_document = DocxTemplate(template)
-    sent_list = SentEnvelop.objects.filter(registry=registry_pk)
+    sent_list = SentEnvelop.objects.filter(registry=registry_pk).order_by('pk')
     envelops_list_len = len(sent_list)
     date = datetime.datetime.today().strftime("%d.%m.%Y")
     text_date = DateToWords(date)
@@ -428,7 +429,7 @@ class RecepientModelListJson(BaseDatatableView):
     def filter_queryset(self, qs):
         search = self.request.GET.get('search[value]', None)
         if search:
-            qs = qs.filter(Q(title__icontains=search)|Q(address__icontains=search)|Q(city__icontains=search))
+            qs = qs.filter(Q(title__icontains=search)|Q(address__icontains=search)|Q(city__icontains=search)|Q(postcode__icontains=search)|Q(region__icontains=search))
 
 
         return qs

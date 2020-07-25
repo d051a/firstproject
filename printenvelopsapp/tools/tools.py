@@ -43,3 +43,16 @@ def without_commas(string):
     outer_nums = outer_nums.replace(',', '')
     outer_nums = outer_nums.replace(';', '')
     return outer_nums
+
+
+def separator_comma(num):
+    num = '%.2f' % num
+    outer_num = str(num).replace('.', ',')
+    return outer_num
+
+
+def separator_dash(num):
+    num = '%.2f' % num
+    outer_num = str(num).replace('.', '-')
+    return outer_num
+
