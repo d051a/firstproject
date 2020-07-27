@@ -327,8 +327,6 @@ def registry_print(request, registry_pk):
         f"({envelops_list_len_pieces.split(' ')[0]}) " \
         f"{envelops_list_len_pieces.split(' ')[1][:2]}."
     current_weight_cost = registry.current_cost
-    # for sent in sent_list:
-    #     tools.set_sent_cost(current_weight_cost, sent)
     envelops_cost_sum = tools.sum_envelops_cost(sent_list)
     context = {
         'tbl_contents': sent_list,
@@ -429,9 +427,13 @@ class RecepientModelListJson(BaseDatatableView):
     def filter_queryset(self, qs):
         search = self.request.GET.get('search[value]', None)
         if search:
-            qs = qs.filter(Q(title__icontains=search)|Q(address__icontains=search)|Q(city__icontains=search)|Q(postcode__icontains=search)|Q(region__icontains=search))
-
-
+            qs = qs.filter(
+                Q(title__icontains=search) |
+                Q(address__icontains=search) |
+                Q(city__icontains=search) |
+                Q(postcode__icontains=search) |
+                Q(region__icontains=search)
+            )
         return qs
 
 
