@@ -449,7 +449,7 @@ class SentModelListJson(BaseDatatableView):
             return formats.date_format(row.date, "SHORT_DATETIME_FORMAT")
         if column == 'registry':
             if row.registry:
-                return f'<a href="/envelops/registry/{row.registry}">{row.registry}</a>'
+                return f'<a href="/envelops/registry/{row.registry}">#{row.registry.num if row.registry.num else " б/н"}</a>'
             else:
                 return ''
         else:
