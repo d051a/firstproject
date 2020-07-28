@@ -41,30 +41,6 @@ def print_envelop(request):
     })
 
 
-def print_envelop_backup(request, recipient_pk):
-    recipient = Recepient.objects.get(pk=recipient_pk)
-    if request.method == 'POST':
-        form = PrintEnvelopForm(request.POST)
-        if form.is_valid():
-            cld = form.cleaned_data
-            envelop = SentEnvelop()
-            user = Employee.objects.get(user=request.user)
-            envelop.username = user
-            envelop.recipient = cld['recipient']
-            envelop.rpo_type = cld['rpo_type']
-            envelop.envelop_format = cld['envelop_format']
-            envelop.outer_num = cld['outer_num']
-            envelop.registry_type = cld['registry_type']
-            envelop.save()
-            return envelope_generate(request, cld)
-    else:
-        form = PrintEnvelopForm(initial={'recipient': recipient})
-    return render(request, 'print_envelop.html', {
-        'form': form,
-        'pagename': 'Печать конверта'
-    })
-
-
 def envelope_generate(request, envelop_data):
     recipient = envelop_data['recipient']
     envelop = envelop_data['envelop_format']

@@ -46,7 +46,7 @@ def without_commas(string):
 
 
 def separator_comma(num):
-    num = '%.2f' % num
+    num = '%.3f' % num
     outer_num = str(num).replace('.', ',')
     return outer_num
 
