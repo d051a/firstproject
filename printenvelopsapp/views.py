@@ -320,7 +320,7 @@ def registry_print(request, registry_pk):
         'date': date,
         'text_date': text_date,
         'post': user.post,
-        'fio_short': '{} {}.{}.'.format(user.fio.split()[0], user.fio.split()[1][0], user.fio.split()[1][0])
+        'fio_short': '{} {}.{}.'.format(user.fio.split()[0], user.fio.split()[1][0], user.fio.split()[2][0])
     }
     datetime_now = datetime.datetime.now()
     temporaty_document.render(context, jinja_env)
