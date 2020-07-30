@@ -24,3 +24,8 @@ pyreadline
 pylint
 ipython
 ######
+
+# tests
+pytest
+selenium
+#####
